@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import portfolioConfig from "@/config/portfolio.json";
+import { handleNavigationClick } from "@/lib/navigation";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isActive = (href: string) => {
     if (href.startsWith("#")) {
@@ -17,10 +19,16 @@ const Header = () => {
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
+    
+    // Always scroll to footer on current page
     const contactElement = document.getElementById('contact');
     if (contactElement) {
       contactElement.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleNavClick = (href: string) => {
+    handleNavigationClick(href, location.pathname, () => setIsMenuOpen(false));
   };
 
   return (
@@ -39,8 +47,6 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
             {portfolioConfig.navigation.map((item) => {
-              const isComingSoon = portfolioConfig.comingSoon?.pages?.[item.href]?.enabled;
-              
               return item.href === "#contact" ? (
                 <button
                   key={item.name}
@@ -53,17 +59,15 @@ const Header = () => {
                 <Link
                   key={item.name}
                   to={item.href}
+                  onClick={() => handleNavClick(item.href)}
                   className={`text-sm font-medium transition-colors hover:text-primary ${
                     isActive(item.href) 
                       ? "text-primary" 
                       : "text-muted-foreground"
-                  } ${isComingSoon ? "relative" : ""}`}
+                  }`}
                   aria-current={isActive(item.href) ? "page" : undefined}
                 >
                   {item.name}
-                  {isComingSoon && (
-                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
-                  )}
                 </Link>
               );
             })}
@@ -87,8 +91,6 @@ const Header = () => {
           <div className="md:hidden py-4 border-t border-border fade-in" role="navigation" aria-label="Mobile navigation">
             <nav className="flex flex-col space-y-3">
               {portfolioConfig.navigation.map((item) => {
-                const isComingSoon = portfolioConfig.comingSoon?.pages?.[item.href]?.enabled;
-                
                 return item.href === "#contact" ? (
                   <button
                     key={item.name}
@@ -104,20 +106,15 @@ const Header = () => {
                   <Link
                     key={item.name}
                     to={item.href}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => handleNavClick(item.href)}
                     className={`text-sm font-medium transition-colors hover:text-primary ${
                       isActive(item.href) 
                         ? "text-primary" 
                         : "text-muted-foreground"
-                    } ${isComingSoon ? "relative" : ""}`}
+                    }`}
                     aria-current={isActive(item.href) ? "page" : undefined}
                   >
                     {item.name}
-                    {isComingSoon && (
-                      <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
-                        Soon
-                      </span>
-                    )}
                   </Link>
                 );
               })}

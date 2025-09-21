@@ -1,11 +1,85 @@
-import ComingSoon from "@/components/ComingSoon";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Calendar, Clock, ExternalLink } from "lucide-react";
+import ComingSoonCard from "@/components/ComingSoonCard";
 import portfolioConfig from "@/config/portfolio.json";
 
 const Writing = () => {
-  const comingSoonConfig = portfolioConfig.comingSoon?.pages?.["/writing"];
+  // Check if all articles are coming soon
+  const allArticlesComingSoon = portfolioConfig.writing.every(article => article.comingSoon);
   
-  if (comingSoonConfig?.enabled) {
-    return <ComingSoon pageConfig={comingSoonConfig} />;
+  if (allArticlesComingSoon) {
+    return (
+      <div className="min-h-screen py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+                Writing
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Thoughts on product management, user experience, and building products that matter.
+              </p>
+            </div>
+
+            {/* Articles Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {portfolioConfig.writing.map((article) => {
+                if (article.comingSoon) {
+                  return <ComingSoonCard key={article.id} />;
+                }
+                
+                return (
+                  <Card key={article.id} className="card-hover">
+                    <CardContent className="p-8">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {article.tags.map((tag) => (
+                              <Badge key={tag} variant="secondary" className="text-xs">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                          <h3 className="text-xl font-semibold text-foreground mb-3">
+                            {article.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">
+                            {article.excerpt}
+                          </p>
+                          <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                            <div className="flex items-center space-x-1">
+                              <Calendar className="w-4 h-4" />
+                              <span>{formatDate(article.publishedAt)}</span>
+                            </div>
+                            <div className="flex items-center space-x-1">
+                              <Clock className="w-4 h-4" />
+                              <span>{article.readTime}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <Button variant="ghost" size="sm" asChild>
+                          <a 
+                            href={article.url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            aria-label={`Read ${article.title}`}
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </a>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);

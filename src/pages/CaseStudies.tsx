@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ComingSoonCard from "@/components/ComingSoonCard";
 import portfolioConfig from "@/config/portfolio.json";
 
 const CaseStudies = () => {
@@ -23,33 +24,65 @@ const CaseStudies = () => {
 
           {/* Case Studies Grid */}
           <div className="space-y-12">
-            {portfolioConfig.caseStudies.map((study, index) => (
-              <Card key={study.id} className="card-hover overflow-hidden">
-                <CardContent className="p-0">
-                  <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
-                    {/* Image */}
-                    <div className={`aspect-video lg:aspect-square bg-gradient-card flex items-center justify-center ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
-                      <div className="text-muted-foreground text-lg font-medium">
-                        {study.title} Preview
+            {portfolioConfig.caseStudies.map((study, index) => {
+              // Show coming soon card if marked as coming soon
+              if (study.comingSoon) {
+                return (
+                  <Card key={study.id} className="card-hover overflow-hidden">
+                    <CardContent className="p-0 relative">
+                      <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+                        {/* Image placeholder */}
+                        <div className={`aspect-video lg:aspect-square bg-gradient-card flex items-center justify-center ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                          <div className="text-muted-foreground text-lg font-medium">
+                            {study.title} Preview
+                          </div>
+                        </div>
+                        {/* Content placeholder */}
+                        <div className="p-8 lg:p-12 flex flex-col justify-center">
+                          <div className="space-y-4">
+                            <div className="h-4 bg-muted rounded w-24"></div>
+                            <div className="h-6 bg-muted rounded w-48"></div>
+                            <div className="h-4 bg-muted rounded w-full"></div>
+                            <div className="h-4 bg-muted rounded w-3/4"></div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                      {/* Coming Soon Overlay */}
+                      <div className="absolute inset-0 z-10">
+                        <ComingSoonCard className="w-full h-full" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              }
 
-                    {/* Content */}
-                    <div className="p-8 lg:p-12 flex flex-col justify-center">
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {study.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
+              return (
+                <Card key={study.id} className="card-hover overflow-hidden">
+                  <CardContent className="p-0">
+                    <div className={`grid grid-cols-1 lg:grid-cols-2 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
+                      {/* Image */}
+                      <div className={`aspect-video lg:aspect-square bg-gradient-card flex items-center justify-center ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                        <div className="text-muted-foreground text-lg font-medium">
+                          {study.title} Preview
+                        </div>
                       </div>
-                      
-                      <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-3">
-                        {study.title}
-                      </h2>
-                      
-                      <p className="text-lg text-muted-foreground mb-6">
-                        {study.description}
+
+                      {/* Content */}
+                      <div className="p-8 lg:p-12 flex flex-col justify-center">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {study.tags.map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        
+                        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-3">
+                          {study.title}
+                        </h2>
+                        
+                        <p className="text-lg text-muted-foreground mb-6">
+                          {study.description}
                       </p>
 
                       {/* Impact Metrics */}
@@ -83,7 +116,8 @@ const CaseStudies = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
 
           {/* CTA */}

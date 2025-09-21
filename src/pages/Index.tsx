@@ -1,11 +1,15 @@
 import { ArrowRight, Download, ExternalLink, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import ComingSoonCard from "@/components/ComingSoonCard";
 import portfolioConfig from "@/config/portfolio.json";
+import { handleNavigationClick } from "@/lib/navigation";
 
 const Index = () => {
+  const location = useLocation();
+  
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -27,46 +31,25 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="fade-in-up flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-              <Button 
-                className="btn-hero"
-                asChild
-              >
-                <Link to="/case-studies">
-                  View My Work
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-              </Button>
-              <Button 
-                variant="outline"
-                className="btn-outline"
-                asChild
-              >
-                <Link to="/about">
-                  About Me
-                </Link>
-              </Button>
-            </div>
-
             {/* Stats */}
-            <div className="fade-in grid grid-cols-2 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
+            <div className="fade-in grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">
+                <div className="text-4xl font-bold text-primary mb-2">
                   {portfolioConfig.personal.yearsExperience}+
                 </div>
                 <div className="text-sm text-muted-foreground">Years Experience</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary mb-2">
-                  {portfolioConfig.caseStudies.length}
+                <div className="text-4xl font-bold text-primary mb-2">
+                  {portfolioConfig.personal.metrics.usersImpacted}
                 </div>
-                <div className="text-sm text-muted-foreground">Case Studies</div>
+                <div className="text-sm text-muted-foreground">Users Impacted</div>
               </div>
-              <div className="text-center col-span-2 md:col-span-1">
-                <div className="text-3xl font-bold text-primary mb-2">
-                  {portfolioConfig.makerProjects.length}
+              <div className="text-center">
+                <div className="text-4xl font-bold text-primary mb-2">
+                  {portfolioConfig.personal.metrics.arpuUplift}
                 </div>
-                <div className="text-sm text-muted-foreground">Side Projects</div>
+                <div className="text-sm text-muted-foreground">ARPU Uplift</div>
               </div>
             </div>
           </div>
@@ -86,24 +69,36 @@ const Index = () => {
               </p>
             </div>
 
-            {/* Skills Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {Object.entries(portfolioConfig.skills).map(([category, skills]) => (
-                <Card key={category} className="card-hover">
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold text-foreground mb-4 capitalize">
-                      {category === "technical" ? "Technical" : category}
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {skills.map((skill) => (
-                        <Badge key={skill} variant="secondary" className="text-xs">
-                          {skill}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            {/* Domain Expertise */}
+            <div className="text-center mb-12">
+              <h3 className="text-xl font-semibold text-foreground mb-6">Domain Expertise</h3>
+              <div className="flex flex-wrap justify-center gap-3">
+                {portfolioConfig.personal.domains.map((domain) => (
+                  <Badge key={domain} variant="outline" className="text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
+                    {domain}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" className="btn-hero" asChild>
+                <Link to="/about" onClick={() => handleNavigationClick("/about", location.pathname)}>
+                  Full Profile
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a 
+                  href={portfolioConfig.personal.resumeLink}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  Download Resume
+                </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -123,43 +118,54 @@ const Index = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {portfolioConfig.caseStudies.slice(0, 2).map((study) => (
-                <Card key={study.id} className="card-hover group">
-                  <CardContent className="p-0">
-                    <div className="aspect-video bg-gradient-card rounded-t-xl mb-6"></div>
-                    <div className="p-6">
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {study.tags.map((tag) => (
-                          <Badge key={tag} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                      <h3 className="text-xl font-semibold text-foreground mb-2">
-                        {study.title}
-                      </h3>
-                      <p className="text-muted-foreground mb-4">
-                        {study.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-muted-foreground">
-                          {study.duration} • {study.team}
+              {portfolioConfig.caseStudies.slice(0, 2).map((study) => {
+                if (study.comingSoon) {
+                  return (
+                    <ComingSoonCard
+                      key={study.id}
+                      className="min-h-[300px]"
+                    />
+                  );
+                }
+
+                return (
+                  <Card key={study.id} className="card-hover group">
+                    <CardContent className="p-0">
+                      <div className="aspect-video bg-gradient-card rounded-t-xl mb-6"></div>
+                      <div className="p-6">
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {study.tags.map((tag) => (
+                            <Badge key={tag} variant="outline" className="text-xs">
+                              {tag}
+                            </Badge>
+                          ))}
                         </div>
-                        <Button variant="ghost" size="sm" asChild>
-                          <Link to={`/case-studies/${study.id}`}>
-                            <ArrowRight className="w-4 h-4" />
-                          </Link>
-                        </Button>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">
+                          {study.title}
+                        </h3>
+                        <p className="text-muted-foreground mb-4">
+                          {study.description}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="text-sm text-muted-foreground">
+                            {study.duration} • {study.team}
+                          </div>
+                          <Button variant="ghost" size="sm" asChild>
+                            <Link to={`/case-studies/${study.id}`}>
+                              <ArrowRight className="w-4 h-4" />
+                            </Link>
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
 
             <div className="text-center">
-              <Button variant="outline" className="btn-outline" asChild>
-                <Link to="/case-studies">
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
                   View All Case Studies
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
@@ -170,21 +176,31 @@ const Index = () => {
       </section>
 
       {/* Maker Projects Preview */}
-      {!portfolioConfig.comingSoon?.sections?.makerProjects?.enabled && (
-        <section className="py-20 lg:py-32">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-6xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-                  Side Projects
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Personal projects where I experiment with new ideas and technologies
-                </p>
-              </div>
+      <section className="py-20 lg:py-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+                Side Projects
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Personal projects where I experiment with new ideas and technologies
+              </p>
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                {portfolioConfig.makerProjects.map((project) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              {portfolioConfig.makerProjects.map((project) => {
+                // Show coming soon card if marked as coming soon
+                if (project.comingSoon) {
+                  return (
+                    <ComingSoonCard
+                      key={project.id}
+                      className="min-h-[300px]"
+                    />
+                  );
+                }
+
+                return (
                   <Card key={project.id} className="card-hover">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between mb-4">
@@ -232,21 +248,21 @@ const Index = () => {
                       </div>
                     </CardContent>
                   </Card>
-                ))}
-              </div>
+                );
+              })}
+            </div>
 
-              <div className="text-center">
-                <Button variant="outline" className="btn-outline" asChild>
-                  <Link to="/maker-projects">
-                    View All Projects
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Link>
-                </Button>
-              </div>
+            <div className="text-center">
+              <Button size="lg" variant="outline" asChild>
+                <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
+                  View All Projects
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+              </Button>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section id="contact" className="py-20 lg:py-32 bg-gradient-hero text-white">
@@ -258,21 +274,10 @@ const Index = () => {
             <p className="text-xl mb-8 text-white/90">
               I'm always interested in discussing new opportunities and product challenges
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                className="btn-secondary border-white text-white hover:bg-white hover:text-primary"
-                asChild
-              >
-                <Link to="/about">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Button size="lg" className="btn-hero" asChild>
+                <Link to="/about" onClick={() => handleNavigationClick("/about", location.pathname)}>
                   Learn More About Me
-                </Link>
-              </Button>
-              <Button 
-                className="btn-outline border-white text-white hover:bg-white hover:text-primary"
-                asChild
-              >
-                <Link to="/case-studies">
-                  View My Work
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>

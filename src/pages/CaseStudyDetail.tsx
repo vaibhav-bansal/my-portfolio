@@ -1,13 +1,15 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Calendar, Users, Target, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import portfolioConfig from "@/config/portfolio.json";
 import { validateCaseStudy, getFallbackContent } from "@/lib/configValidation";
+import { handleNavigationClick } from "@/lib/navigation";
 
 const CaseStudyDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const rawStudy = portfolioConfig.caseStudies.find(s => s.id === id);
   const study = rawStudy && validateCaseStudy(rawStudy) ? rawStudy : null;
 
@@ -33,7 +35,7 @@ const CaseStudyDetail = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <Button variant="outline" className="btn-outline mb-8" asChild>
-            <Link to="/case-studies">
+            <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Case Studies
             </Link>
@@ -219,7 +221,7 @@ const CaseStudyDetail = () => {
           {/* Navigation */}
           <div className="flex items-center justify-between mt-20 pt-12 border-t border-border">
             <Button variant="outline" className="btn-outline" asChild>
-              <Link to="/case-studies">
+              <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 All Case Studies
               </Link>
