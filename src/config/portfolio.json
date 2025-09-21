@@ -9,12 +9,48 @@
     "resumeLink": "https://drive.google.com/file/d/1SHq0qLsAj4i7R8gxGp21_Wwb13GDuXg_/view?usp=drive_link",
     "bio": "Experienced Product Manager with 6+ years building consumer and B2B products at scale. Led teams that shipped features used by millions of users, with a track record of driving 40%+ growth in key metrics through data-driven product decisions.",
     "yearsExperience": 6,
-    "currentRole": "Senior Product Manager at TechCorp"
+    "currentRole": "Senior Product Manager at TechCorp",
+    "domains": ["FinTech", "HR Tech", "E-commerce"],
+    "metrics": {
+      "usersImpacted": "10M+",
+      "revenueGenerated": "$50M+",
+      "teamsLed": "15+",
+      "arpuUplift": "45%"
+    },
+    "background": {
+      "intro": "Currently serving as Senior Product Manager at TechCorp, I've spent 6+ years building products that users love and businesses need. I believe in the power of data-driven decision making combined with deep user empathy to create exceptional product experiences.",
+      "philosophy": {
+        "userCentric": {
+          "title": "User-Centric",
+          "description": "Every feature decision starts with understanding real user needs and pain points through research and data."
+        },
+        "dataDriven": {
+          "title": "Data-Driven", 
+          "description": "Leverage quantitative and qualitative insights to validate hypotheses and measure success."
+        },
+        "iterative": {
+          "title": "Iterative",
+          "description": "Build, measure, learn, and improve through rapid experimentation and continuous feedback loops."
+        }
+      },
+      "highlights": {
+        "majorLaunches": "Major Product Launches",
+        "sideProjects": "Side Projects Built"
+      }
+    }
   },
   "seo": {
     "title": "Alex Chen - Product Manager Portfolio",
     "description": "Senior Product Manager with 6+ years building consumer and B2B products at scale. View case studies, projects, and professional experience.",
-    "keywords": ["Product Manager", "Product Management", "Case Studies", "Alex Chen", "Product Strategy", "User Research", "Data Analysis"],
+    "keywords": [
+      "Product Manager",
+      "Product Management",
+      "Case Studies",
+      "Alex Chen",
+      "Product Strategy",
+      "User Research",
+      "Data Analysis"
+    ],
     "author": "Alex Chen",
     "ogImage": "/images/og-image.jpg",
     "twitterHandle": "@alexchen_pm"
@@ -34,56 +70,58 @@
     }
   },
   "navigation": [
-    { "name": "About", "href": "/about" },
-    { "name": "Case Studies", "href": "/case-studies" },
-    { "name": "Projects", "href": "/maker-projects" },
-    { "name": "Writing", "href": "/writing" },
-    { "name": "Resources", "href": "/resources" },
-    { "name": "Contact", "href": "#contact" }
-  ],
-  "comingSoon": {
-    "pages": {
-      "/writing": {
-        "enabled": true,
-        "title": "Writing & Articles",
-        "subtitle": "Thoughts on product management, strategy, and building great products",
-        "description": "I'm currently working on sharing my insights and experiences through detailed articles and thought leadership pieces.",
-        "expectedDate": "Q2 2024",
-        "features": [
-          "Product strategy insights",
-          "Case study deep dives", 
-          "Industry analysis",
-          "Leadership lessons learned"
-        ]
-      },
-      "/resources": {
-        "enabled": true,
-        "title": "PM Resources & Tools",
-        "subtitle": "Templates, frameworks, and resources for product managers",
-        "description": "A curated collection of templates, frameworks, and tools that I've developed and refined over years of product management.",
-        "expectedDate": "Q2 2024",
-        "features": [
-          "PRD templates",
-          "Prioritization frameworks",
-          "User research guides",
-          "Stakeholder management tools"
-        ]
-      }
+    {
+      "name": "Home",
+      "href": "/"
     },
-    "sections": {
-      "makerProjects": {
-        "enabled": false,
-        "title": "Side Projects",
-        "subtitle": "Personal projects and experiments",
-        "description": "I'm working on some exciting side projects that showcase my technical skills and product thinking."
-      }
+    {
+      "name": "About",
+      "href": "/about"
+    },
+    {
+      "name": "Case Studies",
+      "href": "/case-studies"
+    },
+    {
+      "name": "Projects",
+      "href": "/maker-projects"
+    },
+    {
+      "name": "Writing",
+      "href": "/writing"
+    },
+    {
+      "name": "Resources",
+      "href": "/resources"
+    },
+    {
+      "name": "Contact",
+      "href": "#contact"
     }
-  },
+  ],
   "skills": {
-    "product": ["Product Strategy", "User Research", "Data Analysis", "Roadmap Planning", "Feature Prioritization"],
-    "technical": ["SQL", "Python", "A/B Testing", "Analytics", "API Design"],
-    "design": ["User Experience", "Wireframing", "Prototyping", "Design Systems"],
-    "leadership": ["Team Leadership", "Stakeholder Management", "Cross-functional Collaboration", "Mentoring"]
+    "product": [
+      "Product Strategy",
+      "User Research",
+      "Data Analysis",
+      "Roadmap Planning"
+    ],
+    "technical": [
+      "SQL",
+      "Python",
+      "A/B Testing",
+      "Analytics"
+    ],
+    "design": [
+      "User Experience",
+      "Wireframing",
+      "Prototyping"
+    ],
+    "leadership": [
+      "Team Leadership",
+      "Stakeholder Management",
+      "Cross-functional Collaboration"
+    ]
   },
   "caseStudies": [
     {
@@ -93,10 +131,15 @@
       "description": "Led the complete redesign of our mobile checkout flow, resulting in a 32% increase in conversion rates and $2.4M additional annual revenue.",
       "image": "/images/case-study-mobile.jpg",
       "imageAlt": "Mobile checkout flow redesign showing before and after user interface",
-      "tags": ["UX Research", "A/B Testing", "Mobile"],
+      "tags": [
+        "UX Research",
+        "A/B Testing",
+        "Mobile"
+      ],
       "duration": "3 months",
       "team": "Designer, 2 Engineers, Data Analyst",
       "role": "Lead PM",
+      "comingSoon": true,
       "impact": {
         "conversionRate": "+32%",
         "revenue": "+$2.4M annually",
@@ -149,10 +192,15 @@
       "description": "Developed and launched an ML-powered recommendation system that increased user engagement by 45% and session time by 28%.",
       "image": "/images/case-study-ai.jpg",
       "imageAlt": "AI recommendation system interface showing personalized content suggestions",
-      "tags": ["Machine Learning", "Personalization", "Data Science"],
+      "tags": [
+        "Machine Learning",
+        "Personalization",
+        "Data Science"
+      ],
       "duration": "6 months",
       "team": "ML Engineer, Backend Engineer, Designer",
       "role": "Lead PM",
+      "comingSoon": true,
       "impact": {
         "engagement": "+45%",
         "sessionTime": "+28%",
@@ -205,10 +253,15 @@
       "description": "Built a comprehensive analytics dashboard for enterprise clients, leading to 40% faster decision-making and 90% customer satisfaction.",
       "image": "/images/case-study-dashboard.jpg",
       "imageAlt": "Enterprise analytics dashboard showing data visualization and insights",
-      "tags": ["B2B", "Analytics", "Enterprise"],
+      "tags": [
+        "B2B",
+        "Analytics",
+        "Enterprise"
+      ],
       "duration": "4 months",
       "team": "3 Engineers, UX Designer, Data Engineer",
       "role": "Lead PM",
+      "comingSoon": true,
       "impact": {
         "decisionSpeed": "+40%",
         "satisfaction": "90%",
@@ -262,9 +315,14 @@
       "subtitle": "A minimalist habit tracking app",
       "description": "Built a habit tracking app with 10k+ downloads that helps users build better habits through gamification and smart reminders.",
       "image": "/images/project-habits.jpg",
-      "tags": ["React Native", "Node.js", "Mobile"],
+      "tags": [
+        "React Native",
+        "Node.js",
+        "Mobile"
+      ],
       "github": "https://github.com/alexchen/habitflow",
       "website": "https://habitflow.app",
+      "comingSoon": true,
       "stats": {
         "downloads": "10k+",
         "rating": "4.8/5",
@@ -277,8 +335,13 @@
       "subtitle": "Essential tools and templates for product managers",
       "description": "Created a comprehensive toolkit with 50+ templates, frameworks, and resources used by 2000+ product managers worldwide.",
       "image": "/images/project-toolkit.jpg",
-      "tags": ["Templates", "Frameworks", "Community"],
+      "tags": [
+        "Templates",
+        "Frameworks",
+        "Community"
+      ],
       "website": "https://pmtoolkit.co",
+      "comingSoon": true,
       "stats": {
         "users": "2000+",
         "templates": "50+",
@@ -289,29 +352,44 @@
   "writing": [
     {
       "id": "product-discovery",
+      "comingSoon": true,
       "title": "The Art of Product Discovery",
       "excerpt": "A comprehensive guide to validating product ideas before you build them. Learn frameworks and techniques used by top product teams.",
       "publishedAt": "2024-01-15",
       "readTime": "8 min read",
-      "tags": ["Product Discovery", "Validation", "Framework"],
+      "tags": [
+        "Product Discovery",
+        "Validation",
+        "Framework"
+      ],
       "url": "https://medium.com/@alexchen/art-of-product-discovery"
     },
     {
       "id": "data-driven-decisions",
+      "comingSoon": true,
       "title": "Making Data-Driven Product Decisions",
       "excerpt": "How to use data effectively in product management without falling into common traps. Includes real examples and actionable frameworks.",
       "publishedAt": "2024-02-20",
       "readTime": "12 min read",
-      "tags": ["Data Analysis", "Decision Making", "Metrics"],
+      "tags": [
+        "Data Analysis",
+        "Decision Making",
+        "Metrics"
+      ],
       "url": "https://medium.com/@alexchen/data-driven-decisions"
     },
     {
       "id": "stakeholder-management",
+      "comingSoon": true,
       "title": "Mastering Stakeholder Management as a PM",
       "excerpt": "Practical strategies for managing up, down, and across in complex organizations. Learn to align stakeholders and drive consensus.",
       "publishedAt": "2024-03-10",
       "readTime": "10 min read",
-      "tags": ["Leadership", "Communication", "Strategy"],
+      "tags": [
+        "Leadership",
+        "Communication",
+        "Strategy"
+      ],
       "url": "https://medium.com/@alexchen/stakeholder-management"
     }
   ],
@@ -321,21 +399,24 @@
       "description": "A comprehensive PRD template used by top tech companies, including sections for problem definition, user stories, and success metrics.",
       "type": "Template",
       "downloadUrl": "/downloads/prd-template.pdf",
-      "preview": "/images/prd-preview.jpg"
+      "preview": "/images/prd-preview.jpg",
+      "comingSoon": true
     },
     {
       "title": "Feature Prioritization Framework",
       "description": "A strategic framework for prioritizing features based on impact, effort, and strategic alignment. Includes scoring methodology.",
       "type": "Framework",
       "downloadUrl": "/downloads/prioritization-framework.pdf",
-      "preview": "/images/prioritization-preview.jpg"
+      "preview": "/images/prioritization-preview.jpg",
+      "comingSoon": true
     },
     {
       "title": "User Research Planning Kit",
       "description": "Everything you need to plan and execute user research, including interview guides, survey templates, and analysis frameworks.",
       "type": "Kit",
       "downloadUrl": "/downloads/user-research-kit.zip",
-      "preview": "/images/research-preview.jpg"
+      "preview": "/images/research-preview.jpg",
+      "comingSoon": true
     }
   ]
 }

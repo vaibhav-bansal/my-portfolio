@@ -54,12 +54,19 @@ const About = () => {
                 {portfolioConfig.personal.bio}
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mt-6">
-                Currently serving as {portfolioConfig.personal.currentRole}, 
-                I've spent {portfolioConfig.personal.yearsExperience}+ years 
-                building products that users love and businesses need. 
-                I believe in the power of data-driven decision making combined 
-                with deep user empathy to create exceptional product experiences.
+                {portfolioConfig.personal.background.intro}
               </p>
+              
+              {/* Domain Expertise - Inline */}
+              <div className="mt-8">
+                <div className="flex flex-wrap justify-center gap-2">
+                  {portfolioConfig.personal.domains.map((domain) => (
+                    <Badge key={domain} variant="outline" className="text-sm px-4 py-2 hover:bg-primary hover:text-primary-foreground transition-colors">
+                      {domain}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -103,7 +110,7 @@ const About = () => {
                   <div className="text-4xl font-bold text-primary mb-2">
                     {portfolioConfig.caseStudies.length}
                   </div>
-                  <div className="text-muted-foreground">Major Product Launches</div>
+                  <div className="text-muted-foreground">{portfolioConfig.personal.background.highlights.majorLaunches}</div>
                 </CardContent>
               </Card>
               <Card className="card-hover text-center">
@@ -111,7 +118,7 @@ const About = () => {
                   <div className="text-4xl font-bold text-primary mb-2">
                     {portfolioConfig.makerProjects.length}
                   </div>
-                  <div className="text-muted-foreground">Side Projects Built</div>
+                  <div className="text-muted-foreground">{portfolioConfig.personal.background.highlights.sideProjects}</div>
                 </CardContent>
               </Card>
             </div>
@@ -124,24 +131,21 @@ const About = () => {
               <CardContent className="p-8">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
                   <div>
-                    <h3 className="text-xl font-semibold text-primary mb-3">User-Centric</h3>
+                    <h3 className="text-xl font-semibold text-primary mb-3">{portfolioConfig.personal.background.philosophy.userCentric.title}</h3>
                     <p className="text-muted-foreground">
-                      Every feature decision starts with understanding real user needs 
-                      and pain points through research and data.
+                      {portfolioConfig.personal.background.philosophy.userCentric.description}
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-primary mb-3">Data-Driven</h3>
+                    <h3 className="text-xl font-semibold text-primary mb-3">{portfolioConfig.personal.background.philosophy.dataDriven.title}</h3>
                     <p className="text-muted-foreground">
-                      Leverage quantitative and qualitative insights to validate 
-                      hypotheses and measure success.
+                      {portfolioConfig.personal.background.philosophy.dataDriven.description}
                     </p>
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-primary mb-3">Iterative</h3>
+                    <h3 className="text-xl font-semibold text-primary mb-3">{portfolioConfig.personal.background.philosophy.iterative.title}</h3>
                     <p className="text-muted-foreground">
-                      Build, measure, learn, and improve through rapid experimentation 
-                      and continuous feedback loops.
+                      {portfolioConfig.personal.background.philosophy.iterative.description}
                     </p>
                   </div>
                 </div>

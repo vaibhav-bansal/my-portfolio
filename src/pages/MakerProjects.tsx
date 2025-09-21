@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import ComingSoonCard from "@/components/ComingSoonCard";
 import portfolioConfig from "@/config/portfolio.json";
 
 const MakerProjects = () => {
@@ -24,7 +25,18 @@ const MakerProjects = () => {
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-            {portfolioConfig.makerProjects.map((project) => (
+            {portfolioConfig.makerProjects.map((project) => {
+              // Show coming soon card if marked as coming soon
+              if (project.comingSoon) {
+                return (
+                  <ComingSoonCard
+                    key={project.id}
+                    className="min-h-[400px]"
+                  />
+                );
+              }
+
+              return (
               <Card key={project.id} className="card-hover overflow-hidden">
                 <CardContent className="p-0">
                   {/* Project Image */}
@@ -112,7 +124,8 @@ const MakerProjects = () => {
                   </div>
                 </CardContent>
               </Card>
-            ))}
+              );
+            })}
           </div>
 
           {/* Skills & Approach */}

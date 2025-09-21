@@ -1,12 +1,14 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { ArrowLeft, Github, ExternalLink, Calendar, Users, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import portfolioConfig from "@/config/portfolio.json";
+import { handleNavigationClick } from "@/lib/navigation";
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const project = portfolioConfig.makerProjects.find(p => p.id === id);
 
   if (!project) {
@@ -31,7 +33,7 @@ const ProjectDetail = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <Button variant="ghost" className="mb-8" asChild>
-            <Link to="/maker-projects">
+            <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Projects
             </Link>
@@ -266,7 +268,7 @@ const ProjectDetail = () => {
           {/* Navigation */}
           <div className="flex items-center justify-between mt-20 pt-12 border-t border-border">
             <Button variant="outline" asChild>
-              <Link to="/maker-projects">
+              <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 All Projects
               </Link>

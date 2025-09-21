@@ -1,11 +1,68 @@
-import ComingSoon from "@/components/ComingSoon";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { FileText, Download, Eye } from "lucide-react";
+import ComingSoonCard from "@/components/ComingSoonCard";
 import portfolioConfig from "@/config/portfolio.json";
 
 const Resources = () => {
-  const comingSoonConfig = portfolioConfig.comingSoon?.pages?.["/resources"];
+  // Check if all resources are coming soon
+  const allResourcesComingSoon = portfolioConfig.resources.every(resource => resource.comingSoon);
   
-  if (comingSoonConfig?.enabled) {
-    return <ComingSoon pageConfig={comingSoonConfig} />;
+  if (allResourcesComingSoon) {
+    return (
+      <div className="min-h-screen py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-16">
+              <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+                PM Resources
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Free templates, frameworks, and tools for product managers.
+              </p>
+            </div>
+
+            {/* Resources Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {portfolioConfig.resources.map((resource) => {
+                if (resource.comingSoon) {
+                  return <ComingSoonCard key={resource.title} />;
+                }
+                
+                return (
+                  <Card key={resource.title} className="card-hover">
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <Badge variant="outline" className="text-xs mb-3">
+                            {getTypeIcon(resource.type)}
+                            <span className="ml-2">{resource.type}</span>
+                          </Badge>
+                          <h3 className="text-xl font-semibold text-foreground mb-3">
+                            {resource.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4 leading-relaxed">
+                            {resource.description}
+                          </p>
+                        </div>
+                      </div>
+                      <Button className="w-full" asChild>
+                        <a href={resource.downloadUrl} target="_blank" rel="noopener noreferrer">
+                          <Download className="w-4 h-4 mr-2" />
+                          Download Free
+                        </a>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
   const getTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
