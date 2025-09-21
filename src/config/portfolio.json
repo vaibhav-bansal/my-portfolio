@@ -1,0 +1,164 @@
+{
+  "personal": {
+    "name": "Alex Chen",
+    "title": "Senior Product Manager",
+    "tagline": "Building products that users love and businesses need",
+    "location": "San Francisco, CA",
+    "email": "alex.chen@email.com",
+    "phone": "+1 (555) 123-4567",
+    "resumeLink": "/resume.pdf",
+    "bio": "Experienced Product Manager with 6+ years building consumer and B2B products at scale. Led teams that shipped features used by millions of users, with a track record of driving 40%+ growth in key metrics through data-driven product decisions.",
+    "yearsExperience": 6,
+    "currentRole": "Senior Product Manager at TechCorp"
+  },
+  "social": {
+    "linkedin": "https://linkedin.com/in/alexchen",
+    "twitter": "https://twitter.com/alexchen_pm",
+    "github": "https://github.com/alexchen",
+    "medium": "https://medium.com/@alexchen",
+    "dribbble": "https://dribbble.com/alexchen"
+  },
+  "navigation": [
+    { "name": "About", "href": "#about" },
+    { "name": "Case Studies", "href": "/case-studies" },
+    { "name": "Projects", "href": "/maker-projects" },
+    { "name": "Writing", "href": "/writing" },
+    { "name": "Resources", "href": "/resources" }
+  ],
+  "skills": {
+    "product": ["Product Strategy", "User Research", "Data Analysis", "Roadmap Planning", "Feature Prioritization"],
+    "technical": ["SQL", "Python", "A/B Testing", "Analytics", "API Design"],
+    "design": ["User Experience", "Wireframing", "Prototyping", "Design Systems"],
+    "leadership": ["Team Leadership", "Stakeholder Management", "Cross-functional Collaboration", "Mentoring"]
+  },
+  "caseStudies": [
+    {
+      "id": "mobile-checkout",
+      "title": "Mobile Checkout Redesign",
+      "subtitle": "Increasing conversion rates by 32% through UX optimization",
+      "description": "Led the complete redesign of our mobile checkout flow, resulting in a 32% increase in conversion rates and $2.4M additional annual revenue.",
+      "image": "/images/case-study-mobile.jpg",
+      "tags": ["UX Research", "A/B Testing", "Mobile"],
+      "duration": "3 months",
+      "team": "Designer, 2 Engineers, Data Analyst",
+      "impact": {
+        "conversionRate": "+32%",
+        "revenue": "+$2.4M annually",
+        "cartAbandonment": "-25%"
+      }
+    },
+    {
+      "id": "ai-recommendations",
+      "title": "AI-Powered Recommendations",
+      "subtitle": "Boosting engagement with personalized content discovery",
+      "description": "Developed and launched an ML-powered recommendation system that increased user engagement by 45% and session time by 28%.",
+      "image": "/images/case-study-ai.jpg",
+      "tags": ["Machine Learning", "Personalization", "Data Science"],
+      "duration": "6 months",
+      "team": "ML Engineer, Backend Engineer, Designer",
+      "impact": {
+        "engagement": "+45%",
+        "sessionTime": "+28%",
+        "retention": "+18%"
+      }
+    },
+    {
+      "id": "enterprise-dashboard",
+      "title": "Enterprise Analytics Dashboard",
+      "subtitle": "Empowering data-driven decisions for enterprise customers",
+      "description": "Built a comprehensive analytics dashboard for enterprise clients, leading to 40% faster decision-making and 90% customer satisfaction.",
+      "image": "/images/case-study-dashboard.jpg",
+      "tags": ["B2B", "Analytics", "Enterprise"],
+      "duration": "4 months",
+      "team": "3 Engineers, UX Designer, Data Engineer",
+      "impact": {
+        "decisionSpeed": "+40%",
+        "satisfaction": "90%",
+        "retention": "+25%"
+      }
+    }
+  ],
+  "makerProjects": [
+    {
+      "id": "habit-tracker",
+      "title": "HabitFlow",
+      "subtitle": "A minimalist habit tracking app",
+      "description": "Built a habit tracking app with 10k+ downloads that helps users build better habits through gamification and smart reminders.",
+      "image": "/images/project-habits.jpg",
+      "tags": ["React Native", "Node.js", "Mobile"],
+      "github": "https://github.com/alexchen/habitflow",
+      "website": "https://habitflow.app",
+      "stats": {
+        "downloads": "10k+",
+        "rating": "4.8/5",
+        "users": "5k+ active"
+      }
+    },
+    {
+      "id": "pm-toolkit",
+      "title": "PM Toolkit",
+      "subtitle": "Essential tools and templates for product managers",
+      "description": "Created a comprehensive toolkit with 50+ templates, frameworks, and resources used by 2000+ product managers worldwide.",
+      "image": "/images/project-toolkit.jpg",
+      "tags": ["Templates", "Frameworks", "Community"],
+      "website": "https://pmtoolkit.co",
+      "stats": {
+        "users": "2000+",
+        "templates": "50+",
+        "downloads": "15k+"
+      }
+    }
+  ],
+  "writing": [
+    {
+      "id": "product-discovery",
+      "title": "The Art of Product Discovery",
+      "excerpt": "A comprehensive guide to validating product ideas before you build them. Learn frameworks and techniques used by top product teams.",
+      "publishedAt": "2024-01-15",
+      "readTime": "8 min read",
+      "tags": ["Product Discovery", "Validation", "Framework"],
+      "url": "https://medium.com/@alexchen/art-of-product-discovery"
+    },
+    {
+      "id": "data-driven-decisions",
+      "title": "Making Data-Driven Product Decisions",
+      "excerpt": "How to use data effectively in product management without falling into common traps. Includes real examples and actionable frameworks.",
+      "publishedAt": "2024-02-20",
+      "readTime": "12 min read",
+      "tags": ["Data Analysis", "Decision Making", "Metrics"],
+      "url": "https://medium.com/@alexchen/data-driven-decisions"
+    },
+    {
+      "id": "stakeholder-management",
+      "title": "Mastering Stakeholder Management as a PM",
+      "excerpt": "Practical strategies for managing up, down, and across in complex organizations. Learn to align stakeholders and drive consensus.",
+      "publishedAt": "2024-03-10",
+      "readTime": "10 min read",
+      "tags": ["Leadership", "Communication", "Strategy"],
+      "url": "https://medium.com/@alexchen/stakeholder-management"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Product Requirements Document (PRD) Template",
+      "description": "A comprehensive PRD template used by top tech companies, including sections for problem definition, user stories, and success metrics.",
+      "type": "Template",
+      "downloadUrl": "/downloads/prd-template.pdf",
+      "preview": "/images/prd-preview.jpg"
+    },
+    {
+      "title": "Feature Prioritization Framework",
+      "description": "A strategic framework for prioritizing features based on impact, effort, and strategic alignment. Includes scoring methodology.",
+      "type": "Framework",
+      "downloadUrl": "/downloads/prioritization-framework.pdf",
+      "preview": "/images/prioritization-preview.jpg"
+    },
+    {
+      "title": "User Research Planning Kit",
+      "description": "Everything you need to plan and execute user research, including interview guides, survey templates, and analysis frameworks.",
+      "type": "Kit",
+      "downloadUrl": "/downloads/user-research-kit.zip",
+      "preview": "/images/research-preview.jpg"
+    }
+  ]
+}
