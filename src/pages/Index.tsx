@@ -33,24 +33,19 @@ const Index = () => {
                 className="btn-hero"
                 asChild
               >
-                <a 
-                  href={portfolioConfig.personal.resumeLink}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Resume
-                </a>
+                <Link to="/case-studies">
+                  View My Work
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
               </Button>
               <Button 
                 variant="outline" 
                 size="lg"
                 asChild
               >
-                <a href={`mailto:${portfolioConfig.personal.email}`}>
-                  <Mail className="w-5 h-5 mr-2" />
-                  Get In Touch
-                </a>
+                <Link to="/about">
+                  About Me
+                </Link>
               </Button>
             </div>
 
@@ -253,7 +248,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 lg:py-32 bg-gradient-hero text-white">
+      <section id="contact" className="py-20 lg:py-32 bg-gradient-hero text-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-6">
@@ -268,10 +263,9 @@ const Index = () => {
                 variant="secondary"
                 asChild
               >
-                <a href={`mailto:${portfolioConfig.personal.email}`}>
-                  <Mail className="w-5 h-5 mr-2" />
-                  Send a Message
-                </a>
+                <Link to="/about">
+                  Learn More About Me
+                </Link>
               </Button>
               <Button 
                 size="lg" 
@@ -279,14 +273,10 @@ const Index = () => {
                 className="border-white text-white hover:bg-white hover:text-primary"
                 asChild
               >
-                <a 
-                  href={portfolioConfig.personal.resumeLink}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Resume
-                </a>
+                <Link to="/case-studies">
+                  View My Work
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Link>
               </Button>
             </div>
           </div>

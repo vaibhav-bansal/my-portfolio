@@ -19,11 +19,12 @@
     "dribbble": "https://dribbble.com/alexchen"
   },
   "navigation": [
-    { "name": "About", "href": "#about" },
+    { "name": "About", "href": "/about" },
     { "name": "Case Studies", "href": "/case-studies" },
     { "name": "Projects", "href": "/maker-projects" },
     { "name": "Writing", "href": "/writing" },
-    { "name": "Resources", "href": "/resources" }
+    { "name": "Resources", "href": "/resources" },
+    { "name": "Contact", "href": "#contact" }
   ],
   "skills": {
     "product": ["Product Strategy", "User Research", "Data Analysis", "Roadmap Planning", "Feature Prioritization"],
