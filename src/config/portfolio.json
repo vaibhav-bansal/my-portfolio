@@ -6,17 +6,32 @@
     "location": "San Francisco, CA",
     "email": "alex.chen@email.com",
     "phone": "+1 (555) 123-4567",
-    "resumeLink": "/resume.pdf",
+    "resumeLink": "https://drive.google.com/file/d/1SHq0qLsAj4i7R8gxGp21_Wwb13GDuXg_/view?usp=drive_link",
     "bio": "Experienced Product Manager with 6+ years building consumer and B2B products at scale. Led teams that shipped features used by millions of users, with a track record of driving 40%+ growth in key metrics through data-driven product decisions.",
     "yearsExperience": 6,
     "currentRole": "Senior Product Manager at TechCorp"
+  },
+  "seo": {
+    "title": "Alex Chen - Product Manager Portfolio",
+    "description": "Senior Product Manager with 6+ years building consumer and B2B products at scale. View case studies, projects, and professional experience.",
+    "keywords": ["Product Manager", "Product Management", "Case Studies", "Alex Chen", "Product Strategy", "User Research", "Data Analysis"],
+    "author": "Alex Chen",
+    "ogImage": "/images/og-image.jpg",
+    "twitterHandle": "@alexchen_pm"
   },
   "social": {
     "linkedin": "https://linkedin.com/in/alexchen",
     "twitter": "https://twitter.com/alexchen_pm",
     "github": "https://github.com/alexchen",
-    "medium": "https://medium.com/@alexchen",
-    "dribbble": "https://dribbble.com/alexchen"
+    "medium": "https://medium.com/@alexchen"
+  },
+  "assets": {
+    "fallbackImage": "/images/placeholder.svg",
+    "defaultImageAlt": "Portfolio image",
+    "loadingStates": {
+      "enabled": true,
+      "placeholder": "Loading..."
+    }
   },
   "navigation": [
     { "name": "About", "href": "/about" },
@@ -26,6 +41,44 @@
     { "name": "Resources", "href": "/resources" },
     { "name": "Contact", "href": "#contact" }
   ],
+  "comingSoon": {
+    "pages": {
+      "/writing": {
+        "enabled": true,
+        "title": "Writing & Articles",
+        "subtitle": "Thoughts on product management, strategy, and building great products",
+        "description": "I'm currently working on sharing my insights and experiences through detailed articles and thought leadership pieces.",
+        "expectedDate": "Q2 2024",
+        "features": [
+          "Product strategy insights",
+          "Case study deep dives", 
+          "Industry analysis",
+          "Leadership lessons learned"
+        ]
+      },
+      "/resources": {
+        "enabled": true,
+        "title": "PM Resources & Tools",
+        "subtitle": "Templates, frameworks, and resources for product managers",
+        "description": "A curated collection of templates, frameworks, and tools that I've developed and refined over years of product management.",
+        "expectedDate": "Q2 2024",
+        "features": [
+          "PRD templates",
+          "Prioritization frameworks",
+          "User research guides",
+          "Stakeholder management tools"
+        ]
+      }
+    },
+    "sections": {
+      "makerProjects": {
+        "enabled": false,
+        "title": "Side Projects",
+        "subtitle": "Personal projects and experiments",
+        "description": "I'm working on some exciting side projects that showcase my technical skills and product thinking."
+      }
+    }
+  },
   "skills": {
     "product": ["Product Strategy", "User Research", "Data Analysis", "Roadmap Planning", "Feature Prioritization"],
     "technical": ["SQL", "Python", "A/B Testing", "Analytics", "API Design"],
@@ -39,13 +92,54 @@
       "subtitle": "Increasing conversion rates by 32% through UX optimization",
       "description": "Led the complete redesign of our mobile checkout flow, resulting in a 32% increase in conversion rates and $2.4M additional annual revenue.",
       "image": "/images/case-study-mobile.jpg",
+      "imageAlt": "Mobile checkout flow redesign showing before and after user interface",
       "tags": ["UX Research", "A/B Testing", "Mobile"],
       "duration": "3 months",
       "team": "Designer, 2 Engineers, Data Analyst",
+      "role": "Lead PM",
       "impact": {
         "conversionRate": "+32%",
         "revenue": "+$2.4M annually",
         "cartAbandonment": "-25%"
+      },
+      "content": {
+        "context": "This project emerged from a critical need to improve our mobile experience. User analytics showed a concerning 68% cart abandonment rate on mobile devices, significantly higher than our desktop conversion rate. With mobile traffic accounting for 65% of our total visits, this represented a major revenue opportunity that we needed to address urgently.",
+        "problem": "How might we redesign the mobile checkout experience to reduce friction and increase conversion rates while maintaining security and user trust?",
+        "process": [
+          {
+            "title": "Discovery & Research",
+            "description": "User interviews, analytics analysis, competitive research",
+            "weeks": "2 weeks"
+          },
+          {
+            "title": "Ideation & Design",
+            "description": "Concept development, wireframing, prototyping",
+            "weeks": "3 weeks"
+          },
+          {
+            "title": "Testing & Iteration",
+            "description": "User testing, A/B testing setup, design refinement",
+            "weeks": "2 weeks"
+          },
+          {
+            "title": "Launch & Optimization",
+            "description": "Phased rollout, monitoring, performance optimization",
+            "weeks": "4 weeks"
+          }
+        ],
+        "artifacts": [
+          "User journey maps identifying friction points",
+          "Competitive analysis of 12 leading e-commerce platforms",
+          "High-fidelity prototypes tested with 50+ users",
+          "A/B testing framework and success metrics definition",
+          "Technical specification and implementation roadmap"
+        ],
+        "impactDetails": "The redesigned mobile checkout experience exceeded all our success metrics. Beyond the quantitative improvements, we received overwhelmingly positive user feedback, with many customers noting the smoother, more intuitive flow. The success of this project led to its methodology being adopted across other product teams in the organization.",
+        "reflection": {
+          "whatWentWell": "The close collaboration between design, engineering, and data teams enabled rapid iteration and testing. Our user-centered approach ensured we solved real problems rather than assumed ones.",
+          "whatIdDoDifferently": "I would have involved customer service teams earlier in the process to better understand common user support issues that could be prevented through better UX design.",
+          "keyTakeaway": "Small UX improvements in critical user flows can have exponentially large business impact. The key is identifying the right leverage points through data and user research."
+        }
       }
     },
     {
@@ -54,13 +148,54 @@
       "subtitle": "Boosting engagement with personalized content discovery",
       "description": "Developed and launched an ML-powered recommendation system that increased user engagement by 45% and session time by 28%.",
       "image": "/images/case-study-ai.jpg",
+      "imageAlt": "AI recommendation system interface showing personalized content suggestions",
       "tags": ["Machine Learning", "Personalization", "Data Science"],
       "duration": "6 months",
       "team": "ML Engineer, Backend Engineer, Designer",
+      "role": "Lead PM",
       "impact": {
         "engagement": "+45%",
         "sessionTime": "+28%",
         "retention": "+18%"
+      },
+      "content": {
+        "context": "Our platform had a vast content library but users struggled to discover relevant content. With over 10,000 pieces of content and growing, the traditional browse-and-search approach was leading to poor content discovery and low engagement rates.",
+        "problem": "How might we leverage machine learning to create a personalized content discovery experience that increases user engagement and session duration?",
+        "process": [
+          {
+            "title": "Data Analysis & Research",
+            "description": "User behavior analysis, content taxonomy creation, ML algorithm research",
+            "weeks": "4 weeks"
+          },
+          {
+            "title": "Algorithm Development",
+            "description": "Collaborative filtering implementation, content-based filtering, hybrid approach",
+            "weeks": "8 weeks"
+          },
+          {
+            "title": "UI/UX Design",
+            "description": "Recommendation interface design, personalization controls, feedback mechanisms",
+            "weeks": "4 weeks"
+          },
+          {
+            "title": "Testing & Launch",
+            "description": "A/B testing, performance optimization, gradual rollout",
+            "weeks": "6 weeks"
+          }
+        ],
+        "artifacts": [
+          "User behavior analysis report with engagement patterns",
+          "ML algorithm comparison and selection criteria",
+          "Personalization UI/UX mockups and prototypes",
+          "A/B testing framework for recommendation effectiveness",
+          "Performance monitoring dashboard and alerting system"
+        ],
+        "impactDetails": "The AI-powered recommendation system transformed our content discovery experience. Users found more relevant content, leading to increased engagement and longer session times. The system continuously improved through user feedback and behavior learning.",
+        "reflection": {
+          "whatWentWell": "The iterative approach to ML model development allowed us to test and refine our algorithms before full deployment. Strong collaboration between ML engineers and UX designers ensured technical feasibility and user-friendly design.",
+          "whatIdDoDifferently": "I would have invested more in explainability features to help users understand why certain content was recommended, which could improve trust and engagement.",
+          "keyTakeaway": "Personalization requires a balance between algorithmic sophistication and user control. Giving users visibility and control over their recommendations significantly improved adoption and satisfaction."
+        }
       }
     },
     {
@@ -69,13 +204,54 @@
       "subtitle": "Empowering data-driven decisions for enterprise customers",
       "description": "Built a comprehensive analytics dashboard for enterprise clients, leading to 40% faster decision-making and 90% customer satisfaction.",
       "image": "/images/case-study-dashboard.jpg",
+      "imageAlt": "Enterprise analytics dashboard showing data visualization and insights",
       "tags": ["B2B", "Analytics", "Enterprise"],
       "duration": "4 months",
       "team": "3 Engineers, UX Designer, Data Engineer",
+      "role": "Lead PM",
       "impact": {
         "decisionSpeed": "+40%",
         "satisfaction": "90%",
         "retention": "+25%"
+      },
+      "content": {
+        "context": "Our enterprise customers were struggling to extract meaningful insights from their data. They needed a comprehensive analytics solution that would allow them to make data-driven decisions quickly and efficiently, without requiring technical expertise.",
+        "problem": "How might we create an intuitive, powerful analytics dashboard that empowers enterprise users to make faster, more informed business decisions?",
+        "process": [
+          {
+            "title": "Enterprise Research",
+            "description": "Customer interviews, requirements gathering, competitive analysis",
+            "weeks": "3 weeks"
+          },
+          {
+            "title": "Architecture & Design",
+            "description": "Data architecture design, dashboard wireframing, user flow mapping",
+            "weeks": "5 weeks"
+          },
+          {
+            "title": "Development & Testing",
+            "description": "Backend development, frontend implementation, user acceptance testing",
+            "weeks": "6 weeks"
+          },
+          {
+            "title": "Deployment & Training",
+            "description": "Pilot program, user training, feedback collection",
+            "weeks": "2 weeks"
+          }
+        ],
+        "artifacts": [
+          "Enterprise customer requirements document",
+          "Data architecture and integration specifications",
+          "Interactive dashboard prototypes and user flows",
+          "User training materials and documentation",
+          "Success metrics and KPIs tracking framework"
+        ],
+        "impactDetails": "The enterprise analytics dashboard revolutionized how our customers interacted with their data. Decision-making speed increased by 40%, and customer satisfaction reached 90%. The dashboard became a key differentiator in our enterprise sales process.",
+        "reflection": {
+          "whatWentWell": "Deep customer research at the beginning ensured we built exactly what enterprise users needed. The iterative feedback process during development prevented scope creep and maintained focus on core value propositions.",
+          "whatIdDoDifferently": "I would have involved customer success teams earlier to better understand ongoing support needs and create more comprehensive training materials.",
+          "keyTakeaway": "Enterprise products require a different approach to user research and design. The key is understanding not just what users want, but what they need to achieve their business objectives efficiently."
+        }
       }
     }
   ],

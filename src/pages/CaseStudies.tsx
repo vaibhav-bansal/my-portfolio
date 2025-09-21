@@ -95,7 +95,7 @@ const CaseStudies = () => {
               I'm always open to discussing new product challenges and opportunities. 
               Let's chat about how I can help drive impact at your organization.
             </p>
-            <Button size="lg" className="btn-hero" asChild>
+            <Button className="btn-hero" asChild>
               <a href={`mailto:${portfolioConfig.personal.email}`}>
                 Get In Touch
               </a>

@@ -15,54 +15,62 @@ const Header = () => {
     return location.pathname === href;
   };
 
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const contactElement = document.getElementById('contact');
+    if (contactElement) {
+      contactElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border" role="banner">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link 
             to="/" 
             className="text-xl font-bold gradient-text hover:opacity-80 transition-opacity"
+            aria-label={`${portfolioConfig.personal.name} - Home`}
           >
             {portfolioConfig.personal.name}
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {portfolioConfig.navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  isActive(item.href) 
-                    ? "text-primary" 
-                    : "text-muted-foreground"
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+            {portfolioConfig.navigation.map((item) => {
+              const isComingSoon = portfolioConfig.comingSoon?.pages?.[item.href]?.enabled;
+              
+              return item.href === "#contact" ? (
+                <button
+                  key={item.name}
+                  onClick={handleContactClick}
+                  className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${
+                    isActive(item.href) 
+                      ? "text-primary" 
+                      : "text-muted-foreground"
+                  } ${isComingSoon ? "relative" : ""}`}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.name}
+                  {isComingSoon && (
+                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full"></span>
+                  )}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Resume Button & Mobile Menu */}
+          {/* Mobile Menu Button */}
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="hidden sm:flex items-center space-x-2"
-              asChild
-            >
-              <a 
-                href={portfolioConfig.personal.resumeLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Resume</span>
-              </a>
-            </Button>
-
-            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="sm"
@@ -76,37 +84,43 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border fade-in">
+          <div className="md:hidden py-4 border-t border-border fade-in" role="navigation" aria-label="Mobile navigation">
             <nav className="flex flex-col space-y-3">
-              {portfolioConfig.navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isActive(item.href) 
-                      ? "text-primary" 
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              ))}
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="flex items-center space-x-2 w-fit mt-4"
-                asChild
-              >
-                <a 
-                  href={portfolioConfig.personal.resumeLink} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Resume</span>
-                </a>
-              </Button>
+              {portfolioConfig.navigation.map((item) => {
+                const isComingSoon = portfolioConfig.comingSoon?.pages?.[item.href]?.enabled;
+                
+                return item.href === "#contact" ? (
+                  <button
+                    key={item.name}
+                    onClick={(e) => {
+                      handleContactClick(e);
+                      setIsMenuOpen(false);
+                    }}
+                    className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground text-left"
+                  >
+                    {item.name}
+                  </button>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      isActive(item.href) 
+                        ? "text-primary" 
+                        : "text-muted-foreground"
+                    } ${isComingSoon ? "relative" : ""}`}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                  >
+                    {item.name}
+                    {isComingSoon && (
+                      <span className="ml-2 text-xs bg-primary/10 text-primary px-2 py-0.5 rounded-full">
+                        Soon
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         )}

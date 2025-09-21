@@ -1,9 +1,10 @@
-# Product Manager Portfolio Website
+# PM Portfolio Website
 
 A modern, responsive, and highly customizable portfolio website template designed specifically for Product Managers. Built with React, TypeScript, and Tailwind CSS, this template helps PMs showcase their work, experience, and expertise in a professional and engaging way.
 
 ## ✨ Features
 
+### 🎯 **Core Features**
 - **📱 Fully Responsive** - Optimized for desktop, tablet, and mobile devices
 - **🎨 Modern Design** - Clean, professional design with subtle animations
 - **⚡ Fast Performance** - Built with Vite for lightning-fast development and builds
@@ -12,15 +13,21 @@ A modern, responsive, and highly customizable portfolio website template designe
 - **🚀 Project Showcase** - Dedicated sections for side projects and maker work
 - **✍️ Writing Integration** - Blog/article integration with external platforms
 - **📄 Resource Downloads** - Share templates and frameworks with visitors
-- **🎯 SEO Optimized** - Built-in SEO best practices
-- **♿ Accessible** - WCAG compliant and screen reader friendly
+
+### 🛠️ **Technical Features**
+- **🎯 SEO Optimized** - Built-in SEO best practices and meta tags
+- **♿ Accessible** - WCAG 2.1 AA compliant and screen reader friendly
+- **🔒 Type Safe** - Full TypeScript implementation with validation
+- **🔄 Coming Soon System** - Professional "coming soon" pages for incomplete sections
+- **📊 Error Handling** - Comprehensive error boundaries and graceful fallbacks
+- **🎨 Design System** - Consistent component library with shadcn/ui
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ and npm (install via [nvm](https://github.com/nvm-sh/nvm))
-- Git
+- **Node.js** 18+ and npm (install via [nvm](https://github.com/nvm-sh/nvm))
+- **Git**
 
 ### Installation
 
@@ -56,14 +63,14 @@ Edit `src/config/portfolio.json` to customize all content:
     "title": "Senior Product Manager",
     "tagline": "Your unique value proposition",
     "email": "your.email@domain.com",
-    "resumeLink": "/path-to-your-resume.pdf"
+    "resumeLink": "https://drive.google.com/file/d/your-resume.pdf"
   }
 }
 ```
 
 ### 2. Case Studies
 
-Add your case studies to the `caseStudies` array:
+Add your case studies to the `caseStudies` array with detailed content structure:
 
 ```json
 {
@@ -73,35 +80,76 @@ Add your case studies to the `caseStudies` array:
       "title": "Project Title",
       "subtitle": "One-line impact statement",
       "description": "Brief description...",
-      "tags": ["UX Research", "A/B Testing"],
-      "duration": "3 months",
-      "team": "Designer, 2 Engineers",
-      "impact": {
-        "metric1": "+32%",
-        "metric2": "$2.4M annually"
+      "content": {
+        "context": "Project background and motivation",
+        "problem": "Problem statement or challenge",
+        "process": [
+          {
+            "title": "Phase Name",
+            "description": "What was done",
+            "weeks": "Duration"
+          }
+        ],
+        "artifacts": ["Key deliverables and artifacts"],
+        "impactDetails": "Detailed impact description",
+        "reflection": {
+          "whatWentWell": "Success factors",
+          "whatIdDoDifferently": "Lessons learned",
+          "keyTakeaway": "Main insight"
+        }
       }
     }
   ]
 }
 ```
 
-### 3. Projects & Writing
+### 3. Coming Soon Pages
 
-Similarly, update `makerProjects` and `writing` arrays with your content.
+Mark pages as "coming soon" for sections you're still working on:
 
-### 4. Styling
+```json
+{
+  "comingSoon": {
+    "pages": {
+      "/writing": {
+        "enabled": true,
+        "title": "Writing & Articles",
+        "subtitle": "Thoughts on product management",
+        "description": "Currently working on...",
+        "expectedDate": "Q2 2024",
+        "features": ["Feature 1", "Feature 2"]
+      }
+    }
+  }
+}
+```
+
+### 4. Styling & Design
 
 Customize the design system in `src/index.css`:
 
-- **Colors**: Update CSS custom properties for brand colors
-- **Typography**: Modify font imports and variables
-- **Animations**: Adjust transition durations and effects
+```css
+:root {
+  --primary: 217 91% 60%;        /* Your brand primary */
+  --accent: 142 76% 36%;         /* Accent color */
+  --gradient-hero: linear-gradient(...); /* Hero gradient */
+}
+```
 
-### 5. Add Your Resume
+### 5. SEO Configuration
 
-1. Add your resume PDF to the `public` folder
-2. Update the `resumeLink` in the configuration file
-3. Ensure the path matches your file location
+Update SEO metadata in the config:
+
+```json
+{
+  "seo": {
+    "title": "Your Name - Product Manager Portfolio",
+    "description": "Your portfolio description",
+    "keywords": ["Product Manager", "Your Keywords"],
+    "author": "Your Name"
+  }
+}
+```
 
 ## 📁 Project Structure
 
@@ -111,16 +159,23 @@ src/
 │   ├── ui/             # shadcn/ui components
 │   ├── Layout.tsx      # Main layout wrapper
 │   ├── Header.tsx      # Navigation header
-│   └── Footer.tsx      # Site footer
+│   ├── Footer.tsx      # Site footer
+│   └── ComingSoon.tsx  # Coming soon page component
 ├── config/             # Configuration files
 │   └── portfolio.json  # Main content configuration
 ├── pages/              # Page components
 │   ├── Index.tsx       # Homepage
+│   ├── About.tsx       # About page
 │   ├── CaseStudies.tsx # Case studies listing
+│   ├── CaseStudyDetail.tsx # Individual case study
+│   ├── MakerProjects.tsx # Projects listing
 │   ├── Writing.tsx     # Blog/articles
-│   └── Resources.tsx   # Downloadable resources
+│   ├── Resources.tsx   # Downloadable resources
+│   └── NotFound.tsx    # 404 page
 ├── lib/                # Utility functions
-└── styles/            # Global styles and design system
+│   └── configValidation.ts # Config validation
+├── hooks/              # Custom React hooks
+└── index.css          # Global styles and design system
 ```
 
 ## 🎨 Design System
@@ -131,27 +186,24 @@ The portfolio uses a comprehensive design system with:
 - **Typography Scale** - Responsive font sizes and weights
 - **Component Variants** - Reusable button and card styles
 - **Animation Library** - Smooth transitions and hover effects
+- **Standardized Buttons** - Consistent sizing and behavior
 
-### Customizing Colors
+### Button Classes
 
-Edit the CSS custom properties in `src/index.css`:
-
-```css
-:root {
-  --primary: 217 91% 60%;        /* Your brand primary */
-  --accent: 142 76% 36%;         /* Accent color */
-  --gradient-hero: linear-gradient(...); /* Hero gradient */
-}
-```
+- `.btn-primary` - Primary action buttons
+- `.btn-secondary` - Secondary actions
+- `.btn-outline` - Outlined buttons
+- `.btn-hero` - Special gradient buttons for CTAs
 
 ## 📊 Analytics & SEO
 
 ### SEO Features
 
-- Semantic HTML structure
-- Open Graph meta tags
-- Structured data for better search visibility
-- Fast loading times with optimized assets
+- **Dynamic Meta Tags** - Configurable through JSON
+- **Structured Data Ready** - Framework for adding JSON-LD
+- **Semantic HTML** - Proper heading hierarchy and landmarks
+- **Fast Loading** - Optimized assets and lazy loading ready
+- **Mobile Optimized** - Responsive design and mobile-first approach
 
 ### Adding Analytics
 
@@ -169,18 +221,27 @@ npm run build
 
 ### Deployment Options
 
-1. **Lovable** (Recommended)
-   - Click "Publish" in the Lovable interface
-   - Automatic deployments with custom domain support
+#### 1. **Vercel** (Recommended)
+- Import project from GitHub
+- Zero-config deployment with automatic builds
+- Custom domain support
+- Preview deployments for branches
 
-2. **Netlify**
-   - Connect your GitHub repository
-   - Build command: `npm run build`
-   - Publish directory: `dist`
+#### 2. **Netlify**
+- Connect your GitHub repository
+- Build command: `npm run build`
+- Publish directory: `dist`
+- Form handling and serverless functions support
 
-3. **Vercel**
-   - Import project from GitHub
-   - Zero-config deployment with automatic builds
+#### 3. **GitHub Pages**
+- Enable GitHub Pages in repository settings
+- Use GitHub Actions for automated deployment
+- Custom domain support available
+
+#### 4. **Traditional Hosting**
+- Build the project: `npm run build`
+- Upload the `dist` folder to your web server
+- Configure server for SPA routing (redirect all routes to index.html)
 
 ## 🔧 Advanced Customization
 
@@ -189,6 +250,7 @@ npm run build
 1. Create a new component in `src/pages/`
 2. Add route to `src/App.tsx`
 3. Update navigation in `src/config/portfolio.json`
+4. Optionally add to coming soon config
 
 ### Custom Components
 
@@ -206,15 +268,50 @@ For sensitive data (API keys, analytics IDs), use environment variables:
 2. Add variables with `VITE_` prefix
 3. Access via `import.meta.env.VITE_VARIABLE_NAME`
 
+### Content Management
+
+The entire site is driven by the `portfolio.json` configuration file:
+
+- **Personal Info** - Name, title, contact details
+- **Case Studies** - Detailed project showcases
+- **Projects** - Side projects and maker work
+- **Writing** - Articles and blog posts
+- **Resources** - Downloadable templates
+- **Coming Soon** - Pages under development
+- **SEO** - Meta tags and social sharing
+- **Assets** - Image and resource management
+
 ## 🤝 Contributing
 
 This is an open-source template. Contributions are welcome!
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Development Workflow
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes**
+4. **Test thoroughly**
+5. **Commit your changes** (`git commit -m 'Add amazing feature'`)
+6. **Push to the branch** (`git push origin feature/amazing-feature`)
+7. **Open a Pull Request**
+
+### Code Standards
+
+- **TypeScript** - All new code should be typed
+- **ESLint** - Follow the configured linting rules
+- **Component Structure** - Use functional components with hooks
+- **Styling** - Use Tailwind CSS classes and design system tokens
+- **Accessibility** - Ensure WCAG 2.1 AA compliance
+
+### Reporting Issues
+
+When reporting issues, please include:
+
+- **Browser and version**
+- **Steps to reproduce**
+- **Expected vs actual behavior**
+- **Screenshots** (if applicable)
+- **Console errors** (if any)
 
 ## 📝 License
 
@@ -222,17 +319,55 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
+### Getting Help
+
 - **Documentation Issues**: Open an issue on GitHub
 - **Customization Help**: Check the discussions section
 - **Bug Reports**: Use the issue tracker with detailed reproduction steps
 
+### Community
+
+- **GitHub Discussions**: Ask questions and share ideas
+- **Issues**: Report bugs and request features
+- **Pull Requests**: Contribute improvements
+
 ## 🙏 Acknowledgments
 
-- Built with [React](https://reactjs.org/) and [TypeScript](https://www.typescriptlang.org/)
-- UI components from [shadcn/ui](https://ui.shadcn.com/)
-- Icons from [Lucide React](https://lucide.dev/)
-- Styling with [Tailwind CSS](https://tailwindcss.com/)
+### Built With
+
+- **[React](https://reactjs.org/)** - UI library
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[Vite](https://vitejs.dev/)** - Build tool and dev server
+- **[Tailwind CSS](https://tailwindcss.com/)** - Styling framework
+- **[shadcn/ui](https://ui.shadcn.com/)** - Component library
+- **[React Router](https://reactrouter.com/)** - Client-side routing
+- **[Lucide React](https://lucide.dev/)** - Icon library
+
+### Inspiration
+
+- **Modern PM Portfolios** - Best practices from top product managers
+- **Design Systems** - Industry standards for component libraries
+- **Accessibility** - WCAG guidelines and inclusive design principles
 
 ---
 
-Made with ❤️ for the Product Management community. Star ⭐ this repo if it helped you!
+## 🎯 Roadmap
+
+### Planned Features
+
+- **Content Management System** - Visual editor for portfolio content
+- **Analytics Dashboard** - Built-in analytics and insights
+- **Theme Customization** - Multiple color schemes and layouts
+- **Blog Integration** - Built-in blog with markdown support
+- **Contact Forms** - Serverless form handling
+- **Multi-language Support** - Internationalization
+
+### Contributing to Roadmap
+
+Have ideas for new features? We'd love to hear them! Open a discussion or create an issue to share your suggestions.
+
+---
+
+**Made with ❤️ for the Product Management community. Star ⭐ this repo if it helped you!**
+
+*This template is designed to help product managers create professional portfolios that effectively showcase their work and expertise. Whether you're a seasoned PM or just starting out, this template provides the foundation you need to build an impressive online presence.*

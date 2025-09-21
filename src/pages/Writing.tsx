@@ -1,10 +1,12 @@
-import { ExternalLink, Calendar, Clock } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import ComingSoon from "@/components/ComingSoon";
 import portfolioConfig from "@/config/portfolio.json";
 
 const Writing = () => {
+  const comingSoonConfig = portfolioConfig.comingSoon?.pages?.["/writing"];
+  
+  if (comingSoonConfig?.enabled) {
+    return <ComingSoon pageConfig={comingSoonConfig} />;
+  }
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 

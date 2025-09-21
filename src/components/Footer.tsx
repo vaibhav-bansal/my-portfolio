@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Linkedin, Twitter, Github } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import portfolioConfig from "@/config/portfolio.json";
 
@@ -12,7 +13,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-muted/50 border-t border-border">
+    <footer className="bg-muted/50 border-t border-border" role="contentinfo">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Contact Info */}
@@ -47,15 +48,15 @@ const Footer = () => {
             <h3 className="text-lg font-semibold text-foreground">
               Quick Links
             </h3>
-            <nav className="flex flex-col space-y-3">
+            <nav className="flex flex-col space-y-3" aria-label="Footer navigation">
               {portfolioConfig.navigation.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
+                  to={item.href}
                   className="text-sm text-muted-foreground hover:text-primary transition-colors w-fit"
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
@@ -91,21 +92,15 @@ const Footer = () => {
               })}
             </div>
             
-            {/* Resume Download */}
-            <Button 
-              variant="default" 
-              className="w-full sm:w-auto bg-gradient-hero hover:opacity-90"
-              asChild
+            {/* Resume Link */}
+            <a 
+              href={portfolioConfig.personal.resumeLink} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              <a 
-                href={portfolioConfig.personal.resumeLink} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2"
-              >
-                <span>Download Resume</span>
-              </a>
-            </Button>
+              Download Resume
+            </a>
           </div>
         </div>
 

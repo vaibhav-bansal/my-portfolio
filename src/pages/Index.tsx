@@ -29,18 +29,17 @@ const Index = () => {
 
             <div className="fade-in-up flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
               <Button 
-                size="lg" 
                 className="btn-hero"
                 asChild
               >
                 <Link to="/case-studies">
                   View My Work
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
               <Button 
-                variant="outline" 
-                size="lg"
+                variant="outline"
+                className="btn-outline"
                 asChild
               >
                 <Link to="/about">
@@ -159,10 +158,10 @@ const Index = () => {
             </div>
 
             <div className="text-center">
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" className="btn-outline" asChild>
                 <Link to="/case-studies">
                   View All Case Studies
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
             </div>
@@ -171,81 +170,83 @@ const Index = () => {
       </section>
 
       {/* Maker Projects Preview */}
-      <section className="py-20 lg:py-32">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-                Side Projects
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Personal projects where I experiment with new ideas and technologies
-              </p>
-            </div>
+      {!portfolioConfig.comingSoon?.sections?.makerProjects?.enabled && (
+        <section className="py-20 lg:py-32">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16">
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
+                  Side Projects
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Personal projects where I experiment with new ideas and technologies
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              {portfolioConfig.makerProjects.map((project) => (
-                <Card key={project.id} className="card-hover">
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2">
-                          {project.title}
-                        </h3>
-                        <p className="text-muted-foreground mb-4">
-                          {project.description}
-                        </p>
-                      </div>
-                      <div className="flex space-x-2">
-                        {project.github && (
-                          <Button variant="ghost" size="sm" asChild>
-                            <a href={project.github} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="w-4 h-4" />
-                            </a>
-                          </Button>
-                        )}
-                        {project.website && (
-                          <Button variant="ghost" size="sm" asChild>
-                            <a href={project.website} target="_blank" rel="noopener noreferrer">
-                              <ExternalLink className="w-4 h-4" />
-                            </a>
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {project.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-3 gap-4 text-center">
-                      {Object.entries(project.stats).map(([key, value]) => (
-                        <div key={key}>
-                          <div className="text-sm font-medium text-primary">{value}</div>
-                          <div className="text-xs text-muted-foreground capitalize">
-                            {key}
-                          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                {portfolioConfig.makerProjects.map((project) => (
+                  <Card key={project.id} className="card-hover">
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <h3 className="text-xl font-semibold text-foreground mb-2">
+                            {project.title}
+                          </h3>
+                          <p className="text-muted-foreground mb-4">
+                            {project.description}
+                          </p>
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+                        <div className="flex space-x-2">
+                          {project.github && (
+                            <Button variant="ghost" size="sm" asChild>
+                              <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="w-4 h-4" />
+                              </a>
+                            </Button>
+                          )}
+                          {project.website && (
+                            <Button variant="ghost" size="sm" asChild>
+                              <a href={project.website} target="_blank" rel="noopener noreferrer">
+                                <ExternalLink className="w-4 h-4" />
+                              </a>
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {project.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="grid grid-cols-3 gap-4 text-center">
+                        {Object.entries(project.stats).map(([key, value]) => (
+                          <div key={key}>
+                            <div className="text-sm font-medium text-primary">{value}</div>
+                            <div className="text-xs text-muted-foreground capitalize">
+                              {key}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
-            <div className="text-center">
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/maker-projects">
-                  View All Projects
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Link>
-              </Button>
+              <div className="text-center">
+                <Button variant="outline" className="btn-outline" asChild>
+                  <Link to="/maker-projects">
+                    View All Projects
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section id="contact" className="py-20 lg:py-32 bg-gradient-hero text-white">
@@ -259,8 +260,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
-                size="lg" 
-                variant="secondary"
+                className="btn-secondary border-white text-white hover:bg-white hover:text-primary"
                 asChild
               >
                 <Link to="/about">
@@ -268,14 +268,12 @@ const Index = () => {
                 </Link>
               </Button>
               <Button 
-                size="lg" 
-                variant="outline"
-                className="border-white text-white hover:bg-white hover:text-primary"
+                className="btn-outline border-white text-white hover:bg-white hover:text-primary"
                 asChild
               >
                 <Link to="/case-studies">
                   View My Work
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
             </div>

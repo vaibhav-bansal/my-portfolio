@@ -1,10 +1,12 @@
-import { Download, FileText, Eye } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import ComingSoon from "@/components/ComingSoon";
 import portfolioConfig from "@/config/portfolio.json";
 
 const Resources = () => {
+  const comingSoonConfig = portfolioConfig.comingSoon?.pages?.["/resources"];
+  
+  if (comingSoonConfig?.enabled) {
+    return <ComingSoon pageConfig={comingSoonConfig} />;
+  }
   const getTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
       case 'template':
