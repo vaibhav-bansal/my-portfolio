@@ -2,12 +2,11 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getConfig } from "@/lib/configLoader";
+import { useConfig } from "@/contexts/ConfigContext";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const Header = () => {
-  // Load configuration - this will throw if missing/invalid
-  const portfolioConfig = getConfig();
+  const { config: portfolioConfig, loading, error } = useConfig();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,13 +32,43 @@ const Header = () => {
     handleNavigationClick(href, location.pathname, () => setIsMenuOpen(false));
   };
 
+  // Show loading state
+  if (loading) {
+    return (
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border" role="banner">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="text-xl font-bold gradient-text">Loading...</div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Show error state
+  if (error || !portfolioConfig) {
+    return (
+      <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border" role="banner">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <div className="text-xl font-bold text-red-500">Configuration Error</div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border" role="banner">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link 
-            to="/" 
+          <Link
+            to="/"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              handleNavClick("/");
+            }}
             className="text-xl font-bold gradient-text hover:opacity-80 transition-opacity"
             aria-label={`${portfolioConfig.personal.name} - Home`}
           >

@@ -7,7 +7,7 @@ let config: PortfolioConfig | null = null;
 let configError: Error | null = null;
 
 // Load configuration with error handling
-export const loadConfig = (): PortfolioConfig => {
+export const loadConfig = async (): Promise<PortfolioConfig> => {
   if (config) {
     return config;
   }
@@ -18,13 +18,13 @@ export const loadConfig = (): PortfolioConfig => {
 
   try {
     // Import the JSON file - this will throw if missing or invalid
-    const configModule = require('@/config/portfolio.json');
+    const configModule = await import('@/config/portfolio.json');
     
     if (!configModule || typeof configModule !== 'object') {
       throw new Error('portfolio.json is not a valid JSON object');
     }
 
-    config = configModule as PortfolioConfig;
+    config = configModule.default as PortfolioConfig;
     return config;
   } catch (error) {
     configError = error instanceof Error ? error : new Error('Failed to load portfolio.json');
@@ -43,8 +43,8 @@ export const loadConfig = (): PortfolioConfig => {
 };
 
 // Get configuration with validation
-export const getConfig = (): PortfolioConfig => {
-  const loadedConfig = loadConfig();
+export const getConfig = async (): Promise<PortfolioConfig> => {
+  const loadedConfig = await loadConfig();
   
   // Validate the configuration structure
   if (!loadedConfig.personal || !loadedConfig.personal.name) {
