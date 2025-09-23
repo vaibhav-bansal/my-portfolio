@@ -3,9 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileText, Download, Eye } from "lucide-react";
 import ComingSoonCard from "@/components/ComingSoonCard";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 
 const Resources = () => {
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   // Check if all resources are coming soon
   const allResourcesComingSoon = portfolioConfig.resources.every(resource => resource.comingSoon);
   

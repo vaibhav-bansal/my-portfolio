@@ -4,9 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ComingSoonCard from "@/components/ComingSoonCard";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 
 const MakerProjects = () => {
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   return (
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

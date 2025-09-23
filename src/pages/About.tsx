@@ -2,9 +2,11 @@ import { Download, MapPin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 
 const About = () => {
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   return (
     <div className="min-h-screen py-20 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

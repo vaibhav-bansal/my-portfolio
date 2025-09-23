@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import ComingSoonCard from "@/components/ComingSoonCard";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const Index = () => {
   const location = useLocation();
+  
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   
   return (
     <div className="min-h-screen">

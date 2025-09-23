@@ -3,9 +3,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ExternalLink } from "lucide-react";
 import ComingSoonCard from "@/components/ComingSoonCard";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 
 const Writing = () => {
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   // Check if all articles are coming soon
   const allArticlesComingSoon = portfolioConfig.writing.every(article => article.comingSoon);
   

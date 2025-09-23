@@ -3,12 +3,15 @@ import { ArrowLeft, Github, ExternalLink, Calendar, Users, Target } from "lucide
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const ProjectDetail = () => {
   const { id } = useParams();
   const location = useLocation();
+  
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   const project = portfolioConfig.makerProjects.find(p => p.id === id);
 
   if (!project) {
