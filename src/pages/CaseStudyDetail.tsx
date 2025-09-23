@@ -3,13 +3,16 @@ import { ArrowLeft, Calendar, Users, Target, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import portfolioConfig from "@/config/portfolio.json";
-import { validateCaseStudy, getFallbackContent } from "@/lib/configValidation";
+import { getConfig } from "@/lib/configLoader";
+import { validateCaseStudy } from "@/lib/configValidation";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const CaseStudyDetail = () => {
   const { id } = useParams();
   const location = useLocation();
+  
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   const rawStudy = portfolioConfig.caseStudies.find(s => s.id === id);
   const study = rawStudy && validateCaseStudy(rawStudy) ? rawStudy : null;
 

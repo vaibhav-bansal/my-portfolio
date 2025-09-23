@@ -1,10 +1,12 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import portfolioConfig from "@/config/portfolio.json";
+import { getConfig } from "@/lib/configLoader";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const Footer = () => {
+  // Load configuration - this will throw if missing/invalid
+  const portfolioConfig = getConfig();
   const currentYear = new Date().getFullYear();
   const location = useLocation();
 
