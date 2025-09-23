@@ -20,7 +20,7 @@ const Header = () => {
 
   const handleContactClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    
+
     // Always scroll to footer on current page
     const contactElement = document.getElementById('contact');
     if (contactElement) {
@@ -72,7 +72,7 @@ const Header = () => {
             className="text-xl font-bold gradient-text hover:opacity-80 transition-opacity"
             aria-label={`${portfolioConfig.personal.name} - Home`}
           >
-            {portfolioConfig.personal.name}
+            🚀🔝
           </Link>
 
           {/* Desktop Navigation */}
@@ -91,11 +91,10 @@ const Header = () => {
                   key={item.name}
                   to={item.href}
                   onClick={() => handleNavClick(item.href)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isActive(item.href) 
-                      ? "text-primary" 
-                      : "text-muted-foreground"
-                  }`}
+                  className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.href)
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                    }`}
                   aria-current={isActive(item.href) ? "page" : undefined}
                 >
                   {item.name}
@@ -138,11 +137,10 @@ const Header = () => {
                     key={item.name}
                     to={item.href}
                     onClick={() => handleNavClick(item.href)}
-                    className={`text-sm font-medium transition-colors hover:text-primary ${
-                      isActive(item.href) 
-                        ? "text-primary" 
-                        : "text-muted-foreground"
-                    }`}
+                    className={`text-sm font-medium transition-colors hover:text-primary ${isActive(item.href)
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                      }`}
                     aria-current={isActive(item.href) ? "page" : undefined}
                   >
                     {item.name}
