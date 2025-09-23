@@ -1,0 +1,2 @@
+# Validate portfolio configuration before commit
+npm run validate:config
