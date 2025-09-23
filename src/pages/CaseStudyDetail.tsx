@@ -3,7 +3,7 @@ import { ArrowLeft, Calendar, Users, Target, BarChart3 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getConfig } from "@/lib/configLoader";
+import { useConfig } from "@/contexts/ConfigContext";
 import { validateCaseStudy } from "@/lib/configValidation";
 import { handleNavigationClick } from "@/lib/navigation";
 
@@ -11,8 +11,32 @@ const CaseStudyDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   
-  // Load configuration - this will throw if missing/invalid
-  const portfolioConfig = getConfig();
+  const { config: portfolioConfig, loading, error } = useConfig();
+  
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold gradient-text mb-4">Loading...</div>
+          <div className="text-muted-foreground">Loading portfolio configuration</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || !portfolioConfig) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-red-500 mb-4">Configuration Error</div>
+          <div className="text-muted-foreground">Failed to load portfolio configuration</div>
+        </div>
+      </div>
+    );
+  }
+  
   const rawStudy = portfolioConfig.caseStudies.find(s => s.id === id);
   const study = rawStudy && validateCaseStudy(rawStudy) ? rawStudy : null;
 

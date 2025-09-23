@@ -2,11 +2,35 @@ import { Download, MapPin, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { getConfig } from "@/lib/configLoader";
+import { useConfig } from "@/contexts/ConfigContext";
 
 const About = () => {
-  // Load configuration - this will throw if missing/invalid
-  const portfolioConfig = getConfig();
+  const { config: portfolioConfig, loading, error } = useConfig();
+  
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold gradient-text mb-4">Loading...</div>
+          <div className="text-muted-foreground">Loading portfolio configuration</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error || !portfolioConfig) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-2xl font-bold text-red-500 mb-4">Configuration Error</div>
+          <div className="text-muted-foreground">Failed to load portfolio configuration</div>
+        </div>
+      </div>
+    );
+  }
+  
   return (
     <div className="min-h-screen py-20 lg:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

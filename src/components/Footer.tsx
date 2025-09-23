@@ -1,14 +1,35 @@
 import { Mail, Phone, MapPin } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { getConfig } from "@/lib/configLoader";
+import { useConfig } from "@/contexts/ConfigContext";
 import { handleNavigationClick } from "@/lib/navigation";
 
 const Footer = () => {
-  // Load configuration - this will throw if missing/invalid
-  const portfolioConfig = getConfig();
+  const { config: portfolioConfig, loading, error } = useConfig();
   const currentYear = new Date().getFullYear();
   const location = useLocation();
+
+  // Show loading state
+  if (loading) {
+    return (
+      <footer className="bg-muted/50 border-t border-border" role="contentinfo">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-muted-foreground">Loading...</div>
+        </div>
+      </footer>
+    );
+  }
+
+  // Show error state
+  if (error || !portfolioConfig) {
+    return (
+      <footer className="bg-muted/50 border-t border-border" role="contentinfo">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center text-red-500">Configuration Error</div>
+        </div>
+      </footer>
+    );
+  }
 
   const SocialIcon = ({ platform, className }: { platform: string; className?: string }) => {
     switch (platform) {

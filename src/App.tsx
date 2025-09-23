@@ -15,33 +15,36 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Writing from "./pages/Writing";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
+import { ConfigProvider } from "./contexts/ConfigContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="about" element={<About />} />
-              <Route path="case-studies" element={<CaseStudies />} />
-              <Route path="case-studies/:id" element={<CaseStudyDetail />} />
-              <Route path="maker-projects" element={<MakerProjects />} />
-              <Route path="maker-projects/:id" element={<ProjectDetail />} />
-              <Route path="writing" element={<Writing />} />
-              <Route path="resources" element={<Resources />} />
-              <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <ConfigProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Index />} />
+                <Route path="about" element={<About />} />
+                <Route path="case-studies" element={<CaseStudies />} />
+                <Route path="case-studies/:id" element={<CaseStudyDetail />} />
+                <Route path="maker-projects" element={<MakerProjects />} />
+                <Route path="maker-projects/:id" element={<ProjectDetail />} />
+                <Route path="writing" element={<Writing />} />
+                <Route path="resources" element={<Resources />} />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ConfigProvider>
   </ErrorBoundary>
 );
 
