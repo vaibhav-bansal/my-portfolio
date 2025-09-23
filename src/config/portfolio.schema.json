@@ -1,0 +1,541 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Portfolio Schema",
+    "type": "object",
+    "properties": {
+        "personal": {
+            "type": "object",
+            "required": [
+                "name",
+                "title",
+                "email",
+                "yearsExperience"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "title": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "tagline": {
+                    "type": "string"
+                },
+                "location": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                },
+                "phone": {
+                    "type": "string",
+                    "pattern": "^\\+?[0-9 ()-]{7,20}$"
+                },
+                "resumeLink": {
+                    "type": "string",
+                    "format": "uri-reference"
+                },
+                "bio": {
+                    "type": "string"
+                },
+                "yearsExperience": {
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "currentRole": {
+                    "type": "string"
+                },
+                "domains": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "minItems": 1
+                },
+                "metrics": {
+                    "type": "object",
+                    "properties": {
+                        "usersImpacted": {
+                            "type": "string"
+                        },
+                        "revenueGenerated": {
+                            "type": "string"
+                        },
+                        "teamsLed": {
+                            "type": "string"
+                        },
+                        "arpuUplift": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "background": {
+                    "type": "object",
+                    "properties": {
+                        "intro": {
+                            "type": "string"
+                        },
+                        "philosophy": {
+                            "type": "object",
+                            "properties": {
+                                "userCentric": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "dataDriven": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "iterative": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "highlights": {
+                            "type": "object",
+                            "properties": {
+                                "majorLaunches": {
+                                    "type": "string"
+                                },
+                                "sideProjects": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "seo": {
+            "type": "object",
+            "required": [
+                "title",
+                "description",
+                "author"
+            ],
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "keywords": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "author": {
+                    "type": "string"
+                },
+                "ogImage": {
+                    "type": "string",
+                    "format": "uri-reference"
+                },
+                "twitterHandle": {
+                    "type": "string",
+                    "pattern": "^@?[A-Za-z0-9_]{1,15}$"
+                }
+            }
+        },
+        "social": {
+            "type": "object",
+            "properties": {
+                "linkedin": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "twitter": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "github": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "medium": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        },
+        "assets": {
+            "type": "object",
+            "properties": {
+                "fallbackImage": {
+                    "type": "string",
+                    "format": "uri-reference"
+                },
+                "defaultImageAlt": {
+                    "type": "string"
+                },
+                "loadingStates": {
+                    "type": "object",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean"
+                        },
+                        "placeholder": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "navigation": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "href"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "href": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "skills": {
+            "type": "object",
+            "properties": {
+                "product": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "technical": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "design": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "leadership": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "caseStudies": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri-reference"
+                    },
+                    "imageAlt": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "duration": {
+                        "type": "string"
+                    },
+                    "team": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "comingSoon": {
+                        "type": "boolean"
+                    },
+                    "impact": {
+                        "type": "object"
+                    },
+                    "content": {
+                        "type": "object",
+                        "properties": {
+                            "context": {
+                                "type": "string"
+                            },
+                            "problem": {
+                                "type": "string"
+                            },
+                            "process": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        },
+                                        "weeks": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "artifacts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "impactDetails": {
+                                "type": "string"
+                            },
+                            "reflection": {
+                                "type": "object",
+                                "properties": {
+                                    "whatWentWell": {
+                                        "type": "string"
+                                    },
+                                    "whatIdDoDifferently": {
+                                        "type": "string"
+                                    },
+                                    "keyTakeaway": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "makerProjects": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "title",
+                    "description"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "subtitle": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "uri-reference"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "github": {
+                        "type": "string",
+                        "anyOf": [
+                            {
+                                "format": "uri"
+                            },
+                            {
+                                "const": ""
+                            }
+                        ]
+                    },
+                    "website": {
+                        "type": "string",
+                        "anyOf": [
+                            {
+                                "format": "uri"
+                            },
+                            {
+                                "const": ""
+                            }
+                        ]
+                    },
+                    "comingSoon": {
+                        "type": "boolean"
+                    },
+                    "stats": {
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "writing": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "anyOf": [
+                    {
+                        "required": ["comingSoon"],
+                        "properties": {
+                            "comingSoon": {
+                                "type": "boolean",
+                                "const": true
+                            }
+                        }
+                    },
+                    {
+                        "required": [
+                            "id",
+                            "title",
+                            "excerpt",
+                            "url"
+                        ]
+                    }
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "comingSoon": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "excerpt": {
+                        "type": "string"
+                    },
+                    "publishedAt": {
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "readTime": {
+                        "type": "string"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            }
+        },
+        "resources": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "anyOf": [
+                    {
+                        "required": ["comingSoon"],
+                        "properties": {
+                            "comingSoon": {
+                                "type": "boolean",
+                                "const": true
+                            }
+                        }
+                    },
+                    {
+                        "required": [
+                            "title",
+                            "description",
+                            "type"
+                        ]
+                    }
+                ],
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "Template",
+                            "Framework",
+                            "Kit"
+                        ]
+                    },
+                    "downloadUrl": {
+                        "type": "string",
+                        "format": "uri-reference"
+                    },
+                    "preview": {
+                        "type": "string",
+                        "format": "uri-reference"
+                    },
+                    "comingSoon": {
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "personal",
+        "seo",
+        "social",
+        "assets",
+        "navigation",
+        "skills"
+    ]
+}

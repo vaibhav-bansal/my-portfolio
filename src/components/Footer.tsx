@@ -205,7 +205,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-border mt-8 pt-8 text-center">
           <p className="text-sm text-muted-foreground">
-            © {currentYear} {portfolioConfig.personal.name}. Built with React, TypeScript, and Tailwind CSS.
+            Built by {portfolioConfig.personal.name} with React, TypeScript, and Tailwind CSS. View repository on <a href="https://github.com/vaibhav-bansal/my-portfolio" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80">GitHub</a>.
           </p>
         </div>
       </div>
