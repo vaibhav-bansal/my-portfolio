@@ -87,14 +87,14 @@
       "name": "Projects",
       "href": "/maker-projects"
     },
-    {
-      "name": "Writing",
-      "href": "/writing"
-    },
-    {
-      "name": "Resources",
-      "href": "/resources"
-    },
+    // {
+    //   "name": "Writing",
+    //   "href": "/writing"
+    // },
+    // {
+    //   "name": "Resources",
+    //   "href": "/resources"
+    // },
     {
       "name": "Contact",
       "href": "#contact"
@@ -145,7 +145,7 @@
       "duration": "4 months",
       "team": "Designer, 2 Engineers, QA",
       "role": "Product Manager",
-      "comingSoon": true,
+      "comingSoon": false,
       "impact": {
         "activationTime": "-85% (2 weeks → 3 days)",
         "adoption": "100+ API-first clients onboarded",
@@ -195,7 +195,7 @@
       "duration": "3 months",
       "team": "2 Engineers, Marketing Ops",
       "role": "Product Manager",
-      "comingSoon": true,
+      "comingSoon": false,
       "impact": {
         "usersUpgraded": "30k+",
         "couponTypes": "Flat & Percentage",
@@ -241,7 +241,7 @@
       "duration": "5 months",
       "team": "3 Engineers, Designer, Ops",
       "role": "Product Manager",
-      "comingSoon": true,
+      "comingSoon": false,
       "impact": {
         "partners": "250+",
         "customersReferred": "100k+",
@@ -335,7 +335,7 @@
       ],
       "github": "https://github.com/vaibhavbansal/thought-drop",
       "website": "",
-      "comingSoon": true,
+      "comingSoon": false,
       "stats": {
         "features": "10+",
         "deployments": "Netlify & Vercel ready",
@@ -357,7 +357,7 @@
       ],
       "github": "",
       "website": "",
-      "comingSoon": true,
+      "comingSoon": false,
       "stats": {
         "features": "20+ components",
         "customization": "JSON-driven config",
