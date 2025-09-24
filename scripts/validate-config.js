@@ -2,6 +2,7 @@ import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import fs from 'fs';
 import path from 'path';
+import { parse } from 'jsonc-parser';
 
 // Create AJV instance with format support
 const ajv = new Ajv({ allErrors: true });
@@ -9,14 +10,20 @@ addFormats(ajv);
 
 // Paths
 const schemaPath = 'src/config/portfolio.schema.json';
-const configPath = 'src/config/portfolio.json';
+const configPath = 'src/config/portfolio.jsonc';
 
 console.log('🔍 Validating portfolio configuration...');
 
 try {
   // Read schema and data
   const schema = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-  const data = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  const configContent = fs.readFileSync(configPath, 'utf8');
+  
+  // Parse JSONC content
+  const data = parse(configContent);
+  if (!data) {
+    throw new Error('Invalid JSONC syntax in portfolio.jsonc');
+  }
 
   // Validate
   const validate = ajv.compile(schema);

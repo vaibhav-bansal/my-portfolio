@@ -62,7 +62,7 @@ const Index = () => {
                 <div className="text-4xl font-bold text-primary mb-2">
                   {portfolioConfig.personal.yearsExperience}+
                 </div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
+                <div className="text-sm text-muted-foreground">Product Experience (Years)</div>
               </div>
               <div className="text-center">
                 <div className="text-4xl font-bold text-primary mb-2">
