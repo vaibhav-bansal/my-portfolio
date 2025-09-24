@@ -1,14 +1,15 @@
 # netlify.toml
 [build]
-  # Build command
-  command = "npm ci && npm run build"
+  # Build command with better error handling and debugging
+  command = "npm ci --verbose && npm run build"
   
   # Directory to publish
   publish = "dist"
   
   # Environment variables for build
   [build.environment]
-    NODE_VERSION = "20"
+    NODE_VERSION = "22"
+    NPM_VERSION = "10"
 
 # Redirect rules for SPA
 [[redirects]]
@@ -33,16 +34,16 @@
 
 # Environment-specific settings
 [context.production]
-  command = "npm ci && npm run build"
+  command = "npm ci --verbose && npm run build"
   [context.production.environment]
     NODE_ENV = "production"
 
 [context.deploy-preview]
-  command = "npm ci && npm run build"
+  command = "npm ci --verbose && npm run build"
   [context.deploy-preview.environment]
     NODE_ENV = "production"
 
 [context.branch-deploy]
-  command = "npm ci && npm run build"
+  command = "npm ci --verbose && npm run build"
   [context.branch-deploy.environment]
     NODE_ENV = "production"
