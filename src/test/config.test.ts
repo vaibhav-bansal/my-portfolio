@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { validatePortfolioConfig, validateCaseStudy, getConfigValue } from '@/lib/configValidation'
 import { getConfig, loadConfig, resetConfig } from '@/lib/configLoader'
-import portfolioConfig from '@/config/portfolio.json'
+import portfolioConfig from '@/config/portfolio.jsonc'
 
 describe('Portfolio Configuration Validation', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ErrorBoundary from '@/components/ErrorBoundary'
@@ -42,27 +42,27 @@ describe('Error Handling and Edge Cases', () => {
   })
 
   describe('Configuration Error Handling', () => {
-    it('should throw error when portfolio.json is missing', () => {
+    it('should throw error when portfolio.jsonc is missing', () => {
       // Mock require to simulate missing file
       const originalRequire = require
-      vi.doMock('@/config/portfolio.json', () => {
+      vi.doMock('@/config/portfolio.jsoncc', () => {
         throw new Error('Cannot resolve module')
       })
 
       expect(() => {
         loadConfig()
-      }).toThrow('CRITICAL ERROR: portfolio.json file is missing')
+      }).toThrow('CRITICAL ERROR: portfolio.jsonc file is missing')
     })
 
-    it('should throw error when portfolio.json has invalid JSON', () => {
+    it('should throw error when portfolio.jsonc has invalid JSON', () => {
       // Mock require to simulate invalid JSON
-      vi.doMock('@/config/portfolio.json', () => {
+      vi.doMock('@/config/portfolio.jsonc', () => {
         throw new Error('JSON parse error')
       })
 
       expect(() => {
         loadConfig()
-      }).toThrow('CRITICAL ERROR: portfolio.json contains invalid JSON syntax')
+      }).toThrow('CRITICAL ERROR: portfolio.jsonc contains invalid JSONC syntax')
     })
 
     it('should throw error when required personal information is missing', () => {
@@ -78,11 +78,11 @@ describe('Error Handling and Edge Cases', () => {
         resources: []
       }
 
-      vi.doMock('@/config/portfolio.json', () => invalidConfig)
+      vi.doMock('@/config/portfolio.jsoncc', () => invalidConfig)
 
       expect(() => {
         getConfig()
-      }).toThrow('CRITICAL ERROR: portfolio.json is missing required personal information')
+        }).toThrow('CRITICAL ERROR: portfolio.jsoncc is missing required personal information')
     })
 
     it('should throw error when caseStudies array is missing', () => {
@@ -108,11 +108,11 @@ describe('Error Handling and Edge Cases', () => {
         resources: []
       }
 
-      vi.doMock('@/config/portfolio.json', () => invalidConfig)
+      vi.doMock('@/config/portfolio.jsoncc', () => invalidConfig)
 
       expect(() => {
         getConfig()
-      }).toThrow('CRITICAL ERROR: portfolio.json is missing or has invalid caseStudies array')
+        }).toThrow('CRITICAL ERROR: portfolio.jsoncc is missing or has invalid caseStudies array')
     })
 
     it('should throw error when accessing non-existent config property', () => {
@@ -155,7 +155,7 @@ describe('Error Handling and Edge Cases', () => {
       )
 
       expect(screen.getByText('Something went wrong')).toBeInTheDocument()
-      expect(screen.getByText('We\'re sorry, but something unexpected happened.')).toBeInTheDocument()
+      expect(screen.getByText('We\'re sorry, but something unexpected happened. Please try refreshing the page.')).toBeInTheDocument()
     })
 
     it('should provide retry functionality', () => {

@@ -11,7 +11,7 @@ import About from '@/pages/About'
 import MakerProjects from '@/pages/MakerProjects'
 import Writing from '@/pages/Writing'
 import Resources from '@/pages/Resources'
-import portfolioConfig from '@/config/portfolio.json'
+import portfolioConfig from '@/config/portfolio.jsonc'
 
 // Test wrapper component
 const TestWrapper = ({ children, initialEntries = ['/'] }: { 
@@ -395,7 +395,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       }
 
       // Mock the config
-      vi.doMock('@/config/portfolio.json', () => emptyConfig)
+      vi.doMock('@/config/portfolio.jsonc', () => emptyConfig)
 
       render(
         <TestWrapper>

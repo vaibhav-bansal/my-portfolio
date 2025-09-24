@@ -12,7 +12,7 @@ import ProjectDetail from '@/pages/ProjectDetail'
 import Writing from '@/pages/Writing'
 import Resources from '@/pages/Resources'
 import ComingSoonCard from '@/components/ComingSoonCard'
-import portfolioConfig from '@/config/portfolio.json'
+import portfolioConfig from '@/config/portfolio.jsonc'
 
 // Test wrapper component
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -38,7 +38,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
   })
 
   describe('Homepage Content Rendering', () => {
-    it('should render personal information from portfolio.json', () => {
+    it('should render personal information from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <Index />
@@ -67,7 +67,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
       expect(screen.getByText(metrics.arpuUplift)).toBeInTheDocument()
     })
 
-    it('should render skills from portfolio.json', () => {
+    it('should render skills from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <Index />
@@ -137,7 +137,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
   })
 
   describe('Case Studies Content Rendering', () => {
-    it('should render all case studies from portfolio.json', () => {
+    it('should render all case studies from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <CaseStudies />
@@ -224,7 +224,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
   })
 
   describe('Maker Projects Content Rendering', () => {
-    it('should render all maker projects from portfolio.json', () => {
+    it('should render all maker projects from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <MakerProjects />
@@ -274,7 +274,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
   })
 
   describe('Writing Content Rendering', () => {
-    it('should render all writing articles from portfolio.json', () => {
+    it('should render all writing articles from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <Writing />
@@ -313,7 +313,7 @@ describe('Content Rendering and Coming Soon Behavior', () => {
   })
 
   describe('Resources Content Rendering', () => {
-    it('should render all resources from portfolio.json', () => {
+    it('should render all resources from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <Resources />

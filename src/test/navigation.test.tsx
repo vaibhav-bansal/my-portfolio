@@ -7,7 +7,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Layout from '@/components/Layout'
 import { handleNavigationClick } from '@/lib/navigation'
-import portfolioConfig from '@/config/portfolio.json'
+import portfolioConfig from '@/config/portfolio.jsonc'
 
 // Test wrapper component
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -33,7 +33,7 @@ describe('Navigation System', () => {
   })
 
   describe('Header Navigation', () => {
-    it('should render all navigation items from portfolio.json', () => {
+    it('should render all navigation items from portfolio.jsonc', () => {
       render(
         <TestWrapper>
           <Header />

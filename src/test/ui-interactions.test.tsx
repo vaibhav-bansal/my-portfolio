@@ -8,7 +8,7 @@ import CaseStudies from '@/pages/CaseStudies'
 import MakerProjects from '@/pages/MakerProjects'
 import About from '@/pages/About'
 import ComingSoonCard from '@/components/ComingSoonCard'
-import portfolioConfig from '@/config/portfolio.json'
+import portfolioConfig from '@/config/portfolio.jsonc'
 
 // Test wrapper component
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
