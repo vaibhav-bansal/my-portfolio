@@ -15,27 +15,23 @@ export const useGTM = () => {
     let gtmPreview: string;
     
     if (isProduction) {
-      // Production environment - require environment variables
-      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LIVE;
-      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LIVE;
+      // Production environment - use live credentials
+      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LIVE || 'INAh9lL1SUQlWn0ph6gjCg';
+      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LIVE || 'env-1';
       
-      if (!gtmAuth || !gtmPreview) {
-        console.warn('GTM Production environment variables are missing:', {
-          gtmAuth: !!gtmAuth,
-          gtmPreview: !!gtmPreview
-        });
-      }
+      console.log('🚀 Using PRODUCTION GTM config:', {
+        gtmAuth,
+        gtmPreview
+      });
     } else {
-      // Development environment - require environment variables
-      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LOCAL;
-      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LOCAL;
+      // Development environment - use local credentials
+      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LOCAL || 'HthmeJdh63qRFdWrjogSiw';
+      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LOCAL || 'env-4';
       
-      if (!gtmAuth || !gtmPreview) {
-        console.warn('GTM Development environment variables are missing:', {
-          gtmAuth: !!gtmAuth,
-          gtmPreview: !!gtmPreview
-        });
-      }
+      console.log('🛠️ Using DEVELOPMENT GTM config:', {
+        gtmAuth,
+        gtmPreview
+      });
     }
     
     return {

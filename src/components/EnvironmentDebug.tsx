@@ -22,6 +22,19 @@ export const EnvironmentDebug = () => {
           }
         </p>
       </div>
+      
+      <div className="mt-4 p-2 bg-purple-100 rounded">
+        <p className="text-sm">
+          <strong>PostHog Analytics:</strong> {
+            envInfo.posthogConfigured ? '✅ Enabled' : '❌ Disabled'
+          }
+        </p>
+        {!envInfo.posthogConfigured && (
+          <p className="text-xs mt-1 text-gray-600">
+            Create .env.local file with PostHog credentials to enable analytics
+          </p>
+        )}
+      </div>
     </div>
   );
 };

@@ -255,9 +255,13 @@ The portfolio uses a comprehensive design system built on Tailwind CSS with:
 
 ### Adding Analytics
 
-1. **Google Analytics**: Add your tracking ID to `index.html`
-2. **Plausible**: Add script tag for privacy-focused analytics
-3. **Custom Events**: Track button clicks and downloads
+1. **PostHog Analytics**: 
+   - Copy `env.example` to `.env.local`
+   - Add your PostHog project key and host
+   - Analytics will be automatically enabled when configured
+2. **Google Analytics**: Add your tracking ID to `index.html`
+3. **Plausible**: Add script tag for privacy-focused analytics
+4. **Custom Events**: Track button clicks and downloads
 
 ## 🚀 Deployment
 
