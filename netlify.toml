@@ -8,8 +8,8 @@
   
   # Environment variables for build
   [build.environment]
-    NODE_VERSION = "18"
-    NPM_VERSION = "9"
+    NODE_VERSION = "20"
+    NPM_VERSION = "10"
 
 # Redirect rules for SPA
 [[redirects]]
@@ -37,13 +37,16 @@
   command = "npm run build"
   [context.production.environment]
     NODE_ENV = "production"
+    NODE_VERSION = "20"
 
 [context.deploy-preview]
   command = "npm run build"
   [context.deploy-preview.environment]
     NODE_ENV = "production"
+    NODE_VERSION = "20"
 
 [context.branch-deploy]
   command = "npm run build"
   [context.branch-deploy.environment]
     NODE_ENV = "production"
+    NODE_VERSION = "20"
