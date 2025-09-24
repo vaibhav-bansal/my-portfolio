@@ -15,13 +15,27 @@ export const useGTM = () => {
     let gtmPreview: string;
     
     if (isProduction) {
-      // Production environment - check for environment variables first
-      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LIVE || 'INAh9lL1SUQlWn0ph6gjCg';
-      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LIVE || 'env-1';
+      // Production environment - require environment variables
+      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LIVE;
+      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LIVE;
+      
+      if (!gtmAuth || !gtmPreview) {
+        console.warn('GTM Production environment variables are missing:', {
+          gtmAuth: !!gtmAuth,
+          gtmPreview: !!gtmPreview
+        });
+      }
     } else {
-      // Development environment - check for environment variables first
-      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LOCAL || 'HthmeJdh63qRFdWrjogSiw';
-      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LOCAL || 'env-4';
+      // Development environment - require environment variables
+      gtmAuth = import.meta.env.VITE_PUBLIC_GTM_AUTH_LOCAL;
+      gtmPreview = import.meta.env.VITE_PUBLIC_GTM_PREVIEW_LOCAL;
+      
+      if (!gtmAuth || !gtmPreview) {
+        console.warn('GTM Development environment variables are missing:', {
+          gtmAuth: !!gtmAuth,
+          gtmPreview: !!gtmPreview
+        });
+      }
     }
     
     return {
