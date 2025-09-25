@@ -43,9 +43,9 @@ const ProjectDetail = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-foreground mb-4">Project Not Found</h1>
           <Button asChild>
-            <Link to="/maker-projects">
+            <Link to="/side-projects">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Projects
+              Back to Side Projects
             </Link>
           </Button>
         </div>
@@ -59,9 +59,9 @@ const ProjectDetail = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <Button variant="ghost" className="mb-8" asChild>
-            <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
+            <Link to="/side-projects" onClick={() => handleNavigationClick("/side-projects", location.pathname)}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Projects
+              Back to Side Projects
             </Link>
           </Button>
 
@@ -117,7 +117,7 @@ const ProjectDetail = () => {
             <div className="grid grid-cols-3 gap-6">
               {Object.entries(project.stats).map(([key, value]) => (
                 <div key={key} className="text-center p-4 bg-muted/50 rounded-lg">
-                  <div className="text-2xl font-bold text-primary mb-1">{value}</div>
+                  <div className="text-2xl font-bold text-primary mb-1">{value as React.ReactNode}</div>
                   <div className="text-sm text-muted-foreground capitalize">
                     {key}
                   </div>
@@ -294,9 +294,9 @@ const ProjectDetail = () => {
           {/* Navigation */}
           <div className="flex items-center justify-between mt-20 pt-12 border-t border-border">
             <Button variant="outline" asChild>
-              <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
+              <Link to="/side-projects" onClick={() => handleNavigationClick("/side-projects", location.pathname)}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                All Projects
+                All Side Projects
               </Link>
             </Button>
             

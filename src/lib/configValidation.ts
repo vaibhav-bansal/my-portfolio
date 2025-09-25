@@ -31,6 +31,7 @@ export interface CaseStudy {
   role?: string;
   impact: Record<string, string>;
   content?: CaseStudyContent;
+  comingSoon?: boolean;
 }
 
 export interface PortfolioConfig {
@@ -45,6 +46,28 @@ export interface PortfolioConfig {
     bio: string;
     yearsExperience: number;
     currentRole: string;
+    domains: string[];
+    metrics: {
+      usersImpacted: string;
+      arpuUplift: string;
+    };
+    background: {
+      intro: string;
+      philosophy: Record<string, {
+        title: string;
+        description: string;
+      }>;
+      highlights: {
+        majorLaunches: string;
+        sideProjects: string;
+      };
+    };
+  };
+  seo: {
+    title: string;
+    description: string;
+    keywords: string[];
+    author: string;
   };
   social: Record<string, string>;
   navigation: Array<{ name: string; href: string }>;

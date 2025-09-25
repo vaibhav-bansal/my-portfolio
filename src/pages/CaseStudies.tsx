@@ -40,15 +40,15 @@ const CaseStudies = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Case Studies
+              Work Projects
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Deep dives into real product challenges and the strategies I used to solve them. 
-              Each case study includes the full process, artifacts, and measurable impact.
+              Each project includes the full process, artifacts, and measurable impact.
             </p>
           </div>
 
-          {/* Case Studies Grid */}
+          {/* Work Projects Grid */}
           <div className="space-y-12">
             {portfolioConfig.caseStudies.map((study, index) => {
               // Show coming soon card if marked as coming soon
@@ -132,7 +132,7 @@ const CaseStudies = () => {
                           <div>{study.team}</div>
                         </div>
                         <Button variant="default" asChild>
-                          <Link to={`/case-studies/${study.id}`}>
+                          <Link to={`/work-projects/${study.id}`}>
                             Read Case Study
                             <ArrowRight className="w-4 h-4 ml-2" />
                           </Link>

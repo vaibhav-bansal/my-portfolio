@@ -129,13 +129,13 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Case Studies */}
+      {/* Featured Work Projects */}
       <section className="py-20 lg:py-32 bg-muted/50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6">
-                Featured Case Studies
+                Featured Work Projects
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Real-world product challenges and the strategies I used to solve them
@@ -176,7 +176,7 @@ const Index = () => {
                             {study.duration} • {study.team}
                           </div>
                           <Button variant="ghost" size="sm" asChild>
-                            <Link to={`/case-studies/${study.id}`}>
+                            <Link to={`/work-projects/${study.id}`}>
                               <ArrowRight className="w-4 h-4" />
                             </Link>
                           </Button>
@@ -190,8 +190,8 @@ const Index = () => {
 
             <div className="text-center">
               <Button size="lg" variant="outline" asChild>
-                <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
-                  View All Case Studies
+                <Link to="/work-projects" onClick={() => handleNavigationClick("/work-projects", location.pathname)}>
+                  View All Work Projects
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
@@ -200,7 +200,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Maker Projects Preview */}
+      {/* Side Projects Preview */}
       <section className="py-20 lg:py-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
@@ -264,7 +264,7 @@ const Index = () => {
                       <div className="grid grid-cols-3 gap-4 text-center">
                         {Object.entries(project.stats).map(([key, value]) => (
                           <div key={key}>
-                            <div className="text-sm font-medium text-primary">{value}</div>
+                            <div className="text-sm font-medium text-primary">{value as React.ReactNode}</div>
                             <div className="text-xs text-muted-foreground capitalize">
                               {key}
                             </div>
@@ -279,8 +279,8 @@ const Index = () => {
 
             <div className="text-center">
               <Button size="lg" variant="outline" asChild>
-                <Link to="/maker-projects" onClick={() => handleNavigationClick("/maker-projects", location.pathname)}>
-                  View All Projects
+                <Link to="/side-projects" onClick={() => handleNavigationClick("/side-projects", location.pathname)}>
+                  View All Side Projects
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Link>
               </Button>
