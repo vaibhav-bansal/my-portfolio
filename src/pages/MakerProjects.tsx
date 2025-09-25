@@ -40,7 +40,7 @@ const MakerProjects = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Maker Projects
+              Side Projects
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
               Personal projects where I explore new ideas, experiment with emerging technologies, 
@@ -49,7 +49,7 @@ const MakerProjects = () => {
             </p>
           </div>
 
-          {/* Projects Grid */}
+          {/* Side Projects Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {portfolioConfig.makerProjects.map((project) => {
               // Show coming soon card if marked as coming soon
@@ -131,7 +131,7 @@ const MakerProjects = () => {
                       {Object.entries(project.stats).map(([key, value]) => (
                         <div key={key} className="text-center">
                           <div className="text-lg font-bold text-primary mb-1">
-                            {value}
+                            {value as React.ReactNode}
                           </div>
                           <div className="text-xs text-muted-foreground capitalize">
                             {key}
@@ -142,7 +142,7 @@ const MakerProjects = () => {
 
                     {/* CTA */}
                     <Button variant="outline" className="w-full" asChild>
-                      <Link to={`/maker-projects/${project.id}`}>
+                      <Link to={`/side-projects/${project.id}`}>
                         Learn More
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Link>

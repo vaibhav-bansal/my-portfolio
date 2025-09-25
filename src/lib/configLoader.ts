@@ -82,3 +82,11 @@ export const resetConfig = () => {
   config = null;
   configError = null;
 };
+
+// Synchronous version for tests (assumes config is already loaded)
+export const getConfigSync = (): PortfolioConfig => {
+  if (!config) {
+    throw new Error('Configuration not loaded. Call loadConfig() first.');
+  }
+  return config;
+};

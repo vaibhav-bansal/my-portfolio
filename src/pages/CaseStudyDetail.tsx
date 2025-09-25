@@ -46,9 +46,9 @@ const CaseStudyDetail = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl font-bold text-foreground mb-4">Case Study Not Found</h1>
           <Button asChild>
-            <Link to="/case-studies">
+            <Link to="/work-projects">
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Case Studies
+              Back to Work Projects
             </Link>
           </Button>
         </div>
@@ -62,9 +62,9 @@ const CaseStudyDetail = () => {
         <div className="max-w-4xl mx-auto">
           {/* Back Button */}
           <Button variant="outline" className="btn-outline mb-8" asChild>
-            <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
+            <Link to="/work-projects" onClick={() => handleNavigationClick("/work-projects", location.pathname)}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Case Studies
+              Back to Work Projects
             </Link>
           </Button>
 
@@ -248,9 +248,9 @@ const CaseStudyDetail = () => {
           {/* Navigation */}
           <div className="flex items-center justify-between mt-20 pt-12 border-t border-border">
             <Button variant="outline" className="btn-outline" asChild>
-              <Link to="/case-studies" onClick={() => handleNavigationClick("/case-studies", location.pathname)}>
+              <Link to="/work-projects" onClick={() => handleNavigationClick("/work-projects", location.pathname)}>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                All Case Studies
+                All Work Projects
               </Link>
             </Button>
             

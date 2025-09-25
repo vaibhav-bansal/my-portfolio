@@ -11,7 +11,7 @@ import About from '@/pages/About'
 import MakerProjects from '@/pages/MakerProjects'
 import Writing from '@/pages/Writing'
 import Resources from '@/pages/Resources'
-import portfolioConfig from '@/config/portfolio.jsonc'
+import { getConfigSync, loadConfig } from '../lib/configLoader'
 
 // Test wrapper component
 const TestWrapper = ({ children, initialEntries = ['/'] }: { 
@@ -35,8 +35,15 @@ const TestWrapper = ({ children, initialEntries = ['/'] }: {
 }
 
 describe('Integration Tests - End-to-End Scenarios', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
+    
+    // Load config before each test
+    try {
+      await loadConfig()
+    } catch (error) {
+      // Config might already be loaded
+    }
     
     // Mock window.scrollTo
     Object.defineProperty(window, 'scrollTo', {
@@ -63,39 +70,39 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User starts on homepage
-      expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
-      expect(screen.getByText(portfolioConfig.personal.title)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.title)).toBeInTheDocument()
 
-      // User clicks "View Case Studies" button
-      const caseStudiesButton = screen.getByRole('button', { name: /view case studies/i })
+      // User clicks "View All Work Projects" button
+      const caseStudiesButton = screen.getByRole('button', { name: /view all work projects/i })
       await user.click(caseStudiesButton)
 
-      // Should navigate to case studies page
-      expect(caseStudiesButton.closest('a')).toHaveAttribute('href', '/case-studies')
+      // Should navigate to work page
+      expect(caseStudiesButton.closest('a')).toHaveAttribute('href', '/work-projects')
     })
 
     it('should allow user to browse case studies and view details', async () => {
       const user = userEvent.setup()
       
       render(
-        <TestWrapper initialEntries={['/case-studies']}>
+        <TestWrapper initialEntries={['/work-projects']}>
           <CaseStudies />
         </TestWrapper>
       )
 
       // User sees case studies list
-      portfolioConfig.caseStudies.forEach(study => {
+      getConfigSync().caseStudies.forEach(study => {
         expect(screen.getByText(study.title)).toBeInTheDocument()
         expect(screen.getByText(study.subtitle)).toBeInTheDocument()
       })
 
       // User clicks on a case study
-      const firstStudy = portfolioConfig.caseStudies[0]
+      const firstStudy = getConfigSync().caseStudies[0]
       const caseStudyLink = screen.getByRole('link', { name: new RegExp(firstStudy.title, 'i') })
       await user.click(caseStudyLink)
 
       // Should navigate to case study detail
-      expect(caseStudyLink).toHaveAttribute('href', `/case-studies/${firstStudy.id}`)
+      expect(caseStudyLink).toHaveAttribute('href', `/work-projects/${firstStudy.id}`)
     })
   })
 
@@ -110,19 +117,19 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User sees personal information
-      expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
-      expect(screen.getByText(portfolioConfig.personal.background.intro)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.background.intro)).toBeInTheDocument()
 
       // User sees philosophy sections
-      const background = portfolioConfig.personal.background
-      Object.values(background.philosophy).forEach(philosophy => {
+      const background = getConfigSync().personal.background
+      Object.values(background.philosophy).forEach((philosophy: any) => {
         expect(screen.getByText(philosophy.title)).toBeInTheDocument()
         expect(screen.getByText(philosophy.description)).toBeInTheDocument()
       })
 
       // User sees skills
-      Object.entries(portfolioConfig.skills).forEach(([category, skills]) => {
-        skills.forEach(skill => {
+      Object.entries(getConfigSync().skills).forEach(([category, skills]: [string, any]) => {
+        skills.forEach((skill: string) => {
           expect(screen.getByText(skill)).toBeInTheDocument()
         })
       })
@@ -134,20 +141,20 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       const user = userEvent.setup()
       
       render(
-        <TestWrapper initialEntries={['/maker-projects']}>
+        <TestWrapper initialEntries={['/side-projects']}>
           <MakerProjects />
         </TestWrapper>
       )
 
       // User sees projects list
-      portfolioConfig.makerProjects.forEach(project => {
+      getConfigSync().makerProjects.forEach(project => {
         expect(screen.getByText(project.title)).toBeInTheDocument()
         expect(screen.getByText(project.subtitle)).toBeInTheDocument()
         expect(screen.getByText(project.description)).toBeInTheDocument()
       })
 
       // User can click on project links
-      const projectWithWebsite = portfolioConfig.makerProjects.find(p => p.website)
+      const projectWithWebsite = getConfigSync().makerProjects.find(p => p.website)
       if (projectWithWebsite) {
         const websiteLink = screen.getByRole('link', { name: /visit website/i })
         expect(websiteLink).toHaveAttribute('href', projectWithWebsite.website)
@@ -165,14 +172,14 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User sees articles list
-      portfolioConfig.writing.forEach(article => {
+      getConfigSync().writing.forEach(article => {
         expect(screen.getByText(article.title)).toBeInTheDocument()
         expect(screen.getByText(article.excerpt)).toBeInTheDocument()
         expect(screen.getByText(article.readTime)).toBeInTheDocument()
       })
 
       // User can click on article links
-      portfolioConfig.writing.forEach(article => {
+      getConfigSync().writing.forEach(article => {
         const articleLink = screen.getByRole('link', { name: new RegExp(article.title, 'i') })
         expect(articleLink).toHaveAttribute('href', article.url)
         expect(articleLink).toHaveAttribute('target', '_blank')
@@ -189,14 +196,14 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User sees resources list
-      portfolioConfig.resources.forEach(resource => {
+      getConfigSync().resources.forEach(resource => {
         expect(screen.getByText(resource.title)).toBeInTheDocument()
         expect(screen.getByText(resource.description)).toBeInTheDocument()
         expect(screen.getByText(resource.type)).toBeInTheDocument()
       })
 
       // User can download resources
-      portfolioConfig.resources.forEach(resource => {
+      getConfigSync().resources.forEach(resource => {
         const downloadLink = screen.getByRole('link', { name: /download/i })
         expect(downloadLink).toHaveAttribute('href', resource.downloadUrl)
       })
@@ -214,7 +221,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User starts on homepage
-      expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
 
       // User navigates to about page
       const aboutLink = screen.getByRole('link', { name: 'About' })
@@ -222,19 +229,19 @@ describe('Integration Tests - End-to-End Scenarios', () => {
 
       // Navigation should still be visible
       expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: 'Case Studies' })).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: 'Projects' })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'Work Projects' })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'Side Projects' })).toBeInTheDocument()
     })
 
     it('should handle browser back/forward navigation', () => {
       render(
-        <TestWrapper initialEntries={['/about', '/case-studies']}>
+        <TestWrapper initialEntries={['/about', '/work-projects']}>
           <App />
         </TestWrapper>
       )
 
       // Should render the last route in the history
-      expect(screen.getByText(/case studies/i)).toBeInTheDocument()
+      expect(screen.getByText(/work/i)).toBeInTheDocument()
     })
   })
 
@@ -270,7 +277,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       await user.click(downloadButton)
 
       // Should open resume link in new tab
-      expect(downloadButton.closest('a')).toHaveAttribute('href', portfolioConfig.personal.resumeLink)
+      expect(downloadButton.closest('a')).toHaveAttribute('href', getConfigSync().personal.resumeLink)
       expect(downloadButton.closest('a')).toHaveAttribute('target', '_blank')
     })
 
@@ -284,7 +291,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // User clicks social media links
-      Object.entries(portfolioConfig.social).forEach(async ([platform, url]) => {
+      Object.entries(getConfigSync().social).forEach(async ([platform, url]) => {
         const socialLink = screen.getByRole('link', { name: new RegExp(platform, 'i') })
         expect(socialLink).toHaveAttribute('href', url)
         expect(socialLink).toHaveAttribute('target', '_blank')
@@ -334,7 +341,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // Desktop navigation should be visible
-      portfolioConfig.navigation.forEach(item => {
+      getConfigSync().navigation.forEach(item => {
         const link = screen.getByRole('link', { name: item.name })
         expect(link).toBeInTheDocument()
       })
@@ -343,7 +350,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
 
   describe('Performance Integration', () => {
     it('should load all pages efficiently', async () => {
-      const routes = ['/', '/about', '/case-studies', '/maker-projects', '/writing', '/resources']
+      const routes = ['/', '/about', '/work-projects', '/side-projects', '/writing', '/resources']
       
       for (const route of routes) {
         const { unmount } = render(
@@ -354,7 +361,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
 
         // Wait for content to load
         await waitFor(() => {
-          expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
+          expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
         })
 
         unmount()
@@ -371,14 +378,14 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // Rapid navigation between pages
-      const navigationLinks = portfolioConfig.navigation.slice(0, 3)
+      const navigationLinks = getConfigSync().navigation.slice(0, 3)
       
       for (const navItem of navigationLinks) {
         const link = screen.getByRole('link', { name: navItem.name })
         await user.click(link)
         
         // Should not crash or show errors
-        expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
+        expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
       }
     })
   })
@@ -387,7 +394,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
     it('should handle missing content gracefully', () => {
       // Test with empty arrays
       const emptyConfig = {
-        ...portfolioConfig,
+        ...getConfigSync(),
         caseStudies: [],
         makerProjects: [],
         writing: [],
@@ -404,7 +411,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // Should still render without crashing
-      expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
+      expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
     })
 
     it('should handle invalid routes gracefully', () => {
@@ -465,11 +472,11 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       )
 
       // Check for title
-      expect(document.title).toContain(portfolioConfig.seo.title)
+      expect(document.title).toContain(getConfigSync().seo.title)
       
       // Check for meta description
       const metaDescription = document.querySelector('meta[name="description"]')
-      expect(metaDescription).toHaveAttribute('content', portfolioConfig.seo.description)
+      expect(metaDescription).toHaveAttribute('content', getConfigSync().seo.description)
     })
 
     it('should handle social media meta tags', () => {
@@ -483,14 +490,14 @@ describe('Integration Tests - End-to-End Scenarios', () => {
       const ogTitle = document.querySelector('meta[property="og:title"]')
       const ogDescription = document.querySelector('meta[property="og:description"]')
       
-      expect(ogTitle).toHaveAttribute('content', portfolioConfig.seo.title)
-      expect(ogDescription).toHaveAttribute('content', portfolioConfig.seo.description)
+      expect(ogTitle).toHaveAttribute('content', getConfigSync().seo.title)
+      expect(ogDescription).toHaveAttribute('content', getConfigSync().seo.description)
     })
   })
 
   describe('Data Consistency Integration', () => {
     it('should maintain consistent data across all pages', () => {
-      const routes = ['/', '/about', '/case-studies', '/maker-projects', '/writing', '/resources']
+      const routes = ['/', '/about', '/work-projects', '/side-projects', '/writing', '/resources']
       
       routes.forEach(route => {
         const { unmount } = render(
@@ -500,7 +507,7 @@ describe('Integration Tests - End-to-End Scenarios', () => {
         )
 
         // Personal name should be consistent across all pages
-        expect(screen.getByText(portfolioConfig.personal.name)).toBeInTheDocument()
+        expect(screen.getByText(getConfigSync().personal.name)).toBeInTheDocument()
         
         unmount()
       })

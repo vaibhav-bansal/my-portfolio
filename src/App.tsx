@@ -39,10 +39,10 @@ const AppContent = () => {
                   <Route path="/" element={<Layout />}>
                     <Route index element={<Index />} />
                     <Route path="about" element={<About />} />
-                    <Route path="case-studies" element={<CaseStudies />} />
-                    <Route path="case-studies/:id" element={<CaseStudyDetail />} />
-                    <Route path="maker-projects" element={<MakerProjects />} />
-                    <Route path="maker-projects/:id" element={<ProjectDetail />} />
+                    <Route path="work-projects" element={<CaseStudies />} />
+                    <Route path="work-projects/:id" element={<CaseStudyDetail />} />
+                    <Route path="side-projects" element={<MakerProjects />} />
+                    <Route path="side-projects/:id" element={<ProjectDetail />} />
                     <Route path="writing" element={<Writing />} />
                     <Route path="resources" element={<Resources />} />
                     <Route path="*" element={<NotFound />} />

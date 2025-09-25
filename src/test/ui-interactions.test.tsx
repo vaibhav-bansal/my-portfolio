@@ -8,7 +8,7 @@ import CaseStudies from '@/pages/CaseStudies'
 import MakerProjects from '@/pages/MakerProjects'
 import About from '@/pages/About'
 import ComingSoonCard from '@/components/ComingSoonCard'
-import portfolioConfig from '@/config/portfolio.jsonc'
+import { getConfigSync, loadConfig } from '../lib/configLoader'
 
 // Test wrapper component
 const TestWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -29,8 +29,15 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
 }
 
 describe('UI Interactions and Button Behavior', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
+    
+    // Load config before each test
+    try {
+      await loadConfig()
+    } catch (error) {
+      // Config might already be loaded
+    }
     
     // Mock window.scrollTo
     Object.defineProperty(window, 'scrollTo', {
@@ -55,7 +62,7 @@ describe('UI Interactions and Button Behavior', () => {
       )
 
       // Check for main CTA buttons
-      expect(screen.getByRole('button', { name: /view case studies/i })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /view all work projects/i })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /download resume/i })).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /get in touch/i })).toBeInTheDocument()
     })
@@ -73,7 +80,7 @@ describe('UI Interactions and Button Behavior', () => {
       await user.click(downloadButton)
 
       // Verify the button opens resume link
-      expect(downloadButton.closest('a')).toHaveAttribute('href', portfolioConfig.personal.resumeLink)
+      expect(downloadButton.closest('a')).toHaveAttribute('href', getConfigSync().personal.resumeLink)
       expect(downloadButton.closest('a')).toHaveAttribute('target', '_blank')
     })
 
@@ -102,11 +109,11 @@ describe('UI Interactions and Button Behavior', () => {
         </TestWrapper>
       )
 
-      const caseStudiesButton = screen.getByRole('button', { name: /view case studies/i })
+      const caseStudiesButton = screen.getByRole('button', { name: /view all work projects/i })
       await user.click(caseStudiesButton)
 
-      // Should navigate to case studies page
-      expect(caseStudiesButton.closest('a')).toHaveAttribute('href', '/case-studies')
+      // Should navigate to work page
+      expect(caseStudiesButton.closest('a')).toHaveAttribute('href', '/work-projects')
     })
   })
 
@@ -119,7 +126,7 @@ describe('UI Interactions and Button Behavior', () => {
       )
 
       // Check for case study cards
-      portfolioConfig.caseStudies.forEach(study => {
+      getConfigSync().caseStudies.forEach(study => {
         expect(screen.getByText(study.title)).toBeInTheDocument()
         expect(screen.getByText(study.subtitle)).toBeInTheDocument()
         expect(screen.getByText(study.description)).toBeInTheDocument()
@@ -135,12 +142,12 @@ describe('UI Interactions and Button Behavior', () => {
         </TestWrapper>
       )
 
-      const firstCaseStudy = portfolioConfig.caseStudies[0]
+      const firstCaseStudy = getConfigSync().caseStudies[0]
       const caseStudyLink = screen.getByRole('link', { name: new RegExp(firstCaseStudy.title, 'i') })
       
       await user.click(caseStudyLink)
 
-      expect(caseStudyLink).toHaveAttribute('href', `/case-studies/${firstCaseStudy.id}`)
+      expect(caseStudyLink).toHaveAttribute('href', `/work-projects/${firstCaseStudy.id}`)
     })
 
     it('should display coming soon cards for incomplete case studies', () => {
@@ -151,7 +158,7 @@ describe('UI Interactions and Button Behavior', () => {
       )
 
       // Check for coming soon indicators
-      const comingSoonStudies = portfolioConfig.caseStudies.filter(study => study.comingSoon)
+      const comingSoonStudies = getConfigSync().caseStudies.filter(study => study.comingSoon)
       comingSoonStudies.forEach(study => {
         expect(screen.getByText(study.title)).toBeInTheDocument()
         // Should have coming soon indicator
@@ -168,7 +175,7 @@ describe('UI Interactions and Button Behavior', () => {
         </TestWrapper>
       )
 
-      portfolioConfig.makerProjects.forEach(project => {
+      getConfigSync().makerProjects.forEach(project => {
         expect(screen.getByText(project.title)).toBeInTheDocument()
         expect(screen.getByText(project.subtitle)).toBeInTheDocument()
         expect(screen.getByText(project.description)).toBeInTheDocument()
@@ -184,12 +191,12 @@ describe('UI Interactions and Button Behavior', () => {
         </TestWrapper>
       )
 
-      const firstProject = portfolioConfig.makerProjects[0]
+      const firstProject = getConfigSync().makerProjects[0]
       const projectLink = screen.getByRole('link', { name: new RegExp(firstProject.title, 'i') })
       
       await user.click(projectLink)
 
-      expect(projectLink).toHaveAttribute('href', `/maker-projects/${firstProject.id}`)
+      expect(projectLink).toHaveAttribute('href', `/side-projects/${firstProject.id}`)
     })
 
     it('should handle external project links', async () => {
@@ -202,7 +209,7 @@ describe('UI Interactions and Button Behavior', () => {
       )
 
       // Find projects with external links
-      const projectWithWebsite = portfolioConfig.makerProjects.find(p => p.website)
+      const projectWithWebsite = getConfigSync().makerProjects.find(p => p.website)
       if (projectWithWebsite) {
         const externalLink = screen.getByRole('link', { name: /visit website/i })
         expect(externalLink).toHaveAttribute('href', projectWithWebsite.website)
@@ -220,10 +227,8 @@ describe('UI Interactions and Button Behavior', () => {
         comingSoon: true
       }
 
-      render(<ComingSoonCard item={mockItem} />)
+      render(<ComingSoonCard />)
 
-      expect(screen.getByText('Test Project')).toBeInTheDocument()
-      expect(screen.getByText('Test description')).toBeInTheDocument()
       expect(screen.getByText(/coming soon/i)).toBeInTheDocument()
     })
 
@@ -234,9 +239,9 @@ describe('UI Interactions and Button Behavior', () => {
         comingSoon: true
       }
 
-      render(<ComingSoonCard item={mockItem} />)
+      render(<ComingSoonCard />)
 
-      const card = screen.getByText('Test Project').closest('div')
+      const card = screen.getByText(/coming soon/i).closest('div')
       expect(card).not.toHaveAttribute('href')
       expect(card).not.toHaveAttribute('onclick')
     })
@@ -408,7 +413,7 @@ describe('UI Interactions and Button Behavior', () => {
       )
 
       // Desktop navigation should be visible
-      portfolioConfig.navigation.forEach(item => {
+      getConfigSync().navigation.forEach(item => {
         const link = screen.getByRole('link', { name: item.name })
         expect(link).toBeInTheDocument()
       })

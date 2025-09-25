@@ -130,21 +130,21 @@ const Footer = () => {
               
               {/* Work Section */}
               <div className="text-center">
-                <h4 className="text-sm font-medium text-foreground mb-2">Work</h4>
+                <h4 className="text-sm font-medium text-foreground mb-2">Work Projects</h4>
                 <nav className="flex flex-col space-y-2" aria-label="Work navigation">
                   <Link
-                    to="/case-studies"
-                    onClick={() => handleNavigationClick("/case-studies", location.pathname)}
+                    to="/work-projects"
+                    onClick={() => handleNavigationClick("/work-projects", location.pathname)}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors w-fit mx-auto"
                   >
-                    Case Studies
+                    Work Projects
                   </Link>
                   <Link
-                    to="/maker-projects"
-                    onClick={() => handleNavigationClick("/maker-projects", location.pathname)}
+                    to="/side-projects"
+                    onClick={() => handleNavigationClick("/side-projects", location.pathname)}
                     className="text-sm text-muted-foreground hover:text-primary transition-colors w-fit mx-auto"
                   >
-                    AI Projects
+                    Side Projects
                   </Link>
                 </nav>
               </div>

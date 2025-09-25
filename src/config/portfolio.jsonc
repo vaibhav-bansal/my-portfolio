@@ -2,12 +2,12 @@
   "personal": {
     "name": "Vaibhav Bansal",
     "title": "Product Manager",
-    "tagline": "Building workflow-driven, scalable, and user-centric products",
+    "tagline": "Building user-centric, scalable and event-driven products",
     "location": "Ahmedabad, India",
     "email": "vbansal079@gmail.com",
     "phone": "+91-94281-81545",
     "resumeLink": "https://drive.google.com/file/d/1SHq0qLsAj4i7R8gxGp21_Wwb13GDuXg_/view?usp=drive_link",
-    "bio": "Product Manager with 2+ years of experience building onboarding journeys, self-serve platforms, and API-first products across fintech and automation. Specialized in workflow-driven experiences, adoption-focused releases, and AI-driven product thinking.",
+    "bio": "Product Manager (4 years' experience, 2+ as PM) who focuses on solving high-leverage product problems: reducing time-to-activation through delightful onboarding, unlocking recurring revenue via thoughtful subscription & billing flows, and scaling developer adoption with API-first approach. Lately I'm applying AI to improve automation and product decisioning.",
     "yearsExperience": 2,
     "currentRole": "Product Manager at Quicko",
     "domains": [
@@ -24,26 +24,26 @@
       "philosophy": {
         "userCentric": {
           "title": "User-Centric",
-          "description": "Design experiences that reduce friction and scale with business needs."
+          "description": "Design intuitive experiences that solve user needs rather than wants."
         },
         "dataDriven": {
           "title": "Data-Driven",
-          "description": "Leverage SQL, analytics, and adoption metrics to validate decisions and measure impact."
+          "description": "Ditching the vanity metrics, leverage SQL and product analytics to validate decisions."
         },
         "iterative": {
           "title": "Iterative",
-          "description": "Ship MVPs, gather feedback, and improve through agile rituals and cross-functional sprints."
+          "description": "Ship MVPs, observe behaviour, gather feedback, and improve through agile rituals and cross-functional sprints."
         }
       },
       "highlights": {
-        "majorLaunches": "Sandbox Console, GST APIs, Qpon engine, Cliq affiliate platform",
-        "sideProjects": "AI automation apps, marketing automations with n8n and Google Scripts"
+        "majorLaunches": "Console, GST APIs, Qpon coupon engine, Cliq affiliate platform",
+        "sideProjects": "Vibecoded apps & automations with n8n"
       }
     }
   },
   "seo": {
     "title": "Vaibhav Bansal - Product Manager Portfolio",
-    "description": "Product Manager with 2+ years building fintech and automation products. View case studies, projects, and professional experience.",
+    "description": "Product Manager with 2+ years building fintech and automation products. View work, side projects, and professional experience.",
     "keywords": [
       "Product Manager",
       "FinTech",
@@ -80,12 +80,12 @@
       "href": "/about"
     },
     {
-      "name": "Case Studies",
-      "href": "/case-studies"
+      "name": "Work Projects",
+      "href": "/work-projects"
     },
     {
-      "name": "Projects",
-      "href": "/maker-projects"
+      "name": "Side Projects",
+      "href": "/side-projects"
     },
     // {
     //   "name": "Writing",
@@ -114,10 +114,10 @@
       "Postman",
       "JavaScript",
       "Google Analytics",
-      "NoSQL"
+      "Google Tag Manager"
     ],
     "design": [
-      "Figma",
+      "Figjam",
       "Wireframing",
       "Whimsical",
       "System Design"
@@ -132,27 +132,27 @@
   "caseStudies": [
     {
       "id": "sandbox-console",
-      "title": "Sandbox Console Redesign",
-      "subtitle": "Reducing onboarding-to-activation from 2 weeks to 3 days",
+      "title": "Sandbox Console",
+      "subtitle": "Self-serve billing and subscription management console",
       "description": "Launched a self-serve billing and subscription management console, consolidating API keys, usage analytics, team roles, wallet, and billing in one place.",
       "image": "/images/case-study-sandbox.jpg",
       "imageAlt": "Screenshot of Sandbox Console dashboard",
       "tags": [
         "FinTech",
-        "APIs",
-        "Self-Serve"
+        "Subscription",
+        "Onboarding"
       ],
       "duration": "4 months",
-      "team": "Designer, 2 Engineers, QA",
+      "team": "Designer, 2 Engineers",
       "role": "Product Manager",
       "comingSoon": false,
       "impact": {
-        "activationTime": "-85% (2 weeks → 3 days)",
-        "adoption": "100+ API-first clients onboarded",
-        "revenue": "20%+ of annual Sandbox revenue"
+        "activationTime": "-85%",
+        "leads": "3x",
+        "conversionRate": "20%+"
       },
       "content": {
-        "context": "Quicko’s API Sandbox platform required a modernized console to enable developers and businesses to manage subscriptions and usage without support intervention.",
+        "context": "Quicko's API Sandbox platform required a modernized console to enable developers and businesses to manage subscriptions and usage without support intervention.",
         "problem": "How can we reduce time-to-value for new customers and empower them with self-serve tools?",
         "process": [
           {
@@ -248,7 +248,7 @@
         "partnerTiers": "Dynamic tiers & triggers"
       },
       "content": {
-        "context": "The legacy affiliate system lacked scalability and configurability for expanding Quicko’s partner ecosystem.",
+        "context": "The legacy affiliate system lacked scalability and configurability for expanding Quicko's partner ecosystem.",
         "problem": "How might we rebuild Cliq to handle partner scaling, diverse commission rules, and transparent reporting?",
         "process": [
           {
@@ -294,7 +294,7 @@
         "adoption": "Marketing & ops teams actively using"
       },
       "content": {
-        "context": "Quicko’s marketing and ops teams faced recurring manual tasks that slowed productivity.",
+        "context": "Quicko's marketing and ops teams faced recurring manual tasks that slowed productivity.",
         "problem": "How might we leverage AI and workflow automation to eliminate repetitive tasks and free up team bandwidth?",
         "process": [
           {

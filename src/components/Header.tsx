@@ -72,7 +72,7 @@ const Header = () => {
             className="text-xl font-bold gradient-text hover:opacity-80 transition-opacity"
             aria-label={`${portfolioConfig.personal.name} - Home`}
           >
-            🚀🔝
+            🏠🚀
           </Link>
 
           {/* Desktop Navigation */}
