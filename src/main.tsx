@@ -3,6 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { PostHogProvider } from 'posthog-js/react'
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 // PostHog configuration with error handling
 const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY;
@@ -37,5 +39,7 @@ const AppWithAnalytics = isPostHogConfigured ? (
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     {AppWithAnalytics}
+    <Analytics />
+    <SpeedInsights />
   </StrictMode>,
 );
