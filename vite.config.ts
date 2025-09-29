@@ -7,6 +7,11 @@ import path from "path";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
+    port: 5173,
+    allowedHosts: ["5173-i7dwzowzwbmb8jps1lquz.e2b.app"],
+    hmr: {
+      host: "5173-i7dwzowzwbmb8jps1lquz.e2b.app",
+    },
   },
   plugins: [react()],
   resolve: {
