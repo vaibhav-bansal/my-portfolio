@@ -1,0 +1,4 @@
+services:
+  web:
+    command: npm i && npm run dev
+    cwd: .

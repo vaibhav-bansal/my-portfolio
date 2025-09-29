@@ -12,6 +12,7 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import MakerProjects from "./pages/MakerProjects";
 import ProjectDetail from "./pages/ProjectDetail";
+import Testimonials from "./pages/Testimonials";
 import Writing from "./pages/Writing";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
@@ -43,6 +44,7 @@ const AppContent = () => {
                     <Route path="work-projects/:id" element={<CaseStudyDetail />} />
                     <Route path="side-projects" element={<MakerProjects />} />
                     <Route path="side-projects/:id" element={<ProjectDetail />} />
+                    <Route path="testimonials" element={<Testimonials />} />
                     <Route path="writing" element={<Writing />} />
                     <Route path="resources" element={<Resources />} />
                     <Route path="*" element={<NotFound />} />
