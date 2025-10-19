@@ -143,26 +143,3 @@ export const useContactSettingsDirect = () => {
   })
 }
 
-// Test hook to verify Sanity connection
-export const useSanityConnectionTest = () => {
-  return useQuery({
-    queryKey: ['sanity-test'],
-    queryFn: async () => {
-      console.log('🧪 Testing Sanity connection...');
-      console.log('Project ID:', client.config().projectId);
-      console.log('Dataset:', client.config().dataset);
-      console.log('Token configured:', !!client.config().token);
-      
-      try {
-        const result = await client.fetch('*[_type == "personal"][0]')
-        console.log('✅ Connection test successful:', result);
-        return { success: true, data: result };
-      } catch (error) {
-        console.error('❌ Connection test failed:', error);
-        return { success: false, error: error.message };
-      }
-    },
-    retry: false,
-    staleTime: 0,
-  })
-}

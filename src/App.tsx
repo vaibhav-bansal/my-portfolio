@@ -9,7 +9,6 @@ import { initializeClarity } from "./lib/clarity";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
-import { useSanityConnectionTest } from "./hooks/useSanity";
 
 // Lazy load pages for better performance
 const About = lazy(() => import("./pages/About"));
@@ -57,15 +56,6 @@ const App = () => {
     initializeClarity();
   }, []);
 
-  // Debug Sanity connection in development
-  const { data: sanityTest } = useSanityConnectionTest();
-  
-  useEffect(() => {
-    if (import.meta.env.MODE === 'development') {
-      console.log('🔧 Sanity Connection Test Result:', sanityTest);
-    }
-  }, [sanityTest]);
-
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
@@ -78,7 +68,6 @@ const App = () => {
                 <Route path="/" element={<About />} />
                 <Route path="/work" element={<Work />} />
                 <Route path="/contact" element={<Contact />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
