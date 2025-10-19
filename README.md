@@ -41,19 +41,25 @@ npm install
 3. Create an API token with read permissions
 
 ### 4. Configure Environment
-Create a `.env` file:
+Create a `.env` file with your Sanity project details:
 ```env
+# Required: Your Sanity project ID
+VITE_SANITY_PROJECT_ID=your_project_id_here
+
+# Required: Your Sanity dataset name (usually 'production')
+VITE_SANITY_DATASET=production
+
+# Required: Your Sanity API token with read permissions
 VITE_SANITY_API_TOKEN=your_api_token_here
+
+# Optional: Sanity API version (defaults to '2024-01-01')
+VITE_SANITY_API_VERSION=2024-01-01
+
+# Optional: Contact form webhook URL
+VITE_CONTACT_WEBHOOK_URL=your_webhook_url_here
 ```
 
-Update `src/lib/sanity.ts` with your Sanity project details:
-```typescript
-export const client = createClient({
-  projectId: 'your-project-id',  // Replace with your project ID
-  dataset: 'production',         // Replace with your dataset
-  // ... rest of config
-})
-```
+**Security Note**: Never commit your `.env` file to version control. The configuration is now fully environment-based for security.
 
 ### 5. Add Your Content
 1. Start the Sanity Studio:

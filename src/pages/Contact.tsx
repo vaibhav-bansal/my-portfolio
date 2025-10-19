@@ -75,7 +75,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(contactSettings?.webhookUrl || '', {
+      const response = await fetch(contactSettings?.webhookUrl || import.meta.env.VITE_CONTACT_WEBHOOK_URL || '', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

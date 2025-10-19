@@ -14,10 +14,10 @@ import imageUrlBuilder from '@sanity/image-url'
 
 // Sanity configuration with optimized settings
 export const client = createClient({
-  projectId: 'nhwa1k1t',
-  dataset: 'production',
+  projectId: import.meta.env.VITE_SANITY_PROJECT_ID,
+  dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
   useCdn: true, // Use CDN for better performance
-  apiVersion: '2024-01-01',
+  apiVersion: import.meta.env.VITE_SANITY_API_VERSION || '2024-01-01',
   timeout: 10000, // Increased timeout for better reliability
   perspective: 'published', // Only fetch published content
   stega: {
@@ -26,6 +26,7 @@ export const client = createClient({
   // Add token for authenticated requests
   token: import.meta.env.VITE_SANITY_API_TOKEN,
 })
+
 
 // Fallback data in case Sanity is not accessible - using fictional placeholder data
 export const fallbackData = {
@@ -105,6 +106,7 @@ export const testConnection = async () => {
     return false
   }
 }
+
 
 // Image URL builder with optimizations
 const builder = imageUrlBuilder(client)
