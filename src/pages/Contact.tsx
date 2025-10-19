@@ -119,7 +119,7 @@ const Contact = () => {
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Contact Form */}
             <div className="animate-fade-in">
-              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
                 Let's Connect
               </h1>
               <p className="text-muted-foreground mb-8">
@@ -182,9 +182,12 @@ const Contact = () => {
 
             {/* Social Links */}
             <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              <h2 className="text-2xl font-semibold text-foreground mb-6">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
                 Find me online
-              </h2>
+              </h1>
+              <p className="text-muted-foreground mb-8">
+                Connect with me on social platforms and see my latest work.
+              </p>
 
               <div className="space-y-4">
                 {socialLinks?.map((link: any) => {
