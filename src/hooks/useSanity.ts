@@ -31,6 +31,8 @@ export const useAllData = () => {
       try {
         console.log('🔍 Attempting to fetch data from Sanity...');
         console.log('API Token present:', !!import.meta.env.VITE_SANITY_API_TOKEN);
+        console.log('Environment:', import.meta.env.MODE);
+        console.log('Token value (first 10 chars):', import.meta.env.VITE_SANITY_API_TOKEN?.substring(0, 10));
         
         const data = await client.fetch(queries.allData)
         console.log('✅ Sanity data fetched successfully:', data)
@@ -138,5 +140,29 @@ export const useContactSettingsDirect = () => {
     queryKey: ['contactSettings'],
     queryFn: () => client.fetch(queries.contactSettings),
     ...defaultQueryOptions,
+  })
+}
+
+// Test hook to verify Sanity connection
+export const useSanityConnectionTest = () => {
+  return useQuery({
+    queryKey: ['sanity-test'],
+    queryFn: async () => {
+      console.log('🧪 Testing Sanity connection...');
+      console.log('Project ID:', client.config().projectId);
+      console.log('Dataset:', client.config().dataset);
+      console.log('Token configured:', !!client.config().token);
+      
+      try {
+        const result = await client.fetch('*[_type == "personal"][0]')
+        console.log('✅ Connection test successful:', result);
+        return { success: true, data: result };
+      } catch (error) {
+        console.error('❌ Connection test failed:', error);
+        return { success: false, error: error.message };
+      }
+    },
+    retry: false,
+    staleTime: 0,
   })
 }

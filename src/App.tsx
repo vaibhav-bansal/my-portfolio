@@ -8,6 +8,7 @@ import { Suspense, lazy } from "react";
 import { initializeClarity } from "./lib/clarity";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { SpeedInsights } from "@vercel/speed-insights/react"
+import { useSanityConnectionTest } from "./hooks/useSanity";
 
 // Lazy load pages for better performance
 const About = lazy(() => import("./pages/About"));
@@ -54,6 +55,15 @@ const App = () => {
   useEffect(() => {
     initializeClarity();
   }, []);
+
+  // Debug Sanity connection in development
+  const { data: sanityTest } = useSanityConnectionTest();
+  
+  useEffect(() => {
+    if (import.meta.env.MODE === 'development') {
+      console.log('🔧 Sanity Connection Test Result:', sanityTest);
+    }
+  }, [sanityTest]);
 
   return (
     <ErrorBoundary>
