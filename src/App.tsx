@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { Suspense, lazy } from "react";
 import { initializeClarity } from "./lib/clarity";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { useSanityConnectionTest } from "./hooks/useSanity";
 
@@ -82,6 +83,7 @@ const App = () => {
               </Routes>
             </Suspense>
           </BrowserRouter>
+          <Analytics />
           <SpeedInsights />
         </TooltipProvider>
       </QueryClientProvider>
