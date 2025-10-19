@@ -54,8 +54,6 @@ const PageLoader = () => (
 const App = () => {
   useEffect(() => {
     initializeClarity();
-    // Test Sanity API with and without token
-    testWithAndWithoutToken();
   }, []);
 
   return (
