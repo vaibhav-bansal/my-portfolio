@@ -1,11 +1,24 @@
-import { portfolioConfig } from "@/config/portfolio";
 import PageLayout from "@/components/PageLayout";
 import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useProjects } from "@/hooks/useSanity";
+import DataError from "./DataError";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useEffect } from "react";
+import { trackPageView, trackEvent } from "@/lib/clarity";
 
 const Work = () => {
-  const { projects } = portfolioConfig.work;
-  const sortedProjects = [...projects].sort((a, b) => a.order - b.order);
+  const { data: projects, isLoading, error } = useProjects();
+  const sortedProjects = projects ? [...projects].sort((a: any, b: any) => (a.order || 0) - (b.order || 0)) : [];
+
+  useEffect(() => {
+    trackPageView('Work');
+  }, []);
+
+  // Error state
+  if (error) {
+    return <DataError />;
+  }
 
   // Calculate grid layout based on project count
   const getGridClass = () => {
@@ -22,21 +35,35 @@ const Work = () => {
     return "h-80"; // Small tiles with scroll
   };
 
+  // Loading state
+  if (isLoading) {
+    return (
+      <PageLayout>
+        <div className="px-6">
+          <div className="container mx-auto max-w-7xl text-center">
+            <LoadingSpinner size="lg" text="Loading projects..." />
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
   return (
     <PageLayout>
-      <div className={`h-full ${sortedProjects.length > 12 ? 'overflow-y-auto' : 'overflow-hidden'} px-6 py-8`}>
-        <div className="container mx-auto max-w-7xl h-full flex flex-col">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 animate-fade-in">
-            Selected Work
-          </h1>
-          
-          <div className={`grid ${getGridClass()} gap-6 flex-1`}>
-            {sortedProjects.map((project, index) => (
+      <div className={`px-6 py-8 ${sortedProjects.length > 12 ? 'overflow-y-auto' : ''}`}>
+        <div className="container mx-auto max-w-7xl">
+          <div className={`grid ${getGridClass()} gap-6`}>
+            {sortedProjects.map((project: any, index: number) => (
               <a
-                key={project.id}
+                key={project._id || project.id}
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent('project_clicked', { 
+                  projectTitle: project.title, 
+                  projectUrl: project.url,
+                  projectTags: project.tags 
+                })}
                 className={`group relative ${getTileHeight()} rounded-2xl overflow-hidden transition-all duration-300 hover:scale-[1.02] animate-fade-in`}
                 style={{
                   backgroundColor: project.color,
@@ -65,7 +92,7 @@ const Work = () => {
                   </div>
                   
                   <div className="flex flex-wrap gap-2">
-                    {project.tags.map((tag) => (
+                    {project.tags?.map((tag: string) => (
                       <Badge
                         key={tag}
                         variant="secondary"
@@ -73,7 +100,7 @@ const Work = () => {
                       >
                         {tag}
                       </Badge>
-                    ))}
+                    )) || []}
                   </div>
                 </div>
               </a>

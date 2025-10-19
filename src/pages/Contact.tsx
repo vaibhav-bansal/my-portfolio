@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { portfolioConfig } from "@/config/portfolio";
+import { useState, useEffect } from "react";
 import PageLayout from "@/components/PageLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,15 +6,42 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Linkedin, Twitter, Github, BookOpen, Send } from "lucide-react";
+import { useSocialLinks, useContactSettings } from "@/hooks/useSanity";
+import DataError from "./DataError";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { trackPageView, trackEvent } from "@/lib/clarity";
 
 const Contact = () => {
-  const { webhookUrl, socialLinks } = portfolioConfig.contact;
+  const { data: socialLinks, isLoading: socialLinksLoading, error: socialLinksError } = useSocialLinks();
+  const { data: contactSettings, isLoading: contactSettingsLoading, error: contactSettingsError } = useContactSettings();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
+
+  useEffect(() => {
+    trackPageView('Contact');
+  }, []);
+
+  // Error state
+  if (socialLinksError || contactSettingsError) {
+    return <DataError />;
+  }
+
+  // Loading state
+  if (socialLinksLoading || contactSettingsLoading) {
+    return (
+      <PageLayout>
+        <div className="px-6">
+          <div className="container mx-auto max-w-5xl text-center">
+            <LoadingSpinner size="lg" text="Loading contact information..." />
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   const iconMap: Record<string, any> = {
     linkedin: Linkedin,
@@ -49,7 +75,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(webhookUrl, {
+      const response = await fetch(contactSettings?.webhookUrl || '', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,11 +83,16 @@ const Contact = () => {
         body: JSON.stringify({
           ...formData,
           timestamp: new Date().toISOString(),
-          source: "webhav.live",
+          source: "vaibhav.bio",
         }),
       });
 
       if (response.ok) {
+        trackEvent('contact_form_submitted', { 
+          name: formData.name, 
+          email: formData.email,
+          messageLength: formData.message.length 
+        });
         toast({
           title: "Message sent!",
           description: "Thanks for reaching out. I'll get back to you soon.",
@@ -83,8 +114,8 @@ const Contact = () => {
 
   return (
     <PageLayout>
-      <div className="h-full flex items-center justify-center px-6 overflow-y-auto">
-        <div className="container mx-auto max-w-5xl py-8">
+      <div className="px-6 py-8">
+        <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-2 gap-12 items-start">
             {/* Contact Form */}
             <div className="animate-fade-in">
@@ -156,14 +187,15 @@ const Contact = () => {
               </h2>
 
               <div className="space-y-4">
-                {socialLinks.map((link) => {
+                {socialLinks?.map((link: any) => {
                   const Icon = iconMap[link.icon] || BookOpen;
                   return (
                     <a
-                      key={link.platform}
+                      key={link._id}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackEvent('social_link_clicked', { platform: link.platform, url: link.url })}
                       className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group"
                     >
                       <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300">
@@ -174,7 +206,7 @@ const Contact = () => {
                       </span>
                     </a>
                   );
-                })}
+                }) || []}
               </div>
 
               <div className="mt-8 p-6 rounded-xl bg-accent/50 border border-border">

@@ -1,64 +1,71 @@
-import { portfolioConfig } from "@/config/portfolio";
 import PageLayout from "@/components/PageLayout";
+import { usePersonal, useFocusAreas } from "@/hooks/useSanity";
+import DataError from "./DataError";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useEffect } from "react";
+import { trackPageView } from "@/lib/clarity";
 
 const About = () => {
-  const { personal, experience } = portfolioConfig;
+  const { data: personal, isLoading: personalLoading, error: personalError } = usePersonal();
+  const { data: focusAreas, isLoading: focusAreasLoading, error: focusAreasError } = useFocusAreas();
+
+  useEffect(() => {
+    trackPageView('About');
+  }, []);
+
+  // Error state
+  if (personalError || focusAreasError) {
+    return <DataError />;
+  }
+
+  // Loading state
+  if (personalLoading || focusAreasLoading) {
+    return (
+      <PageLayout>
+        <div className="px-6">
+          <div className="container mx-auto max-w-4xl text-center">
+            <LoadingSpinner size="lg" text="Loading your experience..." />
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>
-      <div className="h-full flex items-center justify-center px-6">
+      <div className="px-6 py-8">
         <div className="container mx-auto max-w-4xl">
           {/* Hero Message */}
-          <div className="mb-16 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              {personal.heroMessage}
+          <div className="mb-6 animate-fade-in">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
+              {personal?.heroMessage || "Building Digital Experiences"}
             </h1>
           </div>
 
           {/* Professional Summary */}
-          <div className="animate-fade-in mb-12" style={{ animationDelay: "0.2s" }}>
+          <div className="animate-fade-in mb-8" style={{ animationDelay: "0.2s" }}>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
-              {experience.summary}
+              {personal?.summary || "Passionate about creating meaningful digital products that solve real problems."}
             </p>
           </div>
 
           {/* Focus Areas */}
-          <div className="animate-fade-in mb-12" style={{ animationDelay: "0.3s" }}>
+          <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {experience.focusAreas.map((area, index) => (
+              {focusAreas?.map((area: any, index: number) => (
                 <div
-                  key={area.title}
-                  className="p-6 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 animate-fade-in"
+                  key={area._id}
+                  className="p-6 rounded-xl bg-[#8B7355] border border-[#6B5B47] hover:border-[#A68B6B] transition-all duration-300 animate-fade-in"
                   style={{ animationDelay: `${0.4 + index * 0.1}s` }}
                 >
-                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                  <h3 className="text-lg font-semibold text-white mb-3">
                     {area.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
+                  <p className="text-sm text-white/90 leading-relaxed">
                     {area.description}
                   </p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="animate-fade-in" style={{ animationDelay: "0.7s" }}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {experience.stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className="text-center p-6 rounded-xl bg-accent/30 border border-border"
-                  style={{ animationDelay: `${0.8 + index * 0.1}s` }}
-                >
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-muted-foreground">
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+              )) || []}
             </div>
           </div>
         </div>

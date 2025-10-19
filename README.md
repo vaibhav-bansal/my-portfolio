@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
+# Modern Portfolio Template
 
-## Project info
+A high-performance, modern portfolio website built with React, TypeScript, and Sanity CMS. Features optimized data fetching, dark beige styling, and a clean, minimalist design.
 
-**URL**: https://lovable.dev/projects/27fc0826-6d63-46c0-9bcf-e7aca7a48e4a
+## 🚀 Features
 
-## How can I edit this code?
+- ⚡ **Performance Optimized**: Single API call, aggressive caching, code splitting
+- 🎨 **Modern Design**: Clean, minimalist interface with dark beige accents
+- 📱 **Responsive**: Works perfectly on all devices
+- 🔧 **CMS Integration**: Content managed via Sanity Studio
+- 🚫 **No Scrolling**: Fixed viewport height design
+- 🎯 **SEO Ready**: Optimized for search engines
 
-There are several ways of editing your application.
+## 🛠 Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui components
+- **CMS**: Sanity (headless CMS)
+- **State Management**: TanStack Query (React Query)
+- **Routing**: React Router DOM
+- **Analytics**: Microsoft Clarity
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/27fc0826-6d63-46c0-9bcf-e7aca7a48e4a) and start prompting.
+## 🚀 Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
+### 1. Fork & Clone
+```bash
+git clone <YOUR_FORKED_REPO_URL>
+cd my-portfolio
+```
 
-**Use your preferred IDE**
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### 3. Set Up Sanity
+1. Create a new project at [sanity.io](https://sanity.io)
+2. Copy your project ID and dataset name
+3. Create an API token with read permissions
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### 4. Configure Environment
+Create a `.env` file:
+```env
+VITE_SANITY_API_TOKEN=your_api_token_here
+```
 
-Follow these steps:
+Update `src/lib/sanity.ts` with your Sanity project details:
+```typescript
+export const client = createClient({
+  projectId: 'your-project-id',  // Replace with your project ID
+  dataset: 'production',         // Replace with your dataset
+  // ... rest of config
+})
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### 5. Add Your Content
+1. Start the Sanity Studio:
+```bash
+cd studio-vaibhav.bio
+npm install
+npm run dev
+```
+2. Visit `http://localhost:3333` to manage your content
+3. Add your personal information, projects, and social links
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+### 6. Start Development Server
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Visit `http://localhost:8081` to see your portfolio!
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📁 Project Structure
 
-**Use GitHub Codespaces**
+```
+src/
+├── components/          # Reusable UI components
+├── pages/              # Main page components
+├── hooks/              # Custom React hooks
+├── lib/                # Utilities and configurations
+└── config/             # App configuration
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+studio-vaibhav.bio/     # Sanity Studio (content management)
+├── schemaTypes/        # Content schema definitions
+└── sanity.config.ts    # Studio configuration
+```
 
-## What technologies are used for this project?
+## 🎨 Customization
 
-This project is built with:
+### Content Types
+The portfolio supports these content types (defined in Sanity):
+- **Personal**: Name, hero message, summary
+- **Focus Areas**: Skills/expertise areas
+- **Projects**: Portfolio projects with images and links
+- **Social Links**: Social media and contact links
+- **Contact Settings**: Form webhook configuration
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Styling
+- Modify colors in `src/index.css`
+- Update component styles in individual files
+- Dark beige tiles can be customized in `src/pages/About.tsx`
 
-## How can I deploy this project?
+## 🚀 Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/27fc0826-6d63-46c0-9bcf-e7aca7a48e4a) and click on Share -> Publish.
+### Option 1: Vercel (Recommended)
+1. Connect your GitHub repo to Vercel
+2. Add environment variables in Vercel dashboard
+3. Deploy automatically on push
 
-## Can I connect a custom domain to my Lovable project?
+### Option 2: Netlify
+1. Connect your GitHub repo to Netlify
+2. Add environment variables
+3. Deploy automatically
 
-Yes, you can!
+### Option 3: Any Static Host
+```bash
+npm run build
+# Upload dist/ folder to your hosting provider
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📧 Contact Form Setup
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The contact form sends data to a webhook URL configured in Sanity. You can use:
+- **n8n**: Create a webhook workflow
+- **Formspree**: Simple form handling service
+- **Zapier**: Connect to email/CRM services
+- **Custom API**: Build your own endpoint
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgments
+
+- Built with [Vite](https://vitejs.dev/)
+- UI components from [shadcn/ui](https://ui.shadcn.com/)
+- Content management by [Sanity](https://sanity.io/)
+- Icons by [Lucide](https://lucide.dev/)
+
+---
+
+**Happy coding!** 🎉
