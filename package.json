@@ -12,7 +12,14 @@
     "url": "https://github.com/vaibhav-bansal/my-portfolio.git"
   },
   "homepage": "https://vaibhav.bio",
-  "keywords": ["portfolio", "react", "typescript", "sanity", "template", "vite"],
+  "keywords": [
+    "portfolio",
+    "react",
+    "typescript",
+    "sanity",
+    "template",
+    "vite"
+  ],
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -56,6 +63,7 @@
     "@sanity/client": "^7.12.0",
     "@sanity/image-url": "^1.2.0",
     "@tanstack/react-query": "^5.83.0",
+    "@vercel/speed-insights": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

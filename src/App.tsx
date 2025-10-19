@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { Suspense, lazy } from "react";
 import { initializeClarity } from "./lib/clarity";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Lazy load pages for better performance
 const About = lazy(() => import("./pages/About"));
@@ -21,7 +22,7 @@ const queryClient = new QueryClient({
       retry: 2,
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
       staleTime: 10 * 60 * 1000, // 10 minutes
-      cacheTime: 30 * 60 * 1000, // 30 minutes
+      gcTime: 30 * 60 * 1000, // 30 minutes (renamed from cacheTime in newer versions)
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: true,
@@ -71,6 +72,7 @@ const App = () => {
               </Routes>
             </Suspense>
           </BrowserRouter>
+          <SpeedInsights />
         </TooltipProvider>
       </QueryClientProvider>
     </ErrorBoundary>
