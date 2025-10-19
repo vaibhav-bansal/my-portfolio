@@ -1,7 +1,20 @@
 {
-  "name": "vite_react_shadcn_ts",
-  "private": true,
-  "version": "0.0.0",
+  "name": "modern-portfolio-template",
+  "description": "A high-performance, modern portfolio website built with React, TypeScript, and Sanity CMS",
+  "version": "1.0.0",
+  "author": {
+    "name": "Vaibhav Bansal",
+    "url": "https://github.com/vaibhav-bansal",
+    "email": "vaibhav@vaibhav.bio"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vaibhav-bansal/my-portfolio.git"
+  },
+  "homepage": "https://vaibhav.bio",
+  "keywords": ["portfolio", "react", "typescript", "sanity", "template", "vite"],
+  "license": "MIT",
+  "private": false,
   "type": "module",
   "scripts": {
     "dev": "vite",

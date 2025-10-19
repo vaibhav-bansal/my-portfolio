@@ -1,3 +1,14 @@
+/**
+ * Custom React Query Hooks for Sanity Data Fetching
+ * 
+ * @author Vaibhav Bansal
+ * @github https://github.com/vaibhav-bansal
+ * @website https://vaibhav.bio
+ * 
+ * Optimized data fetching hooks with caching, error handling,
+ * and fallback data for the portfolio template.
+ */
+
 import { useQuery } from '@tanstack/react-query'
 import { client, queries, fallbackData } from '@/lib/sanity'
 

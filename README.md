@@ -2,6 +2,8 @@
 
 A high-performance, modern portfolio website built with React, TypeScript, and Sanity CMS. Features optimized data fetching, dark beige styling, and a clean, minimalist design.
 
+> **Created by [Vaibhav Bansal](https://github.com/vaibhav-bansal)** | [View Live Demo](https://vaibhav.bio) | [Report Issues](https://github.com/vaibhav-bansal/my-portfolio/issues)
+
 ## 🚀 Features
 
 - ⚡ **Performance Optimized**: Single API call, aggressive caching, code splitting
@@ -136,11 +138,24 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
+- **Template Creator**: [Vaibhav Bansal](https://github.com/vaibhav-bansal) - [@vaibhav-bansal](https://github.com/vaibhav-bansal)
 - Built with [Vite](https://vitejs.dev/)
 - UI components from [shadcn/ui](https://ui.shadcn.com/)
 - Content management by [Sanity](https://sanity.io/)
 - Icons by [Lucide](https://lucide.dev/)
 
+## ⚖️ License & Attribution
+
+This project is open source and available under the [MIT License](LICENSE).
+
+**Important**: If you use this template, please:
+- ⭐ Star this repository
+- 🔗 Link back to the original repository
+- 📝 Mention the creator in your README
+- 🐛 Report bugs and contribute improvements
+
 ---
+
+**Created with ❤️ by [Vaibhav Bansal](https://github.com/vaibhav-bansal)**
 
 **Happy coding!** 🎉

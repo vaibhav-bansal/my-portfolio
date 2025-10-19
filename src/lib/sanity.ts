@@ -1,3 +1,14 @@
+/**
+ * Sanity CMS Configuration & Data Fetching
+ * 
+ * @author Vaibhav Bansal
+ * @github https://github.com/vaibhav-bansal
+ * @website https://vaibhav.bio
+ * 
+ * This file contains optimized Sanity client configuration,
+ * GROQ queries, and fallback data for the portfolio template.
+ */
+
 import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
@@ -16,11 +27,11 @@ export const client = createClient({
   token: import.meta.env.VITE_SANITY_API_TOKEN,
 })
 
-// Fallback data in case Sanity is not accessible
+// Fallback data in case Sanity is not accessible - using fictional placeholder data
 export const fallbackData = {
   personal: {
     _id: 'fallback',
-    name: 'Vaibhav',
+    name: 'Alex Developer',
     heroMessage: 'Building Digital Experiences',
     summary: 'Passionate about creating meaningful digital products that solve real problems.',
     profileImage: null
@@ -48,10 +59,10 @@ export const fallbackData = {
   projects: [
     {
       _id: 'fallback-project-1',
-      title: 'Portfolio Website',
+      title: 'Portfolio Template',
       subtitle: 'Modern React Portfolio',
       description: 'A high-performance portfolio website built with React, TypeScript, and Sanity CMS.',
-      url: 'https://vaibhav.bio',
+      url: 'https://example.com',
       color: '#3B82F6',
       tags: ['React', 'TypeScript', 'Sanity', 'Tailwind'],
       order: 1,
@@ -63,14 +74,14 @@ export const fallbackData = {
     {
       _id: 'fallback-social-1',
       platform: 'LinkedIn',
-      url: 'https://linkedin.com/in/vaibhav',
+      url: 'https://linkedin.com/in/example',
       icon: 'linkedin',
       order: 1
     },
     {
       _id: 'fallback-social-2',
       platform: 'GitHub', 
-      url: 'https://github.com/vaibhav',
+      url: 'https://github.com/example',
       icon: 'github',
       order: 2
     }
@@ -78,7 +89,7 @@ export const fallbackData = {
   contactSettings: {
     _id: 'fallback-contact',
     webhookUrl: '',
-    email: 'vaibhav@example.com',
+    email: 'example@placeholder.com',
     phone: '+1 (555) 123-4567'
   }
 }

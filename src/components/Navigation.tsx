@@ -37,7 +37,7 @@ const Navigation = () => {
           to="/" 
           className="text-lg font-semibold text-foreground hover:text-primary transition-colors"
         >
-          {personal?.name || "Vaibhav"}
+          {personal?.name || "Alex Developer"}
         </Link>
         
         <ul className="flex items-center gap-8">

@@ -21,8 +21,7 @@ const NotFound = () => {
               Lost in the digital wilderness?
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-              Looks like you've wandered off the beaten path. Don't worry, 
-              even the best explorers sometimes take a wrong turn!
+              Looks like you've wandered off the beaten path.
             </p>
           </div>
 
@@ -37,7 +36,7 @@ const NotFound = () => {
                   Double-Check the URL
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Sometimes a small typo can lead to big adventures. 
+                  A small typo can lead to big adventures. 
                   Check if everything looks right in the address bar.
                 </p>
               </div>
@@ -64,7 +63,7 @@ const NotFound = () => {
                 </h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   Sometimes the best solution is to begin again. 
-                  Head back to the about page and explore from there.
+                  Head back to the about page and explore.
                 </p>
               </div>
             </div>

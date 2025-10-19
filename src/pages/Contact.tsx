@@ -208,13 +208,6 @@ const Contact = () => {
                   );
                 }) || []}
               </div>
-
-              <div className="mt-8 p-6 rounded-xl bg-accent/50 border border-border">
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Open to discussing product strategy, user experience, and building
-                  meaningful digital products. Let's create something amazing together.
-                </p>
-              </div>
             </div>
           </div>
         </div>

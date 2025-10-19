@@ -36,14 +36,14 @@ const About = () => {
       <div className="px-6 py-8">
         <div className="container mx-auto max-w-4xl">
           {/* Hero Message */}
-          <div className="mb-6 animate-fade-in">
+          <div className="mb-12 animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-4">
               {personal?.heroMessage || "Building Digital Experiences"}
             </h1>
           </div>
 
           {/* Professional Summary */}
-          <div className="animate-fade-in mb-8" style={{ animationDelay: "0.2s" }}>
+          <div className="animate-fade-in mb-16" style={{ animationDelay: "0.2s" }}>
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
               {personal?.summary || "Passionate about creating meaningful digital products that solve real problems."}
             </p>
@@ -51,7 +51,7 @@ const About = () => {
 
           {/* Focus Areas */}
           <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {focusAreas?.map((area: any, index: number) => (
                 <div
                   key={area._id}
