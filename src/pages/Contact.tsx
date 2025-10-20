@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Linkedin, Twitter, Github, BookOpen, Send } from "lucide-react";
-import { useSocialLinks, useContactSettings } from "@/hooks/useSanity";
+import { useSocialLinks, useContactSettings, usePersonal } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { trackPageView, trackEvent } from "@/lib/clarity";
@@ -14,6 +14,7 @@ import { trackPageView, trackEvent } from "@/lib/clarity";
 const Contact = () => {
   const { data: socialLinks, isLoading: socialLinksLoading, error: socialLinksError } = useSocialLinks();
   const { data: contactSettings, isLoading: contactSettingsLoading, error: contactSettingsError } = useContactSettings();
+  const { data: personal, isLoading: personalLoading, error: personalError } = usePersonal();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -26,12 +27,12 @@ const Contact = () => {
   }, []);
 
   // Error state
-  if (socialLinksError || contactSettingsError) {
+  if (socialLinksError || contactSettingsError || personalError) {
     return <DataError />;
   }
 
   // Loading state
-  if (socialLinksLoading || contactSettingsLoading) {
+  if (socialLinksLoading || contactSettingsLoading || personalLoading) {
     return (
       <PageLayout>
         <div className="px-6">
@@ -210,6 +211,26 @@ const Contact = () => {
                     </a>
                   );
                 }) || []}
+                
+                {/* Resume Download */}
+                {personal?.resume && (
+                  <a
+                    href={personal.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => trackEvent('resume_downloaded', { source: 'contact_page' })}
+                    className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group"
+                  >
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                    </div>
+                    <span className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                      Download Resume
+                    </span>
+                  </a>
+                )}
               </div>
             </div>
           </div>

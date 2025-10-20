@@ -38,6 +38,15 @@ export default defineType({
       options: {
         hotspot: true
       }
+    }),
+    defineField({
+      name: 'resume',
+      title: 'Resume/CV',
+      type: 'file',
+      options: {
+        accept: '.pdf'
+      },
+      description: 'Upload your resume/CV as a PDF file'
     })
   ],
   preview: {

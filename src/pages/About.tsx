@@ -47,6 +47,33 @@ const About = () => {
             <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl">
               {personal?.summary || "Passionate about creating meaningful digital products that solve real problems."}
             </p>
+            
+            {/* Resume Download Button */}
+            {personal?.resume && (
+              <div className="mt-8">
+                <a
+                  href={personal.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-6 py-3 bg-[#8B7355] hover:bg-[#A68B6B] text-white font-medium rounded-lg transition-colors duration-200 hover:shadow-lg"
+                >
+                  <svg 
+                    className="w-5 h-5 mr-2" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                    />
+                  </svg>
+                  Download Resume
+                </a>
+              </div>
+            )}
           </div>
 
           {/* Focus Areas */}

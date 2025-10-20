@@ -124,7 +124,8 @@ export const queries = {
     name,
     heroMessage,
     summary,
-    "profileImage": profileImage.asset->url
+    "profileImage": profileImage.asset->url,
+    "resume": resume.asset->url
   }`,
   
   // Focus areas - optimized query
@@ -186,7 +187,8 @@ export const queries = {
       name,
       heroMessage,
       summary,
-      "profileImage": profileImage.asset->url
+      "profileImage": profileImage.asset->url,
+      "resume": resume.asset->url
     },
     "focusAreas": *[_type == "focusArea"] | order(order asc) {
       _id,
