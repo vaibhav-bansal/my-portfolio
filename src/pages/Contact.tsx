@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
-import { Linkedin, Twitter, Github, BookOpen, Send } from "lucide-react";
+import { Linkedin, Twitter, Github, BookOpen, Send, Phone } from "lucide-react";
 import { useSocialLinks, useContactSettings, usePersonal } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -19,8 +20,11 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
+    countryCode: "+91",
     message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     trackPageView('Contact');
@@ -51,25 +55,98 @@ const Contact = () => {
     medium: BookOpen,
   };
 
+  // Country codes for phone number selector
+  const countryCodes = [
+    { code: "+91", country: "India", flag: "🇮🇳" },
+    { code: "+1", country: "United States", flag: "🇺🇸" },
+    { code: "+44", country: "United Kingdom", flag: "🇬🇧" },
+    { code: "+49", country: "Germany", flag: "🇩🇪" },
+    { code: "+33", country: "France", flag: "🇫🇷" },
+    { code: "+81", country: "Japan", flag: "🇯🇵" },
+    { code: "+86", country: "China", flag: "🇨🇳" },
+    { code: "+61", country: "Australia", flag: "🇦🇺" },
+    { code: "+55", country: "Brazil", flag: "🇧🇷" },
+    { code: "+7", country: "Russia", flag: "🇷🇺" },
+  ];
+
+  // Validation functions
+  const validateField = (field: string, value: string) => {
+    let error = "";
+
+    switch (field) {
+      case 'name':
+        if (!value.trim()) {
+          error = 'Name is required';
+        } else if (value.trim().length < 2) {
+          error = 'Name must be at least 2 characters';
+        }
+        break;
+      
+      case 'email':
+        if (!value.trim()) {
+          error = 'Email is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = 'Please enter a valid email address';
+        }
+        break;
+      
+      case 'phone':
+        if (value.trim() && !/^[\d\s\-\(\)]+$/.test(value)) {
+          error = 'Please enter a valid phone number';
+        } else if (value.trim() && value.replace(/\D/g, '').length < 7) {
+          error = 'Phone number must be at least 7 digits';
+        }
+        break;
+      
+      case 'message':
+        if (!value.trim()) {
+          error = 'Message is required';
+        } else if (value.trim().length < 10) {
+          error = 'Message must be at least 10 characters';
+        }
+        break;
+    }
+
+    setErrors((prevErrors) => {
+      const updatedErrors = { ...prevErrors };
+
+      if (error) {
+        updatedErrors[field] = error;
+      } else {
+        delete updatedErrors[field];
+      }
+
+      return updatedErrors;
+    });
+
+    return !error;
+  };
+
+  const validateForm = () => {
+    const fields = ['name', 'email', 'message'];
+    let isValid = true;
+    
+    fields.forEach(field => {
+      if (!validateField(field, formData[field as keyof typeof formData])) {
+        isValid = false;
+      }
+    });
+    
+    // Validate phone if provided
+    if (formData.phone.trim()) {
+      if (!validateField('phone', formData.phone)) {
+        isValid = false;
+      }
+    }
+    
+    return isValid;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validation
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
-      toast({
-        title: "Missing fields",
-        description: "Please fill in all fields",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address",
-        variant: "destructive",
-      });
+    // Validate form
+    if (!validateForm()) {
       return;
     }
 
@@ -83,6 +160,7 @@ const Contact = () => {
         },
         body: JSON.stringify({
           ...formData,
+          fullPhone: formData.phone ? `${formData.countryCode} ${formData.phone}` : '',
           timestamp: new Date().toISOString(),
           source: "vaibhav.bio",
         }),
@@ -92,13 +170,15 @@ const Contact = () => {
         trackEvent('contact_form_submitted', { 
           name: formData.name, 
           email: formData.email,
+          phone: formData.phone ? 'provided' : 'not_provided',
           messageLength: formData.message.length 
         });
         toast({
           title: "Message sent!",
           description: "Thanks for reaching out. I'll get back to you soon.",
         });
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", countryCode: "+91", message: "" });
+        setErrors({});
       } else {
         throw new Error("Failed to send");
       }
@@ -134,10 +214,17 @@ const Contact = () => {
                     id="name"
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="mt-1"
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      validateField('name', e.target.value);
+                    }}
+                    onBlur={(e) => validateField('name', e.target.value)}
+                    className={`mt-1 ${errors.name ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Your name"
                   />
+                  {errors.name && (
+                    <p className="mt-1 text-sm text-amber-700 underline">{errors.name}</p>
+                  )}
                 </div>
 
                 <div>
@@ -146,10 +233,58 @@ const Contact = () => {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="mt-1"
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      validateField('email', e.target.value);
+                    }}
+                    onBlur={(e) => validateField('email', e.target.value)}
+                    className={`mt-1 ${errors.email ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="your@email.com"
                   />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-amber-700 underline">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="phone" className="flex items-center gap-2">
+                    Phone <span className="text-sm text-muted-foreground font-normal">(optional)</span>
+                  </Label>
+                  <div className="flex gap-2 mt-1">
+                    <Select
+                      value={formData.countryCode}
+                      onValueChange={(value) => setFormData({ ...formData, countryCode: value })}
+                    >
+                      <SelectTrigger className="w-32">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {countryCodes.map((country) => (
+                          <SelectItem key={country.code} value={country.code}>
+                            <span className="flex items-center gap-2">
+                              <span>{country.flag}</span>
+                              <span>{country.code}</span>
+                            </span>
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => {
+                        setFormData({ ...formData, phone: e.target.value });
+                        validateField('phone', e.target.value);
+                      }}
+                      onBlur={(e) => validateField('phone', e.target.value)}
+                      className={`flex-1 ${errors.phone ? 'border-amber-600 bg-amber-50' : ''}`}
+                      placeholder="Phone number"
+                    />
+                  </div>
+                  {errors.phone && (
+                    <p className="mt-1 text-sm text-amber-700 underline">{errors.phone}</p>
+                  )}
                 </div>
 
                 <div>
@@ -157,10 +292,17 @@ const Contact = () => {
                   <Textarea
                     id="message"
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="mt-1 min-h-[120px] resize-none"
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      validateField('message', e.target.value);
+                    }}
+                    onBlur={(e) => validateField('message', e.target.value)}
+                    className={`mt-1 min-h-[120px] resize-none ${errors.message ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Tell me about your project or idea..."
                   />
+                  {errors.message && (
+                    <p className="mt-1 text-sm text-amber-700 underline">{errors.message}</p>
+                  )}
                 </div>
 
                 <Button
@@ -211,26 +353,6 @@ const Contact = () => {
                     </a>
                   );
                 }) || []}
-                
-                {/* Resume Download */}
-                {personal?.resume && (
-                  <a
-                    href={personal.resume}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => trackEvent('resume_downloaded', { source: 'contact_page' })}
-                    className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group"
-                  >
-                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300">
-                      <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                    <span className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
-                      Download Resume
-                    </span>
-                  </a>
-                )}
               </div>
             </div>
           </div>
