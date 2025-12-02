@@ -20,8 +20,26 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
-      rows: 3,
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            { title: 'Normal', value: 'normal' },
+            { title: 'H2', value: 'h2' },
+            { title: 'H3', value: 'h3' },
+            { title: 'Quote', value: 'blockquote' }
+          ],
+          lists: [
+            { title: 'Bullet', value: 'bullet' },
+            { title: 'Number', value: 'number' }
+          ]
+        },
+        {
+          type: 'image',
+          options: { hotspot: true }
+        }
+      ],
       validation: Rule => Rule.required()
     }),
     defineField({
@@ -54,8 +72,31 @@ export default defineType({
       name: 'order',
       title: 'Display Order',
       type: 'number',
-      description: 'Order in which this project appears (lower numbers first)',
-      validation: Rule => Rule.min(0).integer()
+      description: 'Order in which this project appears (lower numbers first). Must be unique.',
+      validation: Rule => Rule
+        .required()
+        .min(0)
+        .integer()
+        .custom(async (order, context) => {
+          if (order == null) {
+            return 'Display order is required';
+          }
+          
+          const { document, getClient } = context;
+          const client = getClient({ apiVersion: '2023-05-03' });
+          
+          // Check if another project has the same order
+          const existingProjects = await client.fetch(
+            `*[_type == "project" && order == $order && _id != $id]`,
+            { order, id: document._id }
+          );
+          
+          if (existingProjects.length > 0) {
+            return `Display order ${order} is already used by another project. Please choose a unique number.`;
+          }
+          
+          return true;
+        })
     }),
     defineField({
       name: 'featured',
@@ -71,30 +112,6 @@ export default defineType({
       options: {
         hotspot: true
       }
-    }),
-    defineField({
-      name: 'content',
-      title: 'Detailed Content',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'H2', value: 'h2' },
-            { title: 'H3', value: 'h3' },
-            { title: 'Quote', value: 'blockquote' }
-          ],
-          lists: [
-            { title: 'Bullet', value: 'bullet' },
-            { title: 'Number', value: 'number' }
-          ]
-        },
-        {
-          type: 'image',
-          options: { hotspot: true }
-        }
-      ]
     })
   ],
   preview: {

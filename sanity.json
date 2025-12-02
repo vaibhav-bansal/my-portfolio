@@ -1,0 +1,195 @@
+{
+    "result": {
+        "contactSettings": null,
+        "focusAreas": [
+            {
+                "_id": "759f5ddc-b71c-4fd3-ad4e-1620895bf8cf",
+                "description": "Reducing time-to-activation through intuitive, delightful onboarding experiences that convert users into engaged customers",
+                "order": 1,
+                "title": "Onboarding"
+            },
+            {
+                "_id": "a9783dd6-2c5e-4b04-926e-222d25fcefb4",
+                "description": "Unlocking recurring revenue with thoughtful subscription models, billing flows, and payment experiences.",
+                "order": 2,
+                "title": "Revenue \u0026 Subscriptions"
+            },
+            {
+                "_id": "4a8a3084-8b47-4ad4-99e3-8d72b5df2ac1",
+                "description": "Scaling through API-first product design and intuitive, comprehensive documentation to enhance adoption for tech and non-tech people alike.",
+                "order": null,
+                "title": "Developer Experience"
+            }
+        ],
+        "personal": {
+            "_id": "736fe383-0843-4868-bf9f-672069413d9d",
+            "heroMessage": "Let's build and deliver delight together!",
+            "name": "Vaibhav Bansal",
+            "profileImage": null,
+            "resume": "https://cdn.sanity.io/files/nhwa1k1t/production/068f21bd30eb9efca18c1ce92cda8094102e13a0.pdf",
+            "summary": "Hi, I am Vaibhav. With 4 years working in product companies and 2+ years leading high-impact product initiatives, I specialize in building technical, scalable solutions that drive business outcomes."
+        },
+        "projects": [
+            {
+                "_id": "122539cb-7789-4477-b875-ad0c449cbade",
+                "color": "hsl(210 70% 60%)",
+                "description": "Sandbox Console is the control centre for customers to onboard, manage billing, and monitor usage without relying on internal teams. By replacing a legacy internal dashboard with a self-serve experience, Console cut customer activation time from ~2 weeks to ~3 days and freed sales and ops from repetitive setup work.",
+                "featured": true,
+                "image": null,
+                "order": 1,
+                "subtitle": "Cut onboarding-to-activation from 2 weeks to 3 days",
+                "tags": [
+                    "Billing",
+                    "Subscription",
+                    "Payments",
+                    "Onboarding"
+                ],
+                "title": "Sandbox Console",
+                "url": "https://console.sandbox.co.in/"
+            },
+            {
+                "_id": "65066807-e26c-47b8-977b-adfd11c5a246",
+                "color": "hsl(160 70% 55%)",
+                "description": "Sandbox GST APIs helps businesses automate GST workflows like onboarding returns, E-Invoicing, and E-Way Billing. By packaging these flows into predictable APIs with clear documentation, we unlocked new ERP and fintech integrations and drove 20%+ of Sandbox platform revenue in FY 2024–25.",
+                "featured": false,
+                "image": null,
+                "order": 2,
+                "subtitle": "Drove 20%+ of Sandbox annual revenue (FY 2024–25)",
+                "tags": [
+                    "Tax Tech",
+                    "Reg Tech",
+                    "GST",
+                    "API"
+                ],
+                "title": "GST API Suite",
+                "url": "https://developer.sandbox.co.in/api-reference/gst/overview"
+            },
+            {
+                "_id": "3ae2e8f9-ddc7-46e9-8fb2-4fc09a81d57a",
+                "color": "hsl(0 70% 60%)",
+                "description": "Led an org-wide shift to storyboarding and Scrum so product, design, and engineering had a shared way of planning work. This improved sprint predictability, reduced last-minute surprises, and made it easier for teams to align on user value before committing to builds.",
+                "featured": false,
+                "image": null,
+                "order": 3,
+                "subtitle": "Introduced storyboarding \u0026 Scrum across teams",
+                "tags": [
+                    "Agile",
+                    "Scrum",
+                    "Storyboarding",
+                    "User Training"
+                ],
+                "title": "Agile Transformation",
+                "url": "https://medium.com/@vaibhav-bansal/baking-pizzas-the-agile-way-63937b3edc8e"
+            },
+            {
+                "_id": "1eaf082d-6718-493f-9426-49b68beb8f18",
+                "color": "hsl(260 70% 60%)",
+                "description": "This started as my personal site and evolved into a reusable portfolio template that anyone can fork and adapt. Instead of hardcoding content, everything flows from a simple Sanity CMS schema, so adding or editing projects takes a few minutes in a dashboard—not a code push. The result is a fast, minimal site that lets people ship a credible portfolio quickly.",
+                "featured": false,
+                "image": null,
+                "order": 4,
+                "subtitle": "CMS-powered portfolio that anyone can customize and deploy",
+                "tags": [
+                    "Hobby",
+                    "Lovable",
+                    "Cursor",
+                    "GitHub",
+                    "Vibe Coding"
+                ],
+                "title": "Modern Portfolio Template",
+                "url": "https://github.com/vaibhav-bansal/my-portfolio"
+            },
+            {
+                "_id": "30fddf8a-70a9-4510-9414-94b2c547a778",
+                "color": "hsl(35 80% 60%)",
+                "description": "Qpon is a campaign engine that lets growth teams launch targeted offers without waiting on engineering. It has powered 30k+ plan upgrades in FY 2024–25 while keeping misuse low through guardrails on eligibility, discount limits, expiry and more. This turned promotions into a reliable revenue lever instead of ad-hoc one-offs.",
+                "featured": false,
+                "image": null,
+                "order": 5,
+                "subtitle": "Drove upsells by enabling 30k users to upgrade",
+                "tags": [
+                    "Growth",
+                    "Monetization",
+                    "Campaign",
+                    "Pricing"
+                ],
+                "title": "Qpon",
+                "url": "https://quicko.company/labs/qpon"
+            },
+            {
+                "_id": "6f3a8b4b-2470-4315-ad6c-743cef1f41d5",
+                "color": "hsl(280 65% 62%)",
+                "description": "Rebuilt Quicko’s partner and affiliate platform so 250+ partners could easily track referrals, conversions, and payouts. Event-based workflows, transparent dashboards and tiered rewards helped partners refer 100k+ customers in FY 2024–25, turning Cliq into a scalable, data-rich acquisition channel.",
+                "featured": false,
+                "image": null,
+                "order": 6,
+                "subtitle": "Achieved 100k+ referred customers via 250+ partners ",
+                "tags": [
+                    "Affiliate",
+                    "Partnerships",
+                    "Martech",
+                    "Marketing",
+                    "Growth"
+                ],
+                "title": "Cliq",
+                "url": "https://github.com/org-quicko/cliq"
+            },
+            {
+                "_id": "5880b57b-3407-46b9-9789-7e03585db6a3",
+                "color": "hsl(195 75% 55%)",
+                "description": "Revamped Sandbox API documentation to boost developer experience (DX). New users now start with guides, recipes and a web-based testing environment rather than a flat list of endpoints, which reduces time to activation, support queries and makes it easier for non-technical stakeholders to understand capabilities.",
+                "featured": false,
+                "image": null,
+                "order": 7,
+                "subtitle": "Revamped DX that decreases time to activation",
+                "tags": [
+                    "D2D Economy",
+                    "Developer Experience",
+                    "API Documentation",
+                    "Mintlify"
+                ],
+                "title": "Sandbox API Docs",
+                "url": "https://developer.sandbox.co.in"
+            }
+        ],
+        "socialLinks": [
+            {
+                "_id": "cd8c930c-8d37-4d38-9900-9a4943528d35",
+                "icon": "linkedin",
+                "order": 1,
+                "platform": "LinkedIn",
+                "url": "https://www.linkedin.com/in/vaibhavbansal7/"
+            },
+            {
+                "_id": "13a4d294-2e55-4e94-89ac-35f1251583d7",
+                "icon": "github",
+                "order": 2,
+                "platform": "GitHub",
+                "url": "https://github.com/vaibhav-bansal/"
+            },
+            {
+                "_id": "52ddc5d9-49ff-4216-8f15-3e0a7724ea64",
+                "icon": "medium",
+                "order": 3,
+                "platform": "Medium",
+                "url": "https://vaibhav-bansal.medium.com/"
+            },
+            {
+                "_id": "e5628cbd-5d54-44f3-938d-7bbc37d69699",
+                "icon": "twitter",
+                "order": 3,
+                "platform": "Twitter",
+                "url": "https://twitter.com/vaibhav_bansal7"
+            }
+        ]
+    },
+    "syncTags": [
+        "s1:JLbA2g",
+        "s1:uvp0TQ",
+        "s1:eEGTUg",
+        "s1:2n09nw",
+        "s1:A8UNlg",
+        "s1:qaSERg"
+    ],
+    "ms": 25
+}
