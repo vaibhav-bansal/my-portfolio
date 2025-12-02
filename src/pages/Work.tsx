@@ -13,7 +13,7 @@ import { extractPlainText } from "@/lib/portableText";
 const DescriptionWithEllipsis = ({ description }: { description: string }) => {
   return (
     <div 
-      className="flex-1 min-h-0 overflow-hidden relative pr-16 sm:pr-20 w-full"
+      className="flex-1 min-h-0 overflow-hidden relative w-full"
       style={{
         maxHeight: '6rem' // Exactly 4 lines: 4 * 1.5rem = 6rem
       }}
