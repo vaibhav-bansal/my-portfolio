@@ -199,7 +199,7 @@ const Contact = () => {
         <div className="container mx-auto max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
             {/* Contact Form */}
-            <div className="animate-fade-in order-2 lg:order-1">
+            <div className="animate-fade-in order-2 lg:order-1 hidden">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 Let's Connect
               </h1>
