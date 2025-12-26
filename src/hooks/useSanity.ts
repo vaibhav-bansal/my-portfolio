@@ -30,9 +30,7 @@ export const useAllData = () => {
     queryFn: async () => {
       try {
         console.log('🔍 Attempting to fetch data from Sanity...');
-        console.log('API Token present:', !!import.meta.env.VITE_SANITY_API_TOKEN);
         console.log('Environment:', import.meta.env.MODE);
-        console.log('Token value (first 10 chars):', import.meta.env.VITE_SANITY_API_TOKEN?.substring(0, 10));
         
         const data = await client.fetch(queries.allData)
         console.log('✅ Sanity data fetched successfully:', data)
