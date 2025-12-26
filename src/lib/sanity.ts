@@ -23,8 +23,6 @@ export const client = createClient({
   stega: {
     enabled: false, // Disable stega for better performance
   },
-  // Add token for authenticated requests
-  token: import.meta.env.VITE_SANITY_API_TOKEN,
 })
 
 
