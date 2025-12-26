@@ -2,6 +2,7 @@ import { NavLink, Link } from "react-router-dom";
 import { usePersonal, useAllData } from "@/hooks/useSanity";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { trackEvent } from "@/lib/posthog";
 
 const Navigation = () => {
   const { data: personal } = usePersonal();
@@ -37,6 +38,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between max-w-screen-xl">
         <Link 
           to="/" 
+          onClick={() => trackEvent('navigation_logo_clicked')}
           className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors"
         >
           {personal?.name || "Alex Developer"}
@@ -50,6 +52,7 @@ const Navigation = () => {
                 to={item.path}
                 end={item.path === "/"}
                 onMouseEnter={() => handleMouseEnter(item.path)}
+                onClick={() => trackEvent('navigation_link_clicked', { page: item.label, path: item.path })}
                 className={({ isActive }) =>
                   `text-sm lg:text-base font-medium transition-colors hover:text-foreground ${
                     isActive ? "text-foreground" : "text-muted-foreground"
@@ -64,7 +67,10 @@ const Navigation = () => {
 
         {/* Mobile Menu Button */}
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => {
+            setIsMobileMenuOpen(!isMobileMenuOpen);
+            trackEvent('mobile_menu_toggled', { isOpen: !isMobileMenuOpen });
+          }}
           className="md:hidden p-2 rounded-md hover:bg-accent transition-colors touch-manipulation"
           aria-label="Toggle menu"
         >
@@ -85,7 +91,10 @@ const Navigation = () => {
                 <NavLink
                   to={item.path}
                   end={item.path === "/"}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    trackEvent('mobile_navigation_link_clicked', { page: item.label, path: item.path });
+                  }}
                   className={({ isActive }) =>
                     `block py-2 text-base font-medium transition-colors ${
                       isActive ? "text-foreground" : "text-muted-foreground hover:text-foreground"

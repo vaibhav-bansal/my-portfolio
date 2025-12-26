@@ -10,6 +10,7 @@ import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PortableText } from "@portabletext/react";
 import { PortableTextBlock } from "@portabletext/types";
+import { trackEvent } from "@/lib/posthog";
 
 interface ProjectModalProps {
   project: {
@@ -93,6 +94,11 @@ const ProjectModal = ({ project, open, onOpenChange }: ProjectModalProps) => {
                   href={project.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('project_modal_external_link_clicked', {
+                    projectTitle: project.title,
+                    projectId: project._id || project.id,
+                    projectUrl: project.url,
+                  })}
                   className="flex items-center gap-2"
                 >
                   View Project

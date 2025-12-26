@@ -2,10 +2,11 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Suspense, lazy } from "react";
 import { initializeClarity } from "./lib/clarity";
+import { initializePostHog, trackPageView } from "./lib/posthog";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
@@ -51,9 +52,29 @@ const PageLoader = () => (
   </div>
 );
 
+// Component to track route changes
+const RouteTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Map routes to page names
+    const pageMap: Record<string, string> = {
+      '/': 'About',
+      '/work': 'Work',
+      '/contact': 'Contact',
+    };
+    
+    const pageName = pageMap[location.pathname] || 'NotFound';
+    trackPageView(pageName, { path: location.pathname });
+  }, [location.pathname]);
+
+  return null;
+};
+
 const App = () => {
   useEffect(() => {
     initializeClarity();
+    initializePostHog();
   }, []);
 
   return (
@@ -63,6 +84,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <RouteTracker />
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<About />} />
