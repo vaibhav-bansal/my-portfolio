@@ -39,7 +39,7 @@ const Contact = () => {
   if (socialLinksLoading || contactSettingsLoading || personalLoading) {
     return (
       <PageLayout>
-        <div className="px-6">
+        <div className="px-4 sm:px-6">
           <div className="container mx-auto max-w-5xl text-center">
             <LoadingSpinner size="lg" text="Loading contact information..." />
           </div>
@@ -195,19 +195,19 @@ const Contact = () => {
 
   return (
     <PageLayout>
-      <div className="px-6 py-8">
+      <div className="px-4 sm:px-6 md:px-8 py-6 sm:py-8">
         <div className="container mx-auto max-w-5xl">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
             {/* Contact Form */}
-            <div className="animate-fade-in">
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+            <div className="animate-fade-in order-2 lg:order-1 hidden">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 Let's Connect
               </h1>
-              <p className="text-muted-foreground mb-8">
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">
                 Interested in working together? Drop me a message.
               </p>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div>
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -219,7 +219,7 @@ const Contact = () => {
                       validateField('name', e.target.value);
                     }}
                     onBlur={(e) => validateField('name', e.target.value)}
-                    className={`mt-1 ${errors.name ? 'border-amber-600 bg-amber-50' : ''}`}
+                    className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.name ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Your name"
                   />
                   {errors.name && (
@@ -238,7 +238,7 @@ const Contact = () => {
                       validateField('email', e.target.value);
                     }}
                     onBlur={(e) => validateField('email', e.target.value)}
-                    className={`mt-1 ${errors.email ? 'border-amber-600 bg-amber-50' : ''}`}
+                    className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.email ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="your@email.com"
                   />
                   {errors.email && (
@@ -278,7 +278,7 @@ const Contact = () => {
                         validateField('phone', e.target.value);
                       }}
                       onBlur={(e) => validateField('phone', e.target.value)}
-                      className={`flex-1 ${errors.phone ? 'border-amber-600 bg-amber-50' : ''}`}
+                      className={`flex-1 h-10 sm:h-11 text-sm sm:text-base ${errors.phone ? 'border-amber-600 bg-amber-50' : ''}`}
                       placeholder="Phone number"
                     />
                   </div>
@@ -297,7 +297,7 @@ const Contact = () => {
                       validateField('message', e.target.value);
                     }}
                     onBlur={(e) => validateField('message', e.target.value)}
-                    className={`mt-1 min-h-[120px] resize-none ${errors.message ? 'border-amber-600 bg-amber-50' : ''}`}
+                    className={`mt-1 min-h-[120px] resize-none text-sm sm:text-base ${errors.message ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Tell me about your project or idea..."
                   />
                   {errors.message && (
@@ -308,7 +308,7 @@ const Contact = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full"
+                  className="w-full h-11 sm:h-12 text-sm sm:text-base touch-manipulation"
                   size="lg"
                 >
                   {isSubmitting ? (
@@ -324,15 +324,15 @@ const Contact = () => {
             </div>
 
             {/* Social Links */}
-            <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
-              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-6">
+            <div className="animate-fade-in order-1 lg:order-2" style={{ animationDelay: "0.2s" }}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 Find me online
               </h1>
-              <p className="text-muted-foreground mb-8">
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8">
                 Connect with me on social platforms and see my latest work.
               </p>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {socialLinks?.map((link: any) => {
                   const Icon = iconMap[link.icon] || BookOpen;
                   return (
@@ -342,12 +342,12 @@ const Contact = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => trackEvent('social_link_clicked', { platform: link.platform, url: link.url })}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group"
+                      className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group touch-manipulation"
                     >
-                      <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300">
-                        <Icon className="w-6 h-6 text-primary" />
+                      <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                       </div>
-                      <span className="text-lg font-medium text-foreground group-hover:text-primary transition-colors">
+                      <span className="text-base sm:text-lg font-medium text-foreground group-hover:text-primary transition-colors">
                         {link.platform}
                       </span>
                     </a>
