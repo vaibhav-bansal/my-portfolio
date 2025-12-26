@@ -1,8 +1,9 @@
 import posthog from 'posthog-js';
 
 // PostHog configuration from environment variables
-const POSTHOG_API_KEY = import.meta.env.NEXT_PUBLIC_POSTHOG_KEY || '';
-const POSTHOG_HOST = import.meta.env.NEXT_PUBLIC_POSTHOG_HOST || 'https://us.i.posthog.com';
+// Note: Vite only exposes variables prefixed with VITE_ to the client
+const POSTHOG_API_KEY = import.meta.env.VITE_POSTHOG_KEY || '';
+const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com';
 
 // Initialize PostHog
 export const initializePostHog = () => {
@@ -10,7 +11,7 @@ export const initializePostHog = () => {
     // Don't initialize if API key is missing
     if (!POSTHOG_API_KEY) {
       if (import.meta.env.DEV) {
-        console.warn('PostHog API key is missing. Please set NEXT_PUBLIC_POSTHOG_KEY in your .env.local file.');
+        console.warn('PostHog API key is missing. Please set VITE_POSTHOG_KEY in your .env.local file.');
       }
       return;
     }
