@@ -10,7 +10,8 @@ import { Linkedin, Twitter, Github, BookOpen, Send, Phone } from "lucide-react";
 import { useSocialLinks, usePersonal } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { trackPageView, trackEvent } from "@/lib/clarity";
+import { trackPageView as trackClarityPageView, trackEvent as trackClarityEvent } from "@/lib/clarity";
+import { trackPageView, trackEvent } from "@/lib/posthog";
 
 const Contact = () => {
   const { data: socialLinks, isLoading: socialLinksLoading, error: socialLinksError } = useSocialLinks();
@@ -27,6 +28,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
+    trackClarityPageView('Contact');
     trackPageView('Contact');
   }, []);
 
@@ -160,8 +162,17 @@ const Contact = () => {
 
     // Validate form
     if (!validateForm()) {
+      trackEvent('contact_form_validation_failed', {
+        errors: Object.keys(errors),
+        errorCount: Object.keys(errors).length,
+      });
       return;
     }
+
+    trackEvent('contact_form_submit_attempted', {
+      hasPhone: !!formData.phone,
+      hasLinkedIn: !!formData.linkedin,
+    });
 
     setIsSubmitting(true);
 
@@ -185,12 +196,16 @@ const Contact = () => {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        trackEvent('contact_form_submitted', { 
+        const eventData = { 
           name: formData.name, 
           email: formData.email,
           phone: formData.phone ? 'provided' : 'not_provided',
-          messageLength: formData.message.length 
-        });
+          messageLength: formData.message.length,
+          linkedin: formData.linkedin ? 'provided' : 'not_provided',
+          countryCode: formData.countryCode,
+        };
+        trackClarityEvent('contact_form_submitted', eventData);
+        trackEvent('contact_form_submitted', eventData);
         toast({
           title: "Message sent!",
           description: "Thanks for reaching out. I'll get back to you soon.",
@@ -236,7 +251,11 @@ const Contact = () => {
                       setFormData({ ...formData, name: e.target.value });
                       validateField('name', e.target.value);
                     }}
-                    onBlur={(e) => validateField('name', e.target.value)}
+                    onFocus={() => trackEvent('contact_form_field_focused', { field: 'name' })}
+                    onBlur={(e) => {
+                      validateField('name', e.target.value);
+                      trackEvent('contact_form_field_blurred', { field: 'name', hasError: !!errors.name });
+                    }}
                     className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.name ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Your name"
                   />
@@ -255,7 +274,11 @@ const Contact = () => {
                       setFormData({ ...formData, email: e.target.value });
                       validateField('email', e.target.value);
                     }}
-                    onBlur={(e) => validateField('email', e.target.value)}
+                    onFocus={() => trackEvent('contact_form_field_focused', { field: 'email' })}
+                    onBlur={(e) => {
+                      validateField('email', e.target.value);
+                      trackEvent('contact_form_field_blurred', { field: 'email', hasError: !!errors.email });
+                    }}
                     className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.email ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="your@email.com"
                   />
@@ -276,7 +299,11 @@ const Contact = () => {
                       setFormData({ ...formData, linkedin: e.target.value });
                       validateField('linkedin', e.target.value);
                     }}
-                    onBlur={(e) => validateField('linkedin', e.target.value)}
+                    onFocus={() => trackEvent('contact_form_field_focused', { field: 'linkedin' })}
+                    onBlur={(e) => {
+                      validateField('linkedin', e.target.value);
+                      trackEvent('contact_form_field_blurred', { field: 'linkedin', hasError: !!errors.linkedin });
+                    }}
                     className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.linkedin ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="your-linkedin-username"
                   />
@@ -317,11 +344,15 @@ const Contact = () => {
                       id="phone"
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => {
-                        setFormData({ ...formData, phone: e.target.value });
-                        validateField('phone', e.target.value);
-                      }}
-                      onBlur={(e) => validateField('phone', e.target.value)}
+                    onChange={(e) => {
+                      setFormData({ ...formData, phone: e.target.value });
+                      validateField('phone', e.target.value);
+                    }}
+                    onFocus={() => trackEvent('contact_form_field_focused', { field: 'phone' })}
+                    onBlur={(e) => {
+                      validateField('phone', e.target.value);
+                      trackEvent('contact_form_field_blurred', { field: 'phone', hasError: !!errors.phone });
+                    }}
                       className={`flex-1 h-10 sm:h-11 text-sm sm:text-base ${errors.phone ? 'border-amber-600 bg-amber-50' : ''}`}
                       placeholder="Phone number"
                     />
@@ -340,7 +371,11 @@ const Contact = () => {
                       setFormData({ ...formData, message: e.target.value });
                       validateField('message', e.target.value);
                     }}
-                    onBlur={(e) => validateField('message', e.target.value)}
+                    onFocus={() => trackEvent('contact_form_field_focused', { field: 'message' })}
+                    onBlur={(e) => {
+                      validateField('message', e.target.value);
+                      trackEvent('contact_form_field_blurred', { field: 'message', hasError: !!errors.message });
+                    }}
                     className={`mt-1 min-h-[120px] resize-none text-sm sm:text-base ${errors.message ? 'border-amber-600 bg-amber-50' : ''}`}
                     placeholder="Write your message here..."
                   />
@@ -385,7 +420,11 @@ const Contact = () => {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => trackEvent('social_link_clicked', { platform: link.platform, url: link.url })}
+                      onClick={() => {
+                        const eventData = { platform: link.platform, url: link.url, icon: link.icon };
+                        trackClarityEvent('social_link_clicked', eventData);
+                        trackEvent('social_link_clicked', eventData);
+                      }}
                       className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-card border border-border hover:border-primary transition-all duration-300 group touch-manipulation"
                     >
                       <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-accent group-hover:scale-110 transition-transform duration-300 flex-shrink-0">

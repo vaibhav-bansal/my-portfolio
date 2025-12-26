@@ -5,7 +5,8 @@ import { useProjects } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useEffect, useState, useRef } from "react";
-import { trackPageView, trackEvent } from "@/lib/clarity";
+import { trackPageView as trackClarityPageView, trackEvent as trackClarityEvent } from "@/lib/clarity";
+import { trackPageView, trackEvent } from "@/lib/posthog";
 import ProjectModal from "@/components/ProjectModal";
 import { extractPlainText } from "@/lib/portableText";
 
@@ -58,6 +59,7 @@ const Work = () => {
     }) : [];
 
   useEffect(() => {
+    trackClarityPageView('Work');
     trackPageView('Work');
   }, []);
 
@@ -65,19 +67,26 @@ const Work = () => {
     e.preventDefault();
     e.stopPropagation();
     setSelectedProject(project);
-    trackEvent('project_read_more', { 
-      projectTitle: project.title 
-    });
+    const eventData = { 
+      projectTitle: project.title,
+      projectId: project._id || project.id,
+      projectTags: project.tags,
+    };
+    trackClarityEvent('project_read_more', eventData);
+    trackEvent('project_read_more', eventData);
   };
 
   const handleArrowClick = (e: React.MouseEvent, project: any) => {
     e.stopPropagation();
     if (project.url) {
-      trackEvent('project_clicked', { 
+      const eventData = { 
         projectTitle: project.title, 
         projectUrl: project.url,
-        projectTags: project.tags 
-      });
+        projectTags: project.tags,
+        projectId: project._id || project.id,
+      };
+      trackClarityEvent('project_clicked', eventData);
+      trackEvent('project_external_link_clicked', eventData);
     }
   };
 
@@ -266,6 +275,17 @@ const Work = () => {
         project={selectedProject}
         open={!!selectedProject}
         onOpenChange={(open) => {
+          if (open && selectedProject) {
+            trackEvent('project_modal_opened', {
+              projectTitle: selectedProject.title,
+              projectId: selectedProject._id || selectedProject.id,
+            });
+          } else if (!open && selectedProject) {
+            trackEvent('project_modal_closed', {
+              projectTitle: selectedProject.title,
+              projectId: selectedProject._id || selectedProject.id,
+            });
+          }
           if (!open) {
             setSelectedProject(null);
           }

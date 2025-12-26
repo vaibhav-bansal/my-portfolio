@@ -2,8 +2,14 @@ import PageLayout from "@/components/PageLayout";
 import { Button } from "@/components/ui/button";
 import { Home, ArrowLeft, Search } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { trackPageView, trackEvent } from "@/lib/posthog";
 
 const NotFound = () => {
+  useEffect(() => {
+    trackPageView('NotFound');
+  }, []);
+
   return (
     <PageLayout>
       <div className="h-full flex items-center justify-center px-4 sm:px-6 md:px-8 py-8 sm:py-12">
@@ -75,6 +81,7 @@ const NotFound = () => {
               <Link to="/">
                 <Button 
                   size="lg"
+                  onClick={() => trackEvent('not_found_go_home_clicked')}
                   className="px-6 sm:px-8 h-11 sm:h-12 text-sm sm:text-base bg-primary hover:bg-primary/90 touch-manipulation w-full sm:w-auto"
                 >
                   <Home className="mr-2 h-4 w-4" />
@@ -84,7 +91,10 @@ const NotFound = () => {
               <Button 
                 variant="outline" 
                 size="lg"
-                onClick={() => window.history.back()}
+                onClick={() => {
+                  trackEvent('not_found_go_back_clicked');
+                  window.history.back();
+                }}
                 className="px-6 sm:px-8 h-11 sm:h-12 text-sm sm:text-base border-primary text-primary hover:bg-primary hover:text-primary-foreground touch-manipulation w-full sm:w-auto"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />

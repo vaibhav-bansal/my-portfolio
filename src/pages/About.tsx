@@ -3,13 +3,15 @@ import { usePersonal, useFocusAreas } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useEffect } from "react";
-import { trackPageView } from "@/lib/clarity";
+import { trackPageView as trackClarityPageView } from "@/lib/clarity";
+import { trackPageView, trackEvent } from "@/lib/posthog";
 
 const About = () => {
   const { data: personal, isLoading: personalLoading, error: personalError } = usePersonal();
   const { data: focusAreas, isLoading: focusAreasLoading, error: focusAreasError } = useFocusAreas();
 
   useEffect(() => {
+    trackClarityPageView('About');
     trackPageView('About');
   }, []);
 
@@ -55,6 +57,7 @@ const About = () => {
                   href={personal.resume}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('resume_download_clicked', { resumeUrl: personal?.resume })}
                   className="inline-flex items-center px-5 sm:px-6 py-2.5 sm:py-3 bg-[#8B7355] hover:bg-[#A68B6B] text-white text-sm sm:text-base font-medium rounded-lg transition-colors duration-200 hover:shadow-lg touch-manipulation"
                 >
                   <svg 
