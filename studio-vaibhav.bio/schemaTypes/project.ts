@@ -20,26 +20,8 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            { title: 'Normal', value: 'normal' },
-            { title: 'H2', value: 'h2' },
-            { title: 'H3', value: 'h3' },
-            { title: 'Quote', value: 'blockquote' }
-          ],
-          lists: [
-            { title: 'Bullet', value: 'bullet' },
-            { title: 'Number', value: 'number' }
-          ]
-        },
-        {
-          type: 'image',
-          options: { hotspot: true }
-        }
-      ],
+      type: 'text',
+      rows: 3,
       validation: Rule => Rule.required()
     }),
     defineField({

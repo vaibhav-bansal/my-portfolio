@@ -7,19 +7,19 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { Linkedin, Twitter, Github, BookOpen, Send, Phone } from "lucide-react";
-import { useSocialLinks, useContactSettings, usePersonal } from "@/hooks/useSanity";
+import { useSocialLinks, usePersonal } from "@/hooks/useSanity";
 import DataError from "./DataError";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { trackPageView, trackEvent } from "@/lib/clarity";
 
 const Contact = () => {
   const { data: socialLinks, isLoading: socialLinksLoading, error: socialLinksError } = useSocialLinks();
-  const { data: contactSettings, isLoading: contactSettingsLoading, error: contactSettingsError } = useContactSettings();
   const { data: personal, isLoading: personalLoading, error: personalError } = usePersonal();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    linkedin: "",
     phone: "",
     countryCode: "+91",
     message: "",
@@ -31,12 +31,12 @@ const Contact = () => {
   }, []);
 
   // Error state
-  if (socialLinksError || contactSettingsError || personalError) {
+  if (socialLinksError || personalError) {
     return <DataError />;
   }
 
   // Loading state
-  if (socialLinksLoading || contactSettingsLoading || personalLoading) {
+  if (socialLinksLoading || personalLoading) {
     return (
       <PageLayout>
         <div className="px-4 sm:px-6">
@@ -90,6 +90,12 @@ const Contact = () => {
         }
         break;
       
+      case 'linkedin':
+        if (value.trim() && !/^[a-zA-Z0-9._-]+$/.test(value.trim())) {
+          error = 'LinkedIn username can only contain letters, numbers, hyphens, underscores, and periods';
+        }
+        break;
+      
       case 'phone':
         if (value.trim() && !/^[\d\s\-\(\)]+$/.test(value)) {
           error = 'Please enter a valid phone number';
@@ -139,6 +145,13 @@ const Contact = () => {
       }
     }
     
+    // Validate LinkedIn if provided
+    if (formData.linkedin.trim()) {
+      if (!validateField('linkedin', formData.linkedin)) {
+        isValid = false;
+      }
+    }
+    
     return isValid;
   };
 
@@ -153,20 +166,25 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(contactSettings?.webhookUrl || import.meta.env.VITE_CONTACT_WEBHOOK_URL || '', {
+      // Call server-side API to securely send to webhook
+      const response = await fetch('/api/v1/contact-form/submit', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
-          fullPhone: formData.phone ? `${formData.countryCode} ${formData.phone}` : '',
-          timestamp: new Date().toISOString(),
-          source: "vaibhav.bio",
+          name: formData.name,
+          email: formData.email,
+          linkedin: formData.linkedin,
+          phone: formData.phone,
+          countryCode: formData.countryCode,
+          message: formData.message,
         }),
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
         trackEvent('contact_form_submitted', { 
           name: formData.name, 
           email: formData.email,
@@ -177,7 +195,7 @@ const Contact = () => {
           title: "Message sent!",
           description: "Thanks for reaching out. I'll get back to you soon.",
         });
-        setFormData({ name: "", email: "", phone: "", countryCode: "+91", message: "" });
+        setFormData({ name: "", email: "", linkedin: "", phone: "", countryCode: "+91", message: "" });
         setErrors({});
       } else {
         throw new Error("Failed to send");
@@ -199,7 +217,7 @@ const Contact = () => {
         <div className="container mx-auto max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
             {/* Contact Form */}
-            <div className="animate-fade-in order-2 lg:order-1 hidden">
+            <div className="animate-fade-in order-2 lg:order-1">
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 Let's Connect
               </h1>
@@ -243,6 +261,32 @@ const Contact = () => {
                   />
                   {errors.email && (
                     <p className="mt-1 text-sm text-amber-700 underline">{errors.email}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="linkedin" className="flex items-center gap-2">
+                    LinkedIn <span className="text-sm text-muted-foreground font-normal">(optional)</span>
+                  </Label>
+                  <Input
+                    id="linkedin"
+                    type="text"
+                    value={formData.linkedin}
+                    onChange={(e) => {
+                      setFormData({ ...formData, linkedin: e.target.value });
+                      validateField('linkedin', e.target.value);
+                    }}
+                    onBlur={(e) => validateField('linkedin', e.target.value)}
+                    className={`mt-1 h-10 sm:h-11 text-sm sm:text-base ${errors.linkedin ? 'border-amber-600 bg-amber-50' : ''}`}
+                    placeholder="your-linkedin-username"
+                  />
+                  {errors.linkedin && (
+                    <p className="mt-1 text-sm text-amber-700 underline">{errors.linkedin}</p>
+                  )}
+                  {!errors.linkedin && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Just your LinkedIn username (e.g., vaibhav-bansal)
+                    </p>
                   )}
                 </div>
 
@@ -298,7 +342,7 @@ const Contact = () => {
                     }}
                     onBlur={(e) => validateField('message', e.target.value)}
                     className={`mt-1 min-h-[120px] resize-none text-sm sm:text-base ${errors.message ? 'border-amber-600 bg-amber-50' : ''}`}
-                    placeholder="Tell me about your project or idea..."
+                    placeholder="Write your message here..."
                   />
                   {errors.message && (
                     <p className="mt-1 text-sm text-amber-700 underline">{errors.message}</p>

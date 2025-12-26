@@ -93,15 +93,6 @@ export const useSocialLinks = () => {
   }
 }
 
-export const useContactSettings = () => {
-  const { data: allData, ...rest } = useAllData()
-  
-  return {
-    data: allData?.contactSettings,
-    ...rest,
-  }
-}
-
 // Fallback hooks for individual queries (used only if needed)
 export const usePersonalDirect = () => {
   return useQuery({
@@ -135,11 +126,4 @@ export const useSocialLinksDirect = () => {
   })
 }
 
-export const useContactSettingsDirect = () => {
-  return useQuery({
-    queryKey: ['contactSettings'],
-    queryFn: () => client.fetch(queries.contactSettings),
-    ...defaultQueryOptions,
-  })
-}
 
