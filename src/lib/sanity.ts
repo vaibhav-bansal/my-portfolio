@@ -86,13 +86,7 @@ export const fallbackData = {
       icon: 'github',
       order: 2
     }
-  ],
-  contactSettings: {
-    _id: 'fallback-contact',
-    webhookUrl: '',
-    email: 'example@placeholder.com',
-    phone: '+1 (555) 123-4567'
-  }
+  ]
 }
 
 // Test connection function
@@ -172,14 +166,6 @@ export const queries = {
     order
   }`,
   
-  // Contact settings - optimized
-  contactSettings: `*[_type == "contactSettings"][0] {
-    _id,
-    webhookUrl,
-    email,
-    phone
-  }`,
-  
   // Combined query for initial page load - fetches all data in one request
   allData: `{
     "personal": *[_type == "personal"][0] {
@@ -214,12 +200,6 @@ export const queries = {
       url,
       icon,
       order
-    },
-    "contactSettings": *[_type == "contactSettings"][0] {
-      _id,
-      webhookUrl,
-      email,
-      phone
     }
   }`,
 }

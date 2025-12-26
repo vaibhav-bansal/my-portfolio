@@ -1,0 +1,306 @@
+{
+  "name": "Contact Form Handler v2",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "contact-form-webhook"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Verify webhook signature\nconst crypto = require('crypto');\n\nconst input = $input.first().json;\nconst receivedSignature = input.headers['x-webhook-signature'];\nconst body = input.body;\n\n// Secret must match the one in Vercel environment\nconst secret = 'YOUR_WEBHOOK_SECRET_HERE';\n\n// Recreate the signature from the body\nconst normalizedBody = JSON.stringify(body);\nconst expectedSignature = crypto\n  .createHmac('sha256', secret)\n  .update(normalizedBody)\n  .digest('hex');\n\nif (receivedSignature !== expectedSignature) {\n  throw new Error('Invalid webhook signature');\n}\n\n// Signature valid - pass the body through\nreturn { json: body };"
+      },
+      "id": "verify-signature",
+      "name": "Verify Signature",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "name-validation",
+              "leftValue": "={{ $json.name }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            },
+            {
+              "id": "email-validation",
+              "leftValue": "={{ $json.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            },
+            {
+              "id": "message-validation",
+              "leftValue": "={{ $json.message }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "isNotEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "data-validation",
+      "name": "Validate Data",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json;\n\nconst cleanedData = {\n  name: body.name?.trim() || '',\n  email: body.email?.trim().toLowerCase() || '',\n  phone: body.phone?.trim() || '',\n  countryCode: body.countryCode || '+91',\n  fullPhone: body.fullPhone || '',\n  linkedin: body.linkedin?.trim() || '',\n  message: body.message?.trim() || '',\n  timestamp: body.timestamp || new Date().toISOString(),\n  source: body.source || 'vaibhav.bio'\n};\n\ncleanedData.formattedDate = new Date(cleanedData.timestamp).toLocaleString('en-IN', {\n  timeZone: 'Asia/Kolkata',\n  year: 'numeric',\n  month: 'long',\n  day: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit'\n});\n\ncleanedData.referenceId = `CF-${Date.now()}-${Math.random().toString(36).substr(2, 6).toUpperCase()}`;\n\n// Calculate reminder time (24 hours from now)\nconst reminderTime = new Date(Date.now() + 24 * 60 * 60 * 1000);\ncleanedData.reminderTimestamp = Math.floor(reminderTime.getTime() / 1000);\ncleanedData.reminderFormatted = reminderTime.toLocaleString('en-IN', {\n  timeZone: 'Asia/Kolkata',\n  year: 'numeric',\n  month: 'long',\n  day: 'numeric',\n  hour: '2-digit',\n  minute: '2-digit'\n});\n\nreturn { json: cleanedData };"
+      },
+      "id": "data-transformation",
+      "name": "Transform Data",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Thanks for reaching out, {{ $json.name }}!",
+        "message": "Hi {{ $json.name }},\n\nThank you for reaching out through my portfolio website!\n\nI've received your message and will get back to you within 24 hours.\n\nFor reference, here's what you submitted:\n---\n{{ $json.message }}\n---\n\nReference ID: {{ $json.referenceId }}\n\nBest regards,\nVaibhav Bansal\n\n---\nThis is an automated confirmation from vaibhav.bio",
+        "options": {}
+      },
+      "id": "send-user-acknowledgement",
+      "name": "Email: Acknowledge User",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1120, 100],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail - vbansal079@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "YOUR_SLACK_CHANNEL_ID",
+          "mode": "id"
+        },
+        "text": "📬 *New Contact Form Submission*\n\n*Name:* {{ $json.name }}\n*Email:* {{ $json.email }}\n*LinkedIn:* {{ $json.linkedin || 'Not provided' }}\n*Phone:* {{ $json.fullPhone || 'Not provided' }}\n\n*Message:*\n> {{ $json.message }}\n\n*Reference:* `{{ $json.referenceId }}`\n*Submitted:* {{ $json.formattedDate }} IST\n\n⏰ Reminder set for: {{ $json.reminderFormatted }} IST",
+        "otherOptions": {}
+      },
+      "id": "slack-notification",
+      "name": "Slack: Notify",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1120, 250],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "YOUR_SLACK_CREDENTIAL_ID",
+          "name": "Slack - org-bansal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "reminder",
+        "text": "⏰ *Reminder: Respond to {{ $json.name }}*\n\nYou received a contact form submission 24 hours ago.\n\n*Email:* {{ $json.email }}\n*LinkedIn:* {{ $json.linkedin || 'Not provided' }}\n*Message:* {{ $json.message }}\n\nDon't forget to follow up!",
+        "time": "={{ $json.reminderTimestamp }}"
+      },
+      "id": "slack-reminder",
+      "name": "Slack: Set Reminder",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.2,
+      "position": [1120, 400],
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "YOUR_SLACK_CREDENTIAL_ID",
+          "name": "Slack - org-bansal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "vbansal079@gmail.com",
+        "subject": "📬 New contact: {{ $json.name }} - {{ $json.referenceId }}",
+        "message": "New contact form submission received!\n\n---\nName: {{ $json.name }}\nEmail: {{ $json.email }}\nLinkedIn: {{ $json.linkedin || 'Not provided' }}\nPhone: {{ $json.fullPhone || 'Not provided' }}\n\nMessage:\n{{ $json.message }}\n\n---\nReference ID: {{ $json.referenceId }}\nSubmitted: {{ $json.formattedDate }} IST\n\n⏰ Reminder set for {{ $json.reminderFormatted }} IST\n\nReply directly to this email to respond to {{ $json.name }}.",
+        "options": {
+          "replyTo": "={{ $json.email }}"
+        }
+      },
+      "id": "send-owner-notification",
+      "name": "Email: Notify Owner",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [1340, 100],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "YOUR_GMAIL_CREDENTIAL_ID",
+          "name": "Gmail - vbansal079@gmail.com"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, message: 'Message sent successfully! Check your email for confirmation.', referenceId: $json.referenceId }) }}",
+        "options": {}
+      },
+      "id": "success-response",
+      "name": "Success Response",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1560, 250]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: 'Validation failed', message: 'Please check that all required fields are filled correctly.' }) }}",
+        "responseCode": 400,
+        "options": {}
+      },
+      "id": "validation-error-response",
+      "name": "Validation Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: false, error: 'Unauthorized', message: 'Invalid webhook signature.' }) }}",
+        "responseCode": 401,
+        "options": {}
+      },
+      "id": "signature-error-response",
+      "name": "Signature Error",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [460, 500]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Verify Signature",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Verify Signature": {
+      "main": [
+        [
+          {
+            "node": "Validate Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Data": {
+      "main": [
+        [
+          {
+            "node": "Transform Data",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Validation Error",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform Data": {
+      "main": [
+        [
+          {
+            "node": "Email: Acknowledge User",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack: Notify",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Slack: Set Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email: Acknowledge User": {
+      "main": [
+        [
+          {
+            "node": "Email: Notify Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email: Notify Owner": {
+      "main": [
+        [
+          {
+            "node": "Success Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slack: Notify": {
+      "main": [[]]
+    },
+    "Slack: Set Reminder": {
+      "main": [[]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Contact Form"
+    }
+  ]
+}
